@@ -1,6 +1,6 @@
-package src;
+package SistemaOSM;
 
-public class Prova {
+public class OSMSearch {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
