@@ -2,33 +2,79 @@ package POI;
 
 import java.util.Date;
 
+import INTERFACES.AbstractElement;
 import USER.User;
 
-public class PointOfInterest {
-	public String id;
-	public String name;
-	public String description;
-	public double latitude;
-	public double longitude;
-	public Date open_time;
-	public Date close_time;
-	public User author;
-	public POIType type;
-	public boolean published;
+public class PointOfInterest extends AbstractElement{
+	private double latitude;
+	private double longitude;
+	private Date open_time;
+	private Date close_time;
+	private POIType type;
+	
+	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
+		super(name, description, author);
+		this.latitude = lat;
+		this.longitude = lon;
+		this.open_time = null;  
+		this.close_time = null; 
+		this.type = type;
+	}
 	
 	  @Override
 	    public String toString() {
 	        return "PointOfInterest {" +
-	                "\n  id='" + id + '\'' +
-	                ",\n  name='" + name + '\'' +
-	                ",\n  description='" + description + '\'' +
+	                "\n  id='" + super.getId() + '\'' +
+	                ",\n  name='" + super.getName() + '\'' +
+	                ",\n  description='" + super.getDescription() + '\'' +
 	                ",\n  latitude=" + latitude +
 	                ",\n  longitude=" + longitude +
 	                ",\n  open_time=" + open_time +
 	                ",\n  close_time=" + close_time +
-	                ",\n  author=" + author +
+	                ",\n  author=" + super.getAuthor() +
 	                ",\n  type=" + type +
-	                ",\n  published=" + published +
+	                ",\n  published=" + super.isPublished() +
 	                "\n}";
+	    }
+
+	  // Getter e Setter
+	  public double getLatitude() {
+	        return latitude;
+	    }
+
+	    public void setLatitude(double latitude) {
+	        this.latitude = latitude;
+	    }
+
+	    public double getLongitude() {
+	        return longitude;
+	    }
+
+	    public void setLongitude(double longitude) {
+	        this.longitude = longitude;
+	    }
+
+	    public Date getOpen_time() {
+	        return open_time;
+	    }
+
+	    public void setOpen_time(Date open_time) {
+	        this.open_time = open_time;
+	    }
+
+	    public Date getClose_time() {
+	        return close_time;
+	    }
+
+	    public void setClose_time(Date close_time) {
+	        this.close_time = close_time;
+	    }
+
+	    public POIType getType() {
+	        return type;
+	    }
+
+	    public void setType(POIType type) {
+	        this.type = type;
 	    }
 }
