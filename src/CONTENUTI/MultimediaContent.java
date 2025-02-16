@@ -1,6 +1,7 @@
 package CONTENUTI;
 
 import POI.PointOfInterest;
+
 import USER.User;
 
 import java.time.LocalDateTime;
@@ -90,4 +91,5 @@ public class MultimediaContent {
     public void setPointOfInterest(PointOfInterest pointOfInterest) {
         this.pointOfInterest = pointOfInterest;
     }
+
 }

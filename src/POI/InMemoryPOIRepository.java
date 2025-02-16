@@ -26,4 +26,5 @@ public class InMemoryPOIRepository implements POIRepository {
     public PointOfInterest findById(String id) {
         return storage.get(id);
     }
+
 }

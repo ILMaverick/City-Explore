@@ -1,7 +1,5 @@
 package CONTENUTI;
 
-import POI.InMemoryPOIRepository;
-import POI.POIRepository;
 import POI.POIService;
 import POI.PointOfInterest;
 import USER.User;
@@ -13,7 +11,6 @@ public class MultimediaContentController {
 
     private Scanner scanner;
     private MultimediaContentService multimediaContentService;
-
     private POIService poiService;
 
     public MultimediaContentController(POIService poiService) {

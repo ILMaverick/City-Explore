@@ -13,9 +13,10 @@ public class MainApplication {
         POIController poiController = new POIController();
         TourController tourController = new TourController(poiController.getPOIService());
         ContestController contestController = new ContestController();
+
         EventoController eventoController = new EventoController(poiController.getPOIService());
         MultimediaContentController multimediaContentController = new MultimediaContentController(poiController.getPOIService());
-        
+
         boolean exit = false;
         while (!exit) {
             System.out.println("=== Menu Principale ===");
