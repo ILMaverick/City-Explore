@@ -3,7 +3,7 @@ package TOUR;
 import java.util.ArrayList;
 import java.util.List;
 
-import INTERFACES.AbstractElement;
+import ELEMENT.AbstractElement;
 import USER.User;
 
 public class Tour extends AbstractElement {

@@ -1,8 +1,11 @@
 package POI;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import INTERFACES.AbstractElement;
+import CONTENUTI.MultimediaContent;
+import ELEMENT.AbstractElement;
 import USER.User;
 
 public class PointOfInterest extends AbstractElement{
@@ -11,6 +14,7 @@ public class PointOfInterest extends AbstractElement{
 	private Date open_time;
 	private Date close_time;
 	private POIType type;
+	private List<MultimediaContent> multimediaContentList;
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
 		super(name, description, author);
@@ -19,62 +23,62 @@ public class PointOfInterest extends AbstractElement{
 		this.open_time = null;  
 		this.close_time = null; 
 		this.type = type;
+		multimediaContentList = new ArrayList<>();
 	}
 	
-	  @Override
-	    public String toString() {
-	        return "PointOfInterest {" +
-	                "\n  id='" + super.getId() + '\'' +
-	                ",\n  name='" + super.getName() + '\'' +
-	                ",\n  description='" + super.getDescription() + '\'' +
-	                ",\n  latitude=" + latitude +
-	                ",\n  longitude=" + longitude +
-	                ",\n  open_time=" + open_time +
-	                ",\n  close_time=" + close_time +
-	                ",\n  author=" + super.getAuthor() +
-	                ",\n  type=" + type +
-	                ",\n  published=" + super.isPublished() +
-	                "\n}";
-	    }
+	@Override
+	public String toString() {
+		return "PointOfInterest {" +
+				"\n  id='" + super.getId() + '\'' +
+				",\n  name='" + super.getName() + '\'' +
+				",\n  description='" + super.getDescription() + '\'' +
+				",\n  latitude=" + latitude +
+				",\n  longitude=" + longitude +
+				",\n  open_time=" + open_time +
+				",\n  close_time=" + close_time +
+				",\n  author=" + super.getAuthor() +
+				",\n  type=" + type +
+				",\n  multimediaContent=" + multimediaContentList +
+				",\n  published=" + super.isPublished() +
+				"\n}";
+	}
 
 	  // Getter e Setter
-	  public double getLatitude() {
-	        return latitude;
-	    }
-
-	    public void setLatitude(double latitude) {
+	public double getLatitude() { return latitude; }
+	public void setLatitude(double latitude) {
 	        this.latitude = latitude;
 	    }
-
-	    public double getLongitude() {
+	public double getLongitude() {
 	        return longitude;
 	    }
 
-	    public void setLongitude(double longitude) {
+	public void setLongitude(double longitude) {
 	        this.longitude = longitude;
 	    }
 
-	    public Date getOpen_time() {
+	public Date getOpen_time() {
 	        return open_time;
 	    }
 
-	    public void setOpen_time(Date open_time) {
+	public void setOpen_time(Date open_time) {
 	        this.open_time = open_time;
 	    }
 
-	    public Date getClose_time() {
+	public Date getClose_time() {
 	        return close_time;
 	    }
 
-	    public void setClose_time(Date close_time) {
+	public void setClose_time(Date close_time) {
 	        this.close_time = close_time;
 	    }
 
-	    public POIType getType() {
+	public POIType getType() {
 	        return type;
 	    }
 
-	    public void setType(POIType type) {
+	public void setType(POIType type) {
 	        this.type = type;
 	    }
+
+	public List<MultimediaContent> getMultimediaContentList() { return multimediaContentList; }
 }

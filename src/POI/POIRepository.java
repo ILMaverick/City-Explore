@@ -1,5 +1,7 @@
 package POI;
 
+import CONTENUTI.MultimediaContent;
+
 import java.util.List;
 
 public interface POIRepository {
@@ -17,4 +19,5 @@ public interface POIRepository {
      * Restituisce il PointOfInterest con l'id specificato, oppure null se non presente.
      */
     PointOfInterest findById(String id);
+
 }

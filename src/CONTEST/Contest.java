@@ -1,6 +1,6 @@
 package CONTEST;
 
-import INTERFACES.AbstractElement;
+import ELEMENT.AbstractElement;
 import USER.User;
 
 import java.time.LocalDate;
