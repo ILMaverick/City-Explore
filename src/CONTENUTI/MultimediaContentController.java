@@ -20,6 +20,9 @@ public class MultimediaContentController {
         this.multimediaContentService = new MultimediaContentService(multimediaContentRepository);
     }
 
+    public MultimediaContentService getMultimediaContentService() {
+        return multimediaContentService;
+    }
     public void loadMultimediaContent() {
         System.out.println("=== Creazione di un Contenuto Multimediale ===");
 

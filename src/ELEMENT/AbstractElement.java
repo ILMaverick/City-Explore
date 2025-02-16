@@ -8,6 +8,7 @@ public abstract class AbstractElement implements Element {
 	private String description;
 	private User author;
 	private boolean published;
+	private ElementStatus status;
 	
 	public AbstractElement(String name, String description, User author) {
 		this.id = "custom_" + System.currentTimeMillis();
@@ -15,6 +16,7 @@ public abstract class AbstractElement implements Element {
 		this.description = description;
 		this.author = author;
 		this.published = false;
+		this.status = ElementStatus.Pending;
 	}
 	
 	public boolean isPublished() {
@@ -46,5 +48,11 @@ public abstract class AbstractElement implements Element {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public ElementStatus getStatus() {
+		return status;
+	}
+	public void setStatus(ElementStatus status) {
+		this.status = status;
 	}
 }

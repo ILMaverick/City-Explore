@@ -19,6 +19,10 @@ public class TourController {
         TourRepository repository = new InMemoryTourRepository();
         this.tourService = new TourService(repository);
     }
+
+    public TourService getTourService() {
+        return tourService;
+    }
     
     /**
      * Crea un Tour a partire da una lista di POI.

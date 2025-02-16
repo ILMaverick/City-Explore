@@ -5,6 +5,8 @@ import CONTEST.ContestController;
 import EVENTO.EventoController;
 import POI.POIController;
 import TOUR.TourController;
+import VALIDAZIONE.ValidationController;
+import VALIDAZIONE.ValidationService;
 
 
 public class MainApplication {
@@ -16,6 +18,8 @@ public class MainApplication {
 
         EventoController eventoController = new EventoController(poiController.getPOIService());
         MultimediaContentController multimediaContentController = new MultimediaContentController(poiController.getPOIService());
+        ValidationService validationService = new ValidationService(poiController.getPOIService(), tourController.getTourService(), multimediaContentController.getMultimediaContentService());
+        ValidationController validationController = new ValidationController(validationService);
 
         boolean exit = false;
         while (!exit) {
@@ -25,8 +29,9 @@ public class MainApplication {
             System.out.println("3. Gestione Contest");
             System.out.println("4. Gestione Evento");
             System.out.println("5. Gestione Contenuti Multimediale");
-            System.out.println("6. Esci");
-            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6): ");
+            System.out.println("6. Validazione Elementi e Contenuti Pendenti");
+            System.out.println("7. Esci");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6, 7): ");
             int mainOption = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -47,6 +52,9 @@ public class MainApplication {
                     manageMultimediaContent(scanner, multimediaContentController);
                     break;
                 case 6:
+                    manageValidation(scanner, validationController);
+                    break;
+                case 7:
                     exit = true;
                     System.out.println("Uscita dal programma...");
                     break;
@@ -224,6 +232,46 @@ public class MainApplication {
                     multimediaContentController.displayAllMultimediaContent();
                     break;
                 case 3:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Opzione non valida.");
+                    break;
+            }
+            if (!back) {
+                System.out.println("\nPremi INVIO per continuare...");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private static void manageValidation(Scanner scanner, ValidationController validationController) {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n=== Menu Gestione Validazione ===");
+            System.out.println("1. Validazione");
+            System.out.println("2. Mostra POI Pendenti");
+            System.out.println("3. Mostra Itinerari Pendenti");
+            System.out.println("4. Mostra Contenuti Multimediali Pendenti");
+            System.out.println("5. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4 o 5): ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consuma il newline
+
+            switch (option) {
+                case 1:
+                    validationController.validation();
+                    break;
+                case 2:
+                    validationController.displayAllPOiPending();
+                    break;
+                case 3:
+                    validationController.displayAllTourPending();
+                    break;
+                case 4:
+                    validationController.displayAllMultimediaContentPending();
+                    break;
+                case 5:
                     back = true;
                     break;
                 default:

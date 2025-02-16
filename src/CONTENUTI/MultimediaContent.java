@@ -1,5 +1,6 @@
 package CONTENUTI;
 
+import ELEMENT.ElementStatus;
 import POI.PointOfInterest;
 
 import USER.User;
@@ -18,6 +19,7 @@ public class MultimediaContent {
     private LocalDateTime dataCreation;
     private User author;
     private boolean published;
+    private ElementStatus status;
     private PointOfInterest pointOfInterest;
 
     public MultimediaContent(String name, String description, User author) {
@@ -26,6 +28,7 @@ public class MultimediaContent {
         this.description = description;
         this.author = author;
         this.published = false;
+        this.status = ElementStatus.Pending;
     }
 
     @Override
@@ -84,6 +87,12 @@ public class MultimediaContent {
     }
     public void setPublished(boolean published) {
         this.published = published;
+    }
+    public ElementStatus getStatus() {
+        return status;
+    }
+    public void setStatus(ElementStatus status) {
+        this.status = status;
     }
     public PointOfInterest getPointOfInterest() {
         return pointOfInterest;
