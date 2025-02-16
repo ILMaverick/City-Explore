@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
+import CONTENUTI.MultimediaContentController;
 import CONTEST.ContestController;
 import EVENTO.EventoController;
 import POI.POIController;
 import TOUR.TourController;
 
-import java.util.Scanner;
 
 public class MainApplication {
     public static void main(String[] args) {
@@ -13,8 +13,10 @@ public class MainApplication {
         POIController poiController = new POIController();
         TourController tourController = new TourController(poiController.getPOIService());
         ContestController contestController = new ContestController();
+
         EventoController eventoController = new EventoController(poiController.getPOIService());
-        
+        MultimediaContentController multimediaContentController = new MultimediaContentController(poiController.getPOIService());
+
         boolean exit = false;
         while (!exit) {
             System.out.println("=== Menu Principale ===");
@@ -22,8 +24,9 @@ public class MainApplication {
             System.out.println("2. Gestione Tour");
             System.out.println("3. Gestione Contest");
             System.out.println("4. Gestione Evento");
-            System.out.println("5. Esci");
-            System.out.print("Seleziona un'opzione (1, 2, 3, 4 o 5): ");
+            System.out.println("5. Gestione Contenuti Multimediale");
+            System.out.println("6. Esci");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6): ");
             int mainOption = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -41,6 +44,9 @@ public class MainApplication {
                     manageEvento(scanner, eventoController);
                     break;
                 case 5:
+                    manageMultimediaContent(scanner, multimediaContentController);
+                    break;
+                case 6:
                     exit = true;
                     System.out.println("Uscita dal programma...");
                     break;
@@ -166,7 +172,7 @@ public class MainApplication {
     }
     
  // Sotto-menu per la gestione degli Eventi
-    private static void manageEvento(Scanner scanner,EventoController eventoController) {
+    private static void manageEvento(Scanner scanner, EventoController eventoController) {
         boolean back = false;
         while (!back) {
             System.out.println("\n=== Menu Gestione Evento ===");
@@ -183,6 +189,39 @@ public class MainApplication {
                     break;
                 case 2:
                     eventoController.displayAllEventi();
+                    break;
+                case 3:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Opzione non valida.");
+                    break;
+            }
+            if (!back) {
+                System.out.println("\nPremi INVIO per continuare...");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    //Menù Gestione Contenuti Multimediali
+    private static void manageMultimediaContent(Scanner scanner, MultimediaContentController multimediaContentController) {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n=== Menu Gestione Contenuti Multimediali ===");
+            System.out.println("1. Carica Contenuto ad un POI");
+            System.out.println("2. Visualizza tutti i Contenuti Multimediali salvati");
+            System.out.println("3. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consuma il newline
+
+            switch (option) {
+                case 1:
+                    multimediaContentController.loadMultimediaContent();
+                    break;
+                case 2:
+                    multimediaContentController.displayAllMultimediaContent();
                     break;
                 case 3:
                     back = true;

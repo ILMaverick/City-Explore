@@ -1,4 +1,4 @@
-package INTERFACES;
+package ELEMENT;
 
 public interface Element {
 	String getId();

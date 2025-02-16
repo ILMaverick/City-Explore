@@ -1,6 +1,6 @@
 package EVENTO;
 
-import INTERFACES.AbstractElement;
+import ELEMENT.AbstractElement;
 import POI.PointOfInterest;
 import USER.User;
 

@@ -1,5 +1,7 @@
 package POI;
 
+import CONTENUTI.MultimediaContent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,4 +26,5 @@ public class InMemoryPOIRepository implements POIRepository {
     public PointOfInterest findById(String id) {
         return storage.get(id);
     }
+
 }
