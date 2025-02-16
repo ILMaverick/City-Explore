@@ -4,17 +4,17 @@ import java.util.List;
 
 public interface TourRepository {
     /**
-     * Salva un oggetto PointOfInterest.
+     * Salva un oggetto Tour.
      */
     void save(Tour tour);
 
     /**
-     * Restituisce tutti gli oggetti PointOfInterest salvati.
+     * Restituisce tutti gli oggetti Tour salvati.
      */
     List<Tour> findAll();
 
     /**
-     * Restituisce il PointOfInterest con l'id specificato, oppure null se non presente.
+     * Restituisce il Tour con l'id specificato, oppure null se non presente.
      */
     Tour findById(String id);
 

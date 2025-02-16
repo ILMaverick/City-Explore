@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 import CONTEST.ContestController;
+import EVENTO.EventoController;
 import POI.POIController;
 import TOUR.TourController;
 
@@ -12,6 +13,7 @@ public class MainApplication {
         POIController poiController = new POIController();
         TourController tourController = new TourController(poiController.getPOIService());
         ContestController contestController = new ContestController();
+        EventoController eventoController = new EventoController(poiController.getPOIService());
         
         boolean exit = false;
         while (!exit) {
@@ -19,8 +21,9 @@ public class MainApplication {
             System.out.println("1. Gestione POI");
             System.out.println("2. Gestione Tour");
             System.out.println("3. Gestione Contest");
-            System.out.println("4. Esci");
-            System.out.print("Seleziona un'opzione (1, 2, 3 o 4): ");
+            System.out.println("4. Gestione Evento");
+            System.out.println("5. Esci");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4 o 5): ");
             int mainOption = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -35,6 +38,9 @@ public class MainApplication {
                     manageContest(scanner, contestController);
                     break;
                 case 4:
+                    manageEvento(scanner, eventoController);
+                    break;
+                case 5:
                     exit = true;
                     System.out.println("Uscita dal programma...");
                     break;
@@ -144,6 +150,39 @@ public class MainApplication {
                     break;
                 case 2:
                     contestController.displayAllContest();
+                    break;
+                case 3:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Opzione non valida.");
+                    break;
+            }
+            if (!back) {
+                System.out.println("\nPremi INVIO per continuare...");
+                scanner.nextLine();
+            }
+        }
+    }
+    
+ // Sotto-menu per la gestione degli Eventi
+    private static void manageEvento(Scanner scanner,EventoController eventoController) {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n=== Menu Gestione Evento ===");
+            System.out.println("1. Crea Evento da POI");
+            System.out.println("2. Visualizza tutti gli Eventi salvati");
+            System.out.println("3. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consuma il newline
+            
+            switch (option) {
+                case 1:
+                    eventoController.createEventoFromInput();
+                    break;
+                case 2:
+                    eventoController.displayAllEventi();
                     break;
                 case 3:
                     back = true;
