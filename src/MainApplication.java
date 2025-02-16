@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import CONTEST.ContestController;
 import POI.POIController;
 import TOUR.TourController;
 
@@ -10,14 +11,16 @@ public class MainApplication {
         Scanner scanner = new Scanner(System.in);
         POIController poiController = new POIController();
         TourController tourController = new TourController(poiController.getPOIService());
+        ContestController contestController = new ContestController();
         
         boolean exit = false;
         while (!exit) {
             System.out.println("=== Menu Principale ===");
             System.out.println("1. Gestione POI");
             System.out.println("2. Gestione Tour");
-            System.out.println("3. Esci");
-            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            System.out.println("3. Gestione Contest");
+            System.out.println("4. Esci");
+            System.out.print("Seleziona un'opzione (1, 2, 3 o 4): ");
             int mainOption = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -29,6 +32,9 @@ public class MainApplication {
                     manageTour(scanner, tourController);
                     break;
                 case 3:
+                    manageContest(scanner, contestController);
+                    break;
+                case 4:
                     exit = true;
                     System.out.println("Uscita dal programma...");
                     break;
@@ -45,6 +51,7 @@ public class MainApplication {
         scanner.close();
         poiController.close();
         tourController.close();
+        contestController.close();
         System.out.println("Programma terminato.");
     }
     
@@ -103,6 +110,40 @@ public class MainApplication {
                     break;
                 case 2:
                     tourController.displayAllTours();
+                    break;
+                case 3:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Opzione non valida.");
+                    break;
+            }
+            if (!back) {
+                System.out.println("\nPremi INVIO per continuare...");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    // Sotto-menu per la gestione dei Contest
+    private static void manageContest(Scanner scanner, ContestController contestController) {
+        //TODO
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n=== Menu Gestione Contest ===");
+            System.out.println("1. Crea Contest");
+            System.out.println("2. Visualizza tutti i Contest salvati");
+            System.out.println("3. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consuma il newline
+
+            switch (option) {
+                case 1:
+                    contestController.createContest();
+                    break;
+                case 2:
+                    contestController.displayAllContest();
                     break;
                 case 3:
                     back = true;
