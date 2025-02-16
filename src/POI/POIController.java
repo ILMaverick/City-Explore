@@ -16,8 +16,7 @@ public class POIController {
     public POIController() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
         scanner = new Scanner(System.in);
-        POIRepository repository = new InMemoryPOIRepository();
-        this.poiService = new POIService(repository);
+        this.poiService = new POIService();
     }
     
     public POIService getPOIService() {

@@ -4,7 +4,9 @@ import ELEMENT.AbstractElement;
 import POI.PointOfInterest;
 import USER.User;
 
-public class Evento extends AbstractElement {
+import java.time.LocalDateTime;
+
+public class Event extends AbstractElement {
 	private String scope;
 	private String activity;
 	private String organization;
@@ -12,11 +14,11 @@ public class Evento extends AbstractElement {
 	private String category;
 	private double price;
 	private PointOfInterest location;
-	private double orario;
+	private LocalDateTime time;
 	
-	public Evento(String name, String description, User author, String scope,
-			String activity, String organization, String theme, String category,
-			double price, PointOfInterest location, double orario) {
+	public Event(String name, String description, User author, String scope,
+				 String activity, String organization, String theme, String category,
+				 double price, PointOfInterest location, LocalDateTime time) {
 		super(name, description, author);
 		this.scope = scope;
 		this.activity = activity;
@@ -25,7 +27,7 @@ public class Evento extends AbstractElement {
 		this.category = category;
 		this.price = price;
 		this.location = location;
-		this.orario = orario;
+		this.time = time;
 		super.setPublished(true);
 	}
 	
@@ -35,15 +37,15 @@ public class Evento extends AbstractElement {
                 "\n  id='" + super.getId() + '\'' +
                 ",\n  name='" + super.getName() + '\'' +
                 ",\n  description='" + super.getDescription() + '\'' +
-                ",\n  scopo=" + scope +
+                ",\n  scope=" + scope +
                 ",\n  activity=" + activity +
                 ",\n  organization=" + organization +
-                ",\n  tema=" + theme +
-                ",\n  categoria=" + category +
+                ",\n  theme=" + theme +
+                ",\n  category=" + category +
                 ",\n  price=" + price +
-                ",\n  luogo=" + location.toString() +
+                ",\n  location=" + location.toString() +
                 ",\n  author=" + super.getAuthor() +
-                ",\n  orario=" + orario +
+                ",\n  time=" + time +
                 ",\n  published=" + super.isPublished() +
                 "\n}";
     }
@@ -52,8 +54,12 @@ public class Evento extends AbstractElement {
 		return location;
 	}
 
-	public double getOrario() {
-		return orario;
+	public LocalDateTime getTime() {
+		return time;
+	}
+
+	public void setTime(LocalDateTime time) {
+		this.time = time;
 	}
 
 	public String getScope() {

@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 import CONTENUTI.MultimediaContentController;
 import CONTEST.ContestController;
-import EVENTO.EventoController;
+import EVENTO.EventController;
 import POI.POIController;
 import TOUR.TourController;
 import VALIDAZIONE.ValidationController;
@@ -13,13 +13,11 @@ public class MainApplication {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         POIController poiController = new POIController();
-        TourController tourController = new TourController(poiController.getPOIService());
+        TourController tourController = new TourController();
         ContestController contestController = new ContestController();
-
-        EventoController eventoController = new EventoController(poiController.getPOIService());
-        MultimediaContentController multimediaContentController = new MultimediaContentController(poiController.getPOIService());
-        ValidationService validationService = new ValidationService(poiController.getPOIService(), tourController.getTourService(), multimediaContentController.getMultimediaContentService());
-        ValidationController validationController = new ValidationController(validationService);
+        EventController eventController = new EventController();
+        MultimediaContentController multimediaContentController = new MultimediaContentController();
+        ValidationController validationController = new ValidationController();
 
         boolean exit = false;
         while (!exit) {
@@ -46,7 +44,7 @@ public class MainApplication {
                     manageContest(scanner, contestController);
                     break;
                 case 4:
-                    manageEvento(scanner, eventoController);
+                    manageEvent(scanner, eventController);
                     break;
                 case 5:
                     manageMultimediaContent(scanner, multimediaContentController);
@@ -180,7 +178,7 @@ public class MainApplication {
     }
     
  // Sotto-menu per la gestione degli Eventi
-    private static void manageEvento(Scanner scanner, EventoController eventoController) {
+    private static void manageEvent(Scanner scanner, EventController eventController) {
         boolean back = false;
         while (!back) {
             System.out.println("\n=== Menu Gestione Evento ===");
@@ -193,10 +191,10 @@ public class MainApplication {
             
             switch (option) {
                 case 1:
-                    eventoController.createEventoFromInput();
+                    eventController.createEventFromInput();
                     break;
                 case 2:
-                    eventoController.displayAllEventi();
+                    eventController.displayAllEvents();
                     break;
                 case 3:
                     back = true;
@@ -212,7 +210,7 @@ public class MainApplication {
         }
     }
 
-    //Menù Gestione Contenuti Multimediali
+    //Sotto-menu Gestione Contenuti Multimediali
     private static void manageMultimediaContent(Scanner scanner, MultimediaContentController multimediaContentController) {
         boolean back = false;
         while (!back) {

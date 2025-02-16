@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import POI.InMemoryPOIRepository;
 import POI.POIRepository;
 import POI.PointOfInterest;
 import USER.User;
 
 public class TourService {
 	 private TourRepository tourRepository;
-
-	    public TourService(TourRepository tourRepository) {
-	        this.tourRepository = tourRepository;
+     private POIRepository poiRepository;
+     public TourService() {
+	        this.tourRepository = new InMemoryTourRepository();
+            this.poiRepository = new InMemoryPOIRepository();
 	    }
     
     /**

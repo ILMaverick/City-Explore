@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import POI.InMemoryPOIRepository;
+import POI.POIRepository;
 import POI.POIService;
 import POI.PointOfInterest;
 import USER.User;
 
 public class TourController {
     private Scanner scanner;
-    private POIService poiService;
     private TourService tourService;
-    
-    public TourController(POIService poiService) {
+
+    private POIService poiService;
+    public TourController() {
         scanner = new Scanner(System.in);
-        this.poiService = poiService;
-        TourRepository repository = new InMemoryTourRepository();
-        this.tourService = new TourService(repository);
+        this.tourService = new TourService();
     }
 
     public TourService getTourService() {

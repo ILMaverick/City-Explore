@@ -1,7 +1,10 @@
 package VALIDAZIONE;
 
+import CONTENUTI.InMemoryMultimediaContent;
 import CONTENUTI.MultimediaContent;
+import POI.InMemoryPOIRepository;
 import POI.PointOfInterest;
+import TOUR.InMemoryTourRepository;
 import TOUR.Tour;
 import USER.User;
 
@@ -14,10 +17,10 @@ public class ValidationController {
     private Scanner scanner;
     private ValidationService validationService;
 
-    public ValidationController(ValidationService validationService) {
+    public ValidationController() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
         scanner = new Scanner(System.in);
-        this.validationService = validationService;
+        this.validationService = new ValidationService(new InMemoryPOIRepository(), new InMemoryTourRepository(), new InMemoryMultimediaContent());
     }
     /**
     public void sendPOIForValidation(PointOfInterest poi) {

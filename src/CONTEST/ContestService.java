@@ -8,8 +8,8 @@ import java.util.List;
 public class ContestService {
     private ContestRepository contestRepository;
 
-    public ContestService(ContestRepository contestRepository) {
-        this.contestRepository = contestRepository;
+    public ContestService() {
+        this.contestRepository = new InMemoryContestRepository();
     }
 
     public Contest createContest(String name, String description, User author, String rules, String goal, String prize, LocalDate deadline) {

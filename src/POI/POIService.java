@@ -8,8 +8,8 @@ import USER.User;
 public class POIService {
     private POIRepository poiRepository;
 
-    public POIService(POIRepository poiRepository) {
-        this.poiRepository = poiRepository;
+    public POIService() {
+        this.poiRepository = new InMemoryPOIRepository();
     }
     
     public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
@@ -22,10 +22,6 @@ public class POIService {
         PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
         poiRepository.save(poi);
         return poi;
-    }
-
-    public void savePOI(PointOfInterest poi) {
-        poiRepository.save(poi);
     }
 
     public List<PointOfInterest> getAllPOIs() {

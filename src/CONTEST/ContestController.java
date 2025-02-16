@@ -14,8 +14,7 @@ public class ContestController {
 
     public ContestController() {
         scanner = new Scanner(System.in);
-        ContestRepository repository = new InMemoryContestRepository();
-        this.contestService = new ContestService(repository);
+        this.contestService = new ContestService();
     }
 
     public void createContest() {
