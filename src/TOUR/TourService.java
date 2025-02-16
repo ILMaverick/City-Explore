@@ -57,17 +57,15 @@ public class TourService {
         System.out.print("Inserisci la descrizione del Tour: ");
         String tourDescription = scanner.nextLine();
         
-        // Usa il builder per costruire il Tour
-        Tour tour = new TourBuilder()
-                        .withName(tourName)
-                        .withDescription(tourDescription)
-                        .withAuthor(author)
-                        .build();
-        // Aggiungi i percorsi al Tour (puoi anche aggiungerli uno ad uno)
-        for (Percorso p : percorsi) {
-            // Supponendo che il builder non gestisca i percorsi, li settiamo direttamente sul tour
-            tour.getPercorsi().add(p);
-        }
+        TourBuilder builder = new TourBuilder();
+        
+        builder.withName(tourName);
+        builder.withDescription(tourDescription);
+        builder.withAuthor(author);
+        builder.addPercorso(percorsi);
+        
+        Tour tour = builder.build();
+        
         saveTour(tour);
         // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
         return tour;

@@ -59,8 +59,7 @@ public class POIController {
         
         // Crea il PointOfInterest utilizzando la factory
         PointOfInterest newPoi = poiService.createPOIFromScratch(name, description, lat, lon, currentUser, poiType );
-        
-        
+        poiService.savePOI(newPoi);
         System.out.println("\nPointOfInterest creato da zero:");
         System.out.println(newPoi);
     }

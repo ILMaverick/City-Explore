@@ -20,7 +20,6 @@ public class POIService {
     
     public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
-        poiRepository.save(poi);
         return poi;
     }
 
@@ -35,4 +34,5 @@ public class POIService {
     public PointOfInterest getPOIById(String id) {
         return poiRepository.findById(id);
     }
+    
 }

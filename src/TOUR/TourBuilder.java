@@ -1,6 +1,5 @@
 package TOUR;
 
-import java.util.ArrayList;
 import java.util.List;
 import USER.User;
 
@@ -8,31 +7,27 @@ public class TourBuilder {
 	 private String name;
 	    private String description;
 	    private User author;
-	    private List<Percorso> percorsi = new ArrayList<>();
+	    private List<Percorso> percorsi;
 	    
-	 public TourBuilder withName(String name) {
+	 public void withName(String name) {
 	        this.name = name;
-	        return this;
+	        
 	    }
 
-	    public TourBuilder withDescription(String description) {
+	    public void withDescription(String description) {
 	        this.description = description;
-	        return this;
 	    }
 
-	    public TourBuilder withAuthor(User author) {
-	        this.author = author;
-	        return this;
+	    public void withAuthor(User author) {
+	        this.author = author;    
 	    }
 
-	    public TourBuilder addPercorso(Percorso percorso) {
-	        this.percorsi.add(percorso);
-	        return this;
+	    public void addPercorso(List<Percorso> percorsi) {
+	        this.percorsi = percorsi;
 	    }
 
 	    public Tour build() {
-	        Tour tour = new Tour(name, description, author);
-	        tour.setPercorsi(percorsi);
+	        Tour tour = new Tour(name, description, author, percorsi);
 	        return tour;
 	    }
 	}

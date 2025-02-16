@@ -1,6 +1,6 @@
 package TOUR;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import INTERFACES.AbstractElement;
@@ -9,18 +9,15 @@ import USER.User;
 public class Tour extends AbstractElement {
 	private List<Percorso> percorsi;
 
-	public Tour(String name, String description, User author) {
+	public Tour(String name, String description, User author, List<Percorso> percorsi) {
 		super(name, description, author);
-		this.percorsi = new ArrayList<>();
+		this.percorsi = percorsi;
 	}
 
 	public List<Percorso> getPercorsi() {
 		return percorsi;
 	}
 
-	public void setPercorsi(List<Percorso> percorsi) {
-		this.percorsi = percorsi;
-	}
 	
 	@Override
 	public String toString() {
