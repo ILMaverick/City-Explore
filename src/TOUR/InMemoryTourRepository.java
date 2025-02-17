@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTourRepository implements TourRepository{
-	private List<Tour> storage = new ArrayList<Tour>();
+	private List<Tour> storage = new ArrayList<>();
 
     @Override
     public void save(Tour tour) {

@@ -1,13 +1,11 @@
 package CONTEST;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class InMemoryContestRepository implements ContestRepository {
 
-    private List<Contest> storage = new ArrayList<Contest>();
+    private final List<Contest> storage = new ArrayList<>();
 
     @Override
     public void save(Contest contest) {

@@ -2,7 +2,6 @@ package CONTENUTI;
 
 import POI.InMemoryPOIRepository;
 import POI.POIRepository;
-import POI.POIType;
 import POI.PointOfInterest;
 import USER.User;
 
@@ -113,8 +112,6 @@ public class MultimediaContentService {
 
         System.out.print("Inserisci l'ID del Contenuto: ");
         int idMC = scanner.nextInt();
-
-        System.out.print("======");
 
         PointOfInterest poi = loadMultimediaContentToPOI(idPOI, idMC);
 

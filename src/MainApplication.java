@@ -82,6 +82,7 @@ public class MainApplication {
     private static void initializer(POIController poiController, MultimediaContentController multimediaContentController) {
         poiController.initializer();
         multimediaContentController.initializer();
+        System.out.println("Inizializzazione avvenuta con successo.");
     }
 
 
@@ -194,10 +195,12 @@ public class MainApplication {
         boolean back = false;
         while (!back) {
             System.out.println("\n=== Menu Gestione Evento ===");
-            System.out.println("1. Crea Evento da POI");
-            System.out.println("2. Visualizza tutti gli Eventi salvati");
-            System.out.println("3. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            System.out.println("1. Crea Evento");
+            System.out.println("2. Aggiungi Evento a POI");
+            System.out.println("3. Aggiorna Evento");
+            System.out.println("4. Visualizza tutti gli Eventi salvati");
+            System.out.println("5. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4 o 5): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -206,9 +209,15 @@ public class MainApplication {
                     eventController.createEventFromInput();
                     break;
                 case 2:
-                    eventController.displayAllEvents();
+                    eventController.addEventToPOI();
                     break;
                 case 3:
+                    eventController.updateEvent();
+                    break;
+                case 4:
+                    eventController.displayAllEvents();
+                    break;
+                case 5:
                     back = true;
                     break;
                 default:

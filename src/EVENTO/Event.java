@@ -18,7 +18,7 @@ public class Event extends AbstractElement {
 	
 	public Event(String name, String description, User author, String scope,
 				 String activity, String organization, String theme, String category,
-				 double price, PointOfInterest location, LocalDateTime time) {
+				 double price, LocalDateTime time) {
 		super(name, description, author);
 		this.scope = scope;
 		this.activity = activity;
@@ -26,7 +26,6 @@ public class Event extends AbstractElement {
 		this.theme = theme;
 		this.category = category;
 		this.price = price;
-		this.location = location;
 		this.time = time;
 		super.setPublished(true);
 	}
@@ -53,6 +52,7 @@ public class Event extends AbstractElement {
 	public PointOfInterest getLocation() {
 		return location;
 	}
+	public void setLocation(PointOfInterest location) { this.location = location; }
 
 	public LocalDateTime getTime() {
 		return time;

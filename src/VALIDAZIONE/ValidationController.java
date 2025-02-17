@@ -6,20 +6,14 @@ import POI.InMemoryPOIRepository;
 import POI.PointOfInterest;
 import TOUR.InMemoryTourRepository;
 import TOUR.Tour;
-import USER.User;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class ValidationController {
 
-    // Scanner condiviso per l'input da riga di comando.
-    private Scanner scanner;
     private ValidationService validationService;
 
     public ValidationController() {
-        // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
-        scanner = new Scanner(System.in);
         this.validationService = new ValidationService(new InMemoryPOIRepository(), new InMemoryTourRepository(), new InMemoryMultimediaContent());
     }
     /**
@@ -62,42 +56,7 @@ public class ValidationController {
      */
 
     public void validation() {
-        System.out.println("=== Validazione Punti di Interesse ===");
-        System.out.println("Seleziona 1 per approvare o 2 per rifiutare: ");
-
-        List<PointOfInterest> pointOfInterestList = validationService.getAllPendingPOI();
-        for(PointOfInterest p: pointOfInterestList) {
-            if(scanner.nextLine().equals("1")) {
-                validationService.approvePOI(p);
-            } else if(scanner.nextLine().equals("2")) {
-                String reason = scanner.nextLine();
-                validationService.rejectPOI(p, reason);
-            }
-        }
-
-        System.out.println("=== Validazione Itinerari ===");
-        List<Tour> tourList = validationService.getAllPendingTour();
-        for(Tour t: tourList) {
-            if(scanner.nextLine().equals("1")) {
-                validationService.approveTour(t);
-            } else if(scanner.nextLine().equals("2")) {
-                String reason = scanner.nextLine();
-                validationService.rejectTour(t, reason);
-            }
-        }
-
-        System.out.println("=== Validazione Contenuti Multimediali ===");
-        List<MultimediaContent> multimediaContentList = validationService.getAllPendingMultimediaContent();
-        for(MultimediaContent mc: multimediaContentList) {
-            if(scanner.nextLine().equals("1")) {
-                validationService.approveMultimediaContent(mc);
-            } else if(scanner.nextLine().equals("2")) {
-                String reason = scanner.nextLine();
-                validationService.rejectMultimediaContent(mc, reason);
-            }
-        }
-
-        System.out.println("\nValidazioni effettuate con successo:");
+        validationService.validation();
     }
 
 
@@ -137,16 +96,7 @@ public class ValidationController {
         }
     }
 
-    private User getCurrentUser() {
-        User user = new User();
-        user.setUsername("utente_demo");
-        return user;
-    }
-
-    // Se necessario, aggiungi un metodo per chiudere lo scanner quando il controller non serve più.
     public void close() {
-        if (scanner != null) {
-            scanner.close();
-        }
+        validationService.close();
     }
 }

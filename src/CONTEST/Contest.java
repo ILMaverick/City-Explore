@@ -58,14 +58,14 @@ public class Contest extends AbstractElement {
     public String toString() {
         return "Contest{" +
                 "id='" + super.getId() + "\'" +
-                ", name='" + super.getName() + "\'" +
-                ", description='" + super.getDescription() + "\'" +
-                ", author='" + super.getAuthor() + "\'" +
-                ", rules='" + rules + '\'' +
-                ", goal='" + goal + '\'' +
-                ", prize='" + prize + '\'' +
-                ", participationContestList='" + participationContestList + '\'' +
-                ", deadline='" + deadline +
-                '}';
+                "\n, name='" + super.getName() + "\'" +
+                "\n, description='" + super.getDescription() + "\'" +
+                "\n, author='" + super.getAuthor() + "\'" +
+                "\n, rules='" + rules + '\'' +
+                "\n, goal='" + goal + '\'' +
+                "\n, prize='" + prize + '\'' +
+                "\n, participationContestList='" + participationContestList + '\'' +
+                "\n, deadline='" + deadline +
+                "\n}";
     }
 }

@@ -1,12 +1,10 @@
 package EVENTO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class InMemoryEventRepository implements EventRepository{
-	 private final List<Event> storage = new ArrayList<Event>();
+	 private final List<Event> storage = new ArrayList<>();
 
 	    @Override
 	    public void save(Event event) {

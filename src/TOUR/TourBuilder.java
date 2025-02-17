@@ -8,7 +8,7 @@ public class TourBuilder {
 	 private String name;
 	    private String description;
 	    private User author;
-	    private List<Percorso> percorsi = new ArrayList<>();
+	    private List<Way> percorsi = new ArrayList<>();
 	    
 	 public TourBuilder withName(String name) {
 	        this.name = name;
@@ -25,14 +25,14 @@ public class TourBuilder {
 	        return this;
 	    }
 
-	    public TourBuilder addPercorso(Percorso percorso) {
-	        this.percorsi.add(percorso);
+	    public TourBuilder addPercorso(Way way) {
+	        this.percorsi.add(way);
 	        return this;
 	    }
 
 	    public Tour build() {
 	        Tour tour = new Tour(name, description, author);
-	        tour.setPercorsi(percorsi);
+	        tour.setWayList(percorsi);
 	        return tour;
 	    }
 	}

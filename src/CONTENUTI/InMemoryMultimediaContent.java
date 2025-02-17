@@ -1,14 +1,10 @@
 package CONTENUTI;
 
-import POI.PointOfInterest;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class InMemoryMultimediaContent implements MultimediaContentRepository{
-    private List<MultimediaContent> storage = new ArrayList<MultimediaContent>();
+    private final List<MultimediaContent> storage = new ArrayList<>();
 
     @Override
     public void save(MultimediaContent multimediaContent) {

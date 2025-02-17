@@ -6,6 +6,7 @@ import java.util.List;
 
 import CONTENUTI.MultimediaContent;
 import ELEMENT.AbstractElement;
+import EVENTO.Event;
 import USER.User;
 
 public class PointOfInterest extends AbstractElement{
@@ -15,6 +16,7 @@ public class PointOfInterest extends AbstractElement{
 	private Date close_time;
 	private POIType type;
 	private final List<MultimediaContent> multimediaContentList;
+	public Event event;
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
 		super(name, description, author);
@@ -39,6 +41,7 @@ public class PointOfInterest extends AbstractElement{
 				",\n  author=" + super.getAuthor() +
 				",\n  type=" + type +
 				",\n  multimediaContent=" + multimediaContentList +
+				",\n  event=" + event +
 				",\n  published=" + super.isPublished() +
 				"\n}";
 	}
@@ -81,4 +84,12 @@ public class PointOfInterest extends AbstractElement{
 	    }
 
 	public List<MultimediaContent> getMultimediaContentList() { return multimediaContentList; }
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 }

@@ -10,12 +10,71 @@ import POI.PointOfInterest;
 import USER.User;
 
 public class TourService {
+    private Scanner scanner;
 	 private TourRepository tourRepository;
      private POIRepository poiRepository;
      public TourService() {
+            scanner = new Scanner(System.in);
 	        this.tourRepository = new InMemoryTourRepository();
             this.poiRepository = new InMemoryPOIRepository();
-	    }
+     }
+
+
+    /**
+     * Crea un Tour a partire da una lista di POI.
+     * L'utente seleziona i POI da includere e inserisce le informazioni aggiuntive per la creazione dei percorsi.
+     * Il Tour viene poi costruito tramite il TourService (che usa il TourBuilder) e salvato.
+     */
+    public void createTourFromPOIs() {
+        System.out.println("=== Creazione di un Tour a partire da POI ===");
+
+        // Recupera la lista dei POI già salvati
+        List<PointOfInterest> poiList = poiRepository.findAll();
+        if (poiList == null || poiList.isEmpty()) {
+            System.out.println("Nessun POI disponibile per creare un Tour.");
+            return;
+        }
+
+        // Visualizza la lista dei POI con indice
+        System.out.println("Elenco dei POI disponibili:");
+        for (int i = 0; i < poiList.size(); i++) {
+            System.out.println((i + 1) + ". " + poiList.get(i));
+        }
+
+        // L'utente seleziona i POI da includere, separati da virgola (es. "1,3,5")
+        System.out.print("Seleziona i POI da includere nel Tour (inserisci i numeri separati da virgola): ");
+        String input = scanner.nextLine();
+        String[] tokens = input.split(",");
+        List<PointOfInterest> selectedPOIs = new ArrayList<>();
+        for (String token : tokens) {
+            try {
+                int index = Integer.parseInt(token.trim());
+                if (index >= 1 && index <= poiList.size()) {
+                    selectedPOIs.add(poiList.get(index - 1));
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Input non valido: " + token);
+            }
+        }
+
+        if (selectedPOIs.isEmpty()) {
+            System.out.println("Nessun POI selezionato.");
+            return;
+        }
+
+        // Recupera l'utente corrente (dummy)
+        User currentUser = getCurrentUser();
+
+        // Costruisce il Tour a partire dai POI selezionati.
+        // Il metodo buildTourFromPOIs chiederà all'utente informazioni aggiuntive per la creazione dei percorsi.
+        Tour tour = buildTourFromPOIs(selectedPOIs, currentUser);
+
+        // Salva il Tour
+        saveTour(tour);
+
+        System.out.println("\nTour creato e salvato con successo:");
+        System.out.println(tour);
+    }
     
     /**
      * Metodo interattivo per costruire un Tour a partire da una lista di PointOfInterest.
@@ -33,7 +92,7 @@ public class TourService {
         List<List<Tappa>> gruppiTappe = groupTappe(tappe);
         
         Scanner scanner = new Scanner(System.in);
-        List<Percorso> percorsi = new ArrayList<>();
+        List<Way> percorsi = new ArrayList<>();
         
         // 3. Per ogni gruppo, chiedi i dettagli e crea il Percorso
         for (List<Tappa> gruppo : gruppiTappe) {
@@ -47,10 +106,10 @@ public class TourService {
             double durata = Double.parseDouble(scanner.nextLine());
             System.out.print("Inserisci la difficoltà del percorso (facile, medio, difficile): ");
             String diff = scanner.nextLine().trim();
-            PercorsoType percorsoType = PercorsoType.fromString(diff);
+            WayDifficultyType wayDifficultyType = WayDifficultyType.fromString(diff);
             
-            Percorso percorso = new Percorso(lunghezza, durata, percorsoType, gruppo);
-            percorsi.add(percorso);
+            Way way = new Way(lunghezza, durata, wayDifficultyType, gruppo);
+            percorsi.add(way);
         }
         
         // 4. Raccogli nome e descrizione del Tour
@@ -66,9 +125,9 @@ public class TourService {
                         .withAuthor(author)
                         .build();
         // Aggiungi i percorsi al Tour (puoi anche aggiungerli uno ad uno)
-        for (Percorso p : percorsi) {
+        for (Way p : percorsi) {
             // Supponendo che il builder non gestisca i percorsi, li settiamo direttamente sul tour
-            tour.getPercorsi().add(p);
+            tour.getWayList().add(p);
         }
         saveTour(tour);
         // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
@@ -109,5 +168,18 @@ public class TourService {
 
     public Tour getTourById(int id) {
         return tourRepository.findById(id);
+    }
+
+    // Metodo dummy per ottenere l'utente attuale (da sostituire con logica reale)
+    private User getCurrentUser() {
+        User user = new User();
+        user.setUsername("utente_demo");
+        return user;
+    }
+
+    public void close() {
+        if (scanner != null) {
+            scanner.close();
+        }
     }
 }

@@ -1,12 +1,12 @@
 package TOUR;
 
-public enum PercorsoType {
+public enum WayDifficultyType {
 	Facile,
 	Intermedio,
 	Difficile,
 	Altro;
 
-	public static PercorsoType fromString(String difficulty) {
+	public static WayDifficultyType fromString(String difficulty) {
         if (difficulty == null) {
             return Altro;
         }
