@@ -1,7 +1,10 @@
 package VALIDAZIONE;
 
+import CONTENUTI.InMemoryMultimediaContent;
 import CONTENUTI.MultimediaContent;
+import POI.InMemoryPOIRepository;
 import POI.PointOfInterest;
+import TOUR.InMemoryTourRepository;
 import TOUR.Tour;
 
 import java.util.List;
@@ -10,8 +13,8 @@ public class ValidationController {
 
     private ValidationService validationService;
 
-    public ValidationController() {
-        this.validationService = new ValidationService();
+    public ValidationController(ValidationService validationService) {
+        this.validationService = validationService;
     }
     /**
     public void sendPOIForValidation(PointOfInterest poi) {

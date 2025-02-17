@@ -11,8 +11,8 @@ public class POIController {
 
     private POIService poiService;
 
-    public POIController() {
-        this.poiService = new POIService();
+    public POIController(POIService poiService) {
+        this.poiService = poiService;
     }
 
     public void createPOIFromScratch() {

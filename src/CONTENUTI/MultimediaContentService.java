@@ -1,7 +1,6 @@
 package CONTENUTI;
 
-import POI.InMemoryPOIRepository;
-import POI.POIService;
+import POI.POIRepository;
 import POI.PointOfInterest;
 import USER.User;
 
@@ -11,13 +10,13 @@ import java.util.Scanner;
 
 public class MultimediaContentService {
     private MultimediaContentRepository multimediaContentRepository;
-    private POIService poiService;
+    private POIRepository poiRepository;
     private Scanner scanner;
 
-    public MultimediaContentService() {
+    public MultimediaContentService(MultimediaContentRepository multimediaContentRepository, POIRepository poiRepository) {
         scanner = new Scanner(System.in);
-        this.multimediaContentRepository = new InMemoryMultimediaContent();
-        this.poiService = new POIService();
+        this.multimediaContentRepository = multimediaContentRepository;
+        this.poiRepository = poiRepository;
     }
 
     public void initializer() {
@@ -63,13 +62,13 @@ public class MultimediaContentService {
 
     public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
 
-        PointOfInterest poi = poiService.getPOIById(idPOI);
+        PointOfInterest poi = poiRepository.findById(idPOI);
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
 
         multimediaContent.setPointOfInterest(poi);
         save(multimediaContent);
         poi.getMultimediaContentList().add(multimediaContent);
-        poiService.save(poi);
+        poiRepository.save(poi);
         return poi;
     }
 

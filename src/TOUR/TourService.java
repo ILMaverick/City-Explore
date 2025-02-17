@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import POI.InMemoryPOIRepository;
+import POI.POIRepository;
 import POI.POIService;
 import POI.PointOfInterest;
 import USER.User;
@@ -12,11 +13,11 @@ import USER.User;
 public class TourService {
     private Scanner scanner;
 	 private TourRepository tourRepository;
-     private POIService poiService;
-     public TourService() {
+     private POIRepository poiRepository;
+     public TourService(TourRepository tourRepository, POIRepository poiRepository) {
             scanner = new Scanner(System.in);
-	        this.tourRepository = new InMemoryTourRepository();
-            this.poiService = new POIService();
+	        this.tourRepository = tourRepository;
+            this.poiRepository = poiRepository;
      }
 
 
@@ -29,7 +30,7 @@ public class TourService {
         System.out.println("=== Creazione di un Tour a partire da POI ===");
 
         // Recupera la lista dei POI già salvati
-        List<PointOfInterest> poiList = poiService.getAllPOIs();
+        List<PointOfInterest> poiList = poiRepository.findAll();
         if (poiList == null || poiList.isEmpty()) {
             System.out.println("Nessun POI disponibile per creare un Tour.");
             return;

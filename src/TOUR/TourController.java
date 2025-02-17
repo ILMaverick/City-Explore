@@ -5,8 +5,8 @@ import java.util.List;
 public class TourController {
     private TourService tourService;
 
-    public TourController() {
-        this.tourService = new TourService();
+    public TourController(TourService tourService) {
+        this.tourService = tourService;
     }
 
     public void createTourFromPOIs() {

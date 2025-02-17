@@ -1,22 +1,40 @@
 import java.util.Scanner;
 
+import CONTENUTI.InMemoryMultimediaContent;
 import CONTENUTI.MultimediaContentController;
+import CONTENUTI.MultimediaContentRepository;
+import CONTENUTI.MultimediaContentService;
 import CONTEST.ContestController;
 import EVENTO.EventController;
+import EVENTO.EventRepository;
+import EVENTO.EventService;
+import EVENTO.InMemoryEventRepository;
+import POI.InMemoryPOIRepository;
 import POI.POIController;
+import POI.POIRepository;
+import POI.POIService;
+import TOUR.InMemoryTourRepository;
 import TOUR.TourController;
+import TOUR.TourRepository;
+import TOUR.TourService;
 import VALIDAZIONE.ValidationController;
+import VALIDAZIONE.ValidationService;
 
 
 public class MainApplication {
     public static void main(String[] args) {
+        POIRepository poiRepository = new InMemoryPOIRepository();
+        TourRepository tourRepository = new InMemoryTourRepository();
+        EventRepository eventRepository = new InMemoryEventRepository();
+        MultimediaContentRepository multimediaContentRepository = new InMemoryMultimediaContent();
+
         Scanner scanner = new Scanner(System.in);
-        POIController poiController = new POIController();
-        TourController tourController = new TourController();
+        POIController poiController = new POIController(new POIService(poiRepository));
+        TourController tourController = new TourController(new TourService(tourRepository, poiRepository));
         ContestController contestController = new ContestController();
-        EventController eventController = new EventController();
-        MultimediaContentController multimediaContentController = new MultimediaContentController();
-        ValidationController validationController = new ValidationController();
+        EventController eventController = new EventController(new EventService(eventRepository, poiRepository));
+        MultimediaContentController multimediaContentController = new MultimediaContentController(new MultimediaContentService(multimediaContentRepository, poiRepository));
+        ValidationController validationController = new ValidationController(new ValidationService(poiRepository, tourRepository, multimediaContentRepository));
 
         boolean exit = false;
         while (!exit) {
@@ -202,8 +220,9 @@ public class MainApplication {
             System.out.println("2. Aggiungi Evento a POI");
             System.out.println("3. Aggiorna Evento");
             System.out.println("4. Visualizza tutti gli Eventi salvati");
-            System.out.println("5. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2, 3, 4 o 5): ");
+            System.out.println("5. Visualizza tutti i POI salvati");
+            System.out.println("6. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5 o 6): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -221,6 +240,9 @@ public class MainApplication {
                     eventController.displayAllEvents();
                     break;
                 case 5:
+                    eventController.displayAllPoI();
+                    break;
+                case 6:
                     back = true;
                     break;
                 default:

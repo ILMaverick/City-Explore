@@ -10,10 +10,8 @@ public class InMemoryPOIRepository implements POIRepository {
 
     @Override
     public void save(PointOfInterest poi) {
-        if (poi != null) {
-            poi.setId(storage.size());
-            storage.add(poi);
-        }
+        poi.setId(storage.size());
+        storage.add(poi);
     }
     @Override
     public PointOfInterest findById(int id) {

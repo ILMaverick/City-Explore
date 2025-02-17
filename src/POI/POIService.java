@@ -3,6 +3,7 @@ package POI;
 import java.util.List;
 import java.util.Scanner;
 
+import EVENTO.Event;
 import OSM.OSMSearchService;
 import OSM.OverpassElement;
 import USER.User;
@@ -12,10 +13,10 @@ public class POIService {
     private Scanner scanner;
     private POIRepository poiRepository;
 
-    public POIService() {
+    public POIService(POIRepository poiRepository) {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
         scanner = new Scanner(System.in);
-        this.poiRepository = new InMemoryPOIRepository();
+        this.poiRepository = poiRepository;
     }
 
     //Inizializza dei Punti di Interesse
@@ -23,20 +24,20 @@ public class POIService {
         User user = new User();
         user.setUsername("SilverSimon");
 
-        createPOIFromScratch("nome", "descrizione", 1, 1, user, POIType.Turismo);
+        createPOIFromScratch("primo", "primo", 1, 1, user, POIType.Turismo);
         createPOIFromScratch("secondo", "secondo", 2, 2, user, POIType.Alloggio);
         createPOIFromScratch("terzo", "terzo", 3, 3, user, POIType.Natura);
     }
-    
+
     public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
-        save(poi);
+        poiRepository.save(poi);
         return poi;
     }
     
     public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
-        save(poi);
+        poiRepository.save(poi);
         return poi;
     }
 
@@ -146,7 +147,7 @@ public class POIService {
     }
 
     public void save(PointOfInterest pointOfInterest) {
-        poiRepository.save(pointOfInterest.getId(), pointOfInterest);
+        poiRepository.save(pointOfInterest);
     }
 
         // Metodo dummy per ottenere l'utente attuale

@@ -33,9 +33,9 @@ public class Event extends AbstractElement {
 	@Override
     public String toString() {
         return "Evento {" +
-                "\n  id='" + super.getId() + '\'' +
-                ",\n  name='" + super.getName() + '\'' +
-                ",\n  description='" + super.getDescription() + '\'' +
+                "\n  id='" + super.getId() +
+                ",\n  name='" + super.getName() +
+                ",\n  description='" + super.getDescription() +
                 ",\n  scope=" + scope +
                 ",\n  activity=" + activity +
                 ",\n  organization=" + organization +

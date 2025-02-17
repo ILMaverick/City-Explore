@@ -6,8 +6,8 @@ public class MultimediaContentController {
 
     private MultimediaContentService multimediaContentService;
 
-    public MultimediaContentController() {
-        this.multimediaContentService = new MultimediaContentService();
+    public MultimediaContentController(MultimediaContentService multimediaContentService) {
+        this.multimediaContentService = multimediaContentService;
     }
     public void initializer() {
         multimediaContentService.initializer();

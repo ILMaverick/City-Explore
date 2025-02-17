@@ -31,14 +31,14 @@ public class PointOfInterest extends AbstractElement{
 	@Override
 	public String toString() {
 		return "PointOfInterest {" +
-				"\n  id='" + super.getId() + '\'' +
-				",\n  name='" + super.getName() + '\'' +
-				",\n  description='" + super.getDescription() + '\'' +
+				"\n  id='" + super.getId() +
+				",\n  name='" + super.getName() +
+				",\n  description='" + super.getDescription() +
 				",\n  latitude=" + latitude +
 				",\n  longitude=" + longitude +
 				",\n  open_time=" + open_time +
 				",\n  close_time=" + close_time +
-				",\n  author=" + super.getAuthor() +
+    			",\n  author=" + super.getAuthor() +
 				",\n  type=" + type +
 				",\n  multimediaContent=" + multimediaContentList +
 				",\n  event=" + event +

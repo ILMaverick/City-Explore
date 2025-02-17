@@ -1,6 +1,6 @@
 package VISUAL_INTERFACE;
 
-public class Pagecontroller {
+public class PageController {
 
 	Page pointerPage = new MainPage();
 	

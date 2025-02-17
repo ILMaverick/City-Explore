@@ -4,20 +4,21 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import POI.POIService;
+
+import POI.POIRepository;
 import POI.PointOfInterest;
 import USER.User;
 
 public class EventService {
     private Scanner scanner;
     private EventRepository eventRepository;
-    private POIService poiService;
+    private POIRepository poiRepository;
 
-    public EventService() {
+    public EventService(EventRepository eventRepository, POIRepository poiRepository) {
         // Inizializza lo scanner (non lo chiudiamo subito, per evitare di chiudere System.in)
         scanner = new Scanner(System.in);
-        this.eventRepository = new InMemoryEventRepository();
-        this.poiService = new POIService();
+        this.eventRepository = eventRepository;
+        this.poiRepository = poiRepository;
     }
 
     public void initializer() {
@@ -28,6 +29,7 @@ public class EventService {
 
         createEvent("nome", "descrizione", user, "Raccolta fondi", "Gioco libero",
                 "SilverSimonCorp", "Fantasy", "Giochi in presenza", 0.0, time);
+
     }
     
     /**
@@ -47,13 +49,17 @@ public class EventService {
      */
 
     public PointOfInterest addEventToPOI(int idPOI, int idEvent) {
-        PointOfInterest poi = poiService.getPOIById(idPOI);
+        PointOfInterest poi = poiRepository.findById(idPOI);
         Event event = eventRepository.findById(idEvent);
-
-        event.setLocation(poi);
-        eventRepository.save(event);
-        poi.setEvent(event);
-        poiService.save(poi);
+        if (poi != null) {
+            System.out.println("Punto di interesse trovato: ");
+            event.setLocation(poi);
+            eventRepository.save(event);
+            poi.setEvent(event);
+            poiRepository.save(poi);
+        } else {
+            System.out.println("Punto di interesse non trovato.");
+        }
         return poi;
     }
 
@@ -120,7 +126,7 @@ public class EventService {
         PointOfInterest poi = addEventToPOI(idPOI, idEvent);
 
         System.out.println("Evento aggiunto al Punto di Interesse: ");
-        System.out.println(poi);
+        //System.out.print(poi);
     }
 
     public void updateEvent() {
@@ -225,6 +231,13 @@ public class EventService {
         if (scanner != null) {
             scanner.close();
         }
+    }
+
+    /**
+     * Restituisce tutti i poi.
+     */
+    public List<PointOfInterest> getAllPoiFromEventRepository() {
+        return poiRepository.findAll();
     }
 }
 
