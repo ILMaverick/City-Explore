@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Scanner;
 
 import POI.InMemoryPOIRepository;
-import POI.POIRepository;
+import POI.POIService;
 import POI.PointOfInterest;
 import USER.User;
 
 public class TourService {
     private Scanner scanner;
 	 private TourRepository tourRepository;
-     private POIRepository poiRepository;
+     private POIService poiService;
      public TourService() {
             scanner = new Scanner(System.in);
 	        this.tourRepository = new InMemoryTourRepository();
-            this.poiRepository = new InMemoryPOIRepository();
+            this.poiService = new POIService();
      }
 
 
@@ -29,7 +29,7 @@ public class TourService {
         System.out.println("=== Creazione di un Tour a partire da POI ===");
 
         // Recupera la lista dei POI già salvati
-        List<PointOfInterest> poiList = poiRepository.findAll();
+        List<PointOfInterest> poiList = poiService.getAllPOIs();
         if (poiList == null || poiList.isEmpty()) {
             System.out.println("Nessun POI disponibile per creare un Tour.");
             return;
@@ -70,7 +70,7 @@ public class TourService {
         Tour tour = buildTourFromPOIs(selectedPOIs, currentUser);
 
         // Salva il Tour
-        saveTour(tour);
+        save(tour);
 
         System.out.println("\nTour creato e salvato con successo:");
         System.out.println(tour);
@@ -129,7 +129,7 @@ public class TourService {
             // Supponendo che il builder non gestisca i percorsi, li settiamo direttamente sul tour
             tour.getWayList().add(p);
         }
-        saveTour(tour);
+        save(tour);
         // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
         return tour;
     }
@@ -158,7 +158,7 @@ public class TourService {
         return gruppi;
     }
 
-    public void saveTour(Tour tour) {
+    public void save(Tour tour) {
         tourRepository.save(tour);
     }
 

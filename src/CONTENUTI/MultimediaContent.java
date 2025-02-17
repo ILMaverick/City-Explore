@@ -44,6 +44,7 @@ public class MultimediaContent {
                 ",\n  author=" + author +
                 ",\n  poi=" + pointOfInterest +
                 ",\n  published=" + published +
+                ",\n  elementStatus=" + status +
                 "\n}";
     }
 

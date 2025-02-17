@@ -9,6 +9,10 @@ public class ContestController {
         this.contestService = new ContestService();
     }
 
+    public void initializer() {
+        contestService.initializer();
+    }
+
     public void createContest() {
         contestService.createContest();
     }

@@ -4,23 +4,30 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import POI.InMemoryPOIRepository;
-import POI.POIRepository;
+import POI.POIService;
 import POI.PointOfInterest;
 import USER.User;
 
 public class EventService {
     private Scanner scanner;
-
     private EventRepository eventRepository;
-
-    private POIRepository poiRepository;
+    private POIService poiService;
 
     public EventService() {
         // Inizializza lo scanner (non lo chiudiamo subito, per evitare di chiudere System.in)
         scanner = new Scanner(System.in);
         this.eventRepository = new InMemoryEventRepository();
-        this.poiRepository = new InMemoryPOIRepository();
+        this.poiService = new POIService();
+    }
+
+    public void initializer() {
+        User user = new User();
+        user.setUsername("SilverSimon");
+
+        LocalDateTime time = LocalDateTime.of(2025,02,17, 15,48);
+
+        createEvent("nome", "descrizione", user, "Raccolta fondi", "Gioco libero",
+                "SilverSimonCorp", "Fantasy", "Giochi in presenza", 0.0, time);
     }
     
     /**
@@ -39,14 +46,14 @@ public class EventService {
      * Aggiungi un Evento a un Punto di Interesse
      */
 
-    public PointOfInterest addEventToPOI(int idPOI,int idEvent) {
-        PointOfInterest poi = poiRepository.findById(idPOI);
+    public PointOfInterest addEventToPOI(int idPOI, int idEvent) {
+        PointOfInterest poi = poiService.getPOIById(idPOI);
         Event event = eventRepository.findById(idEvent);
 
         event.setLocation(poi);
         eventRepository.save(event);
         poi.setEvent(event);
-        poiRepository.save(poi);
+        poiService.save(poi);
         return poi;
     }
 
@@ -124,7 +131,6 @@ public class EventService {
 
         Event selectedEvent = getEventById(idEvent);
         System.out.println(selectedEvent);
-
 
         System.out.print("Inserisci il nome dell'evento: ");
         String name = scanner.nextLine();

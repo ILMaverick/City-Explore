@@ -21,8 +21,6 @@ public class POIService {
     //Inizializza dei Punti di Interesse
     public void initializer() {
         User user = new User();
-        user.setName("Simone");
-        user.setSurname("Stacchiotti");
         user.setUsername("SilverSimon");
 
         createPOIFromScratch("nome", "descrizione", 1, 1, user, POIType.Turismo);
@@ -32,13 +30,13 @@ public class POIService {
     
     public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
-        poiRepository.save(poi);
+        save(poi);
         return poi;
     }
     
     public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
-        poiRepository.save(poi);
+        save(poi);
         return poi;
     }
 
@@ -147,7 +145,11 @@ public class POIService {
         return poiRepository.findById(id);
     }
 
-    // Metodo dummy per ottenere l'utente attuale
+    public void save(PointOfInterest pointOfInterest) {
+        poiRepository.save(pointOfInterest.getId(), pointOfInterest);
+    }
+
+        // Metodo dummy per ottenere l'utente attuale
     private User getCurrentUser() {
         User user = new User();
         user.setUsername("utente_demo");

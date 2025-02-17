@@ -1,12 +1,18 @@
 package VALIDAZIONE;
 
+import CONTENUTI.InMemoryMultimediaContent;
 import CONTENUTI.MultimediaContent;
 import CONTENUTI.MultimediaContentRepository;
+import CONTENUTI.MultimediaContentService;
 import ELEMENT.ElementStatus;
+import POI.InMemoryPOIRepository;
 import POI.POIRepository;
+import POI.POIService;
 import POI.PointOfInterest;
+import TOUR.InMemoryTourRepository;
 import TOUR.Tour;
 import TOUR.TourRepository;
+import TOUR.TourService;
 import USER.User;
 
 import java.util.List;
@@ -16,16 +22,16 @@ import java.util.stream.Collectors;
 public class ValidationService {
     // Scanner condiviso per l'input da riga di comando.
     private Scanner scanner;
-    private POIRepository poiRepository;
-    private TourRepository tourRepository;
-    private MultimediaContentRepository multimediaContentRepository;
+    private POIService poiService;
+    private TourService tourService;
+    private MultimediaContentService multimediaContentService;
 
-    public ValidationService(POIRepository poiRepository, TourRepository tourRepository, MultimediaContentRepository multimediaContentRepository) {
+    public ValidationService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
         scanner = new Scanner(System.in);
-        this.poiRepository = poiRepository;
-        this.tourRepository = tourRepository;
-        this.multimediaContentRepository = multimediaContentRepository;
+        this.poiService = new POIService();
+        this.tourService = new TourService();
+        this.multimediaContentService = new MultimediaContentService();
     }
 
     public void validation() {
@@ -35,14 +41,15 @@ public class ValidationService {
         List<PointOfInterest> pointOfInterestList = getAllPendingPOI();
         for(PointOfInterest p: pointOfInterestList) {
             if(scanner.nextLine().equals("1")) {
-                approvePOI(p);
+                approvePOI(p.getId());
             } else if(scanner.nextLine().equals("2")) {
                 String reason = scanner.nextLine();
-                rejectPOI(p, reason);
+                rejectPOI(p.getId(), reason);
             }
         }
 
         System.out.println("=== Validazione Itinerari ===");
+        System.out.println("Seleziona 1 per approvare o 2 per rifiutare: ");
         List<Tour> tourList = getAllPendingTour();
         for(Tour t: tourList) {
             if(scanner.nextLine().equals("1")) {
@@ -54,6 +61,7 @@ public class ValidationService {
         }
 
         System.out.println("=== Validazione Contenuti Multimediali ===");
+        System.out.println("Seleziona 1 per approvare o 2 per rifiutare: ");
         List<MultimediaContent> multimediaContentList = getAllPendingMultimediaContent();
         for(MultimediaContent mc: multimediaContentList) {
             if(scanner.nextLine().equals("1")) {
@@ -69,68 +77,70 @@ public class ValidationService {
 
     public void sendPOIForValidation(PointOfInterest poi) {
         poi.setStatus(ElementStatus.Pending);
-        poiRepository.save(poi);
+        poiService.save(poi);
     }
 
-    public void approvePOI(PointOfInterest poi) {
+    public void approvePOI(int idPOI) {
+        PointOfInterest poi = poiService.getPOIById(idPOI);
         poi.setStatus(ElementStatus.Approved);
         poi.setPublished(true);
         System.out.println("Il Punto di Interesse e' stato accettato");
-        poiRepository.save(poi);
+        poiService.save(poi);
     }
 
-    public void rejectPOI(PointOfInterest poi, String reason) {
+    public void rejectPOI(int idPOI, String reason) {
+        PointOfInterest poi = poiService.getPOIById(idPOI);
         poi.setStatus(ElementStatus.Rejected);
         System.out.println("Il Punto di Interesse e' stato rifiutato, " + reason);
-        poiRepository.save(poi);
+        poiService.save(poi);
     }
 
     public void sendTourForValidation(Tour tour) {
         tour.setStatus(ElementStatus.Pending);
-        tourRepository.save(tour);
+        tourService.save(tour);
     }
 
     public void approveTour(Tour tour) {
         tour.setStatus(ElementStatus.Approved);
         tour.setPublished(true);
         System.out.println("L'Itinerario e' stato accettato");
-        tourRepository.save(tour);
+        tourService.save(tour);
     }
 
     public void rejectTour(Tour tour, String reason) {
         tour.setStatus(ElementStatus.Rejected);
         System.out.println("L'Itinerario e' stato rifiutato, " + reason);
-        tourRepository.save(tour);
+        tourService.save(tour);
     }
 
     public void sendMultimediaContentForValidation(MultimediaContent multimediaContent) {
         multimediaContent.setStatus(ElementStatus.Pending);
-        multimediaContentRepository.save(multimediaContent);
+        multimediaContentService.save(multimediaContent);
     }
 
     public void approveMultimediaContent(MultimediaContent multimediaContent) {
         multimediaContent.setStatus(ElementStatus.Approved);
         multimediaContent.setPublished(true);
         System.out.println("Il Contenuto Multimediale e' stato accettato");
-        multimediaContentRepository.save(multimediaContent);
+        multimediaContentService.save(multimediaContent);
     }
 
     public void rejectMultimediaContent(MultimediaContent multimediaContent, String reason) {
         multimediaContent.setStatus(ElementStatus.Rejected);
         System.out.println("Il Contenuto Multimediale e' stato rifiutato, " + reason);
-        multimediaContentRepository.save(multimediaContent);
+        multimediaContentService.save(multimediaContent);
     }
 
     public List<PointOfInterest> getAllPendingPOI() {
-        return poiRepository.findAll().stream().filter(pointOfInterest -> pointOfInterest.getStatus().equals(ElementStatus.Pending)).collect(Collectors.toList());
+        return poiService.getAllPOIs().stream().filter(poi -> poi.getStatus() == ElementStatus.Pending).toList();
     }
 
     public List<Tour> getAllPendingTour() {
-        return tourRepository.findAll().stream().filter(tour -> tour.getStatus().equals(ElementStatus.Pending)).collect(Collectors.toList());
+        return tourService.getAllTours().stream().filter(tour -> tour.getStatus() == ElementStatus.Pending).toList();
     }
 
     public List<MultimediaContent> getAllPendingMultimediaContent() {
-        return multimediaContentRepository.findAll().stream().filter(multimediaContent -> multimediaContent.getStatus().equals(ElementStatus.Pending)).collect(Collectors.toList());
+        return multimediaContentService.getAllMultimediaContent().stream().filter(multimediaContent -> multimediaContent.getStatus().equals(ElementStatus.Pending)).toList();
     }
 
     private User getCurrentUser() {

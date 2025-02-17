@@ -1,7 +1,7 @@
 package CONTENUTI;
 
 import POI.InMemoryPOIRepository;
-import POI.POIRepository;
+import POI.POIService;
 import POI.PointOfInterest;
 import USER.User;
 
@@ -11,13 +11,13 @@ import java.util.Scanner;
 
 public class MultimediaContentService {
     private MultimediaContentRepository multimediaContentRepository;
-    private POIRepository poiRepository;
+    private POIService poiService;
     private Scanner scanner;
 
     public MultimediaContentService() {
         scanner = new Scanner(System.in);
         this.multimediaContentRepository = new InMemoryMultimediaContent();
-        this.poiRepository = new InMemoryPOIRepository();
+        this.poiService = new POIService();
     }
 
     public void initializer() {
@@ -34,19 +34,19 @@ public class MultimediaContentService {
         mc1.setDuration(1);
         mc1.setDimension(1);
         mc1.setResolution(100);
-        multimediaContentRepository.save(mc1);
+        save(mc1);
 
         mc2.setFormatFileEnum(FormatFileEnum.Audio);
         mc2.setDuration(2);
         mc2.setDimension(2);
         mc2.setResolution(200);
-        multimediaContentRepository.save(mc2);
+        save(mc2);
 
         mc3.setFormatFileEnum(FormatFileEnum.Video);
         mc3.setDuration(3);
         mc3.setDimension(3);
         mc3.setResolution(400);
-        multimediaContentRepository.save(mc3);
+        save(mc3);
 
     }
 
@@ -57,19 +57,19 @@ public class MultimediaContentService {
         multimediaContent.setDimension(dimension);
         multimediaContent.setResolution(resolution);
         multimediaContent.setDataCreation(LocalDateTime.now());
-        multimediaContentRepository.save(multimediaContent);
+        save(multimediaContent);
         return multimediaContent;
     }
 
     public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
 
-        PointOfInterest poi = poiRepository.findById(idPOI);
+        PointOfInterest poi = poiService.getPOIById(idPOI);
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
 
         multimediaContent.setPointOfInterest(poi);
-        multimediaContentRepository.save(multimediaContent);
+        save(multimediaContent);
         poi.getMultimediaContentList().add(multimediaContent);
-        poiRepository.save(poi);
+        poiService.save(poi);
         return poi;
     }
 
@@ -130,6 +130,11 @@ public class MultimediaContentService {
             scanner.close();
         }
     }
+
+    public void save(MultimediaContent multimediaContent) {
+        multimediaContentRepository.save(multimediaContent);
+    }
+
 
     public List<MultimediaContent> getAllMultimediaContent() {
         return multimediaContentRepository.findAll();

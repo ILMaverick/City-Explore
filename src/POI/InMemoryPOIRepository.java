@@ -1,17 +1,23 @@
 package POI;
 
+import ELEMENT.ElementStatus;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryPOIRepository implements POIRepository {
-    private List<PointOfInterest> storage = new ArrayList<PointOfInterest>();
-    
+    private final List<PointOfInterest> storage = new ArrayList<>();
 
     @Override
     public void save(PointOfInterest poi) {
         if (poi != null) {
-        	poi.setId(storage.size());
+            poi.setId(storage.size());
             storage.add(poi);
         }
+    }
+    @Override
+    public PointOfInterest findById(int id) {
+        return storage.get(id);
     }
 
     @Override
@@ -20,8 +26,8 @@ public class InMemoryPOIRepository implements POIRepository {
     }
 
     @Override
-    public PointOfInterest findById(int id) {
-        return storage.get(id);
+    public List<PointOfInterest> findByStatus(ElementStatus status) {
+        return this.storage.stream().filter(pointOfInterest -> pointOfInterest.getStatus() == status).collect(Collectors.toList());
     }
 
 }

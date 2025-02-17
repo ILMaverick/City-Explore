@@ -43,6 +43,7 @@ public class PointOfInterest extends AbstractElement{
 				",\n  multimediaContent=" + multimediaContentList +
 				",\n  event=" + event +
 				",\n  published=" + super.isPublished() +
+				",\n  ElementStatus=" + getStatus() +
 				"\n}";
 	}
 

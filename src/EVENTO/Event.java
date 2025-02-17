@@ -42,7 +42,7 @@ public class Event extends AbstractElement {
                 ",\n  theme=" + theme +
                 ",\n  category=" + category +
                 ",\n  price=" + price +
-                ",\n  location=" + location.toString() +
+                ",\n  location=" + location +
                 ",\n  author=" + super.getAuthor() +
                 ",\n  time=" + time +
                 ",\n  published=" + super.isPublished() +

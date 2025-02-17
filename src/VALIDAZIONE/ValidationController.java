@@ -1,10 +1,7 @@
 package VALIDAZIONE;
 
-import CONTENUTI.InMemoryMultimediaContent;
 import CONTENUTI.MultimediaContent;
-import POI.InMemoryPOIRepository;
 import POI.PointOfInterest;
-import TOUR.InMemoryTourRepository;
 import TOUR.Tour;
 
 import java.util.List;
@@ -14,7 +11,7 @@ public class ValidationController {
     private ValidationService validationService;
 
     public ValidationController() {
-        this.validationService = new ValidationService(new InMemoryPOIRepository(), new InMemoryTourRepository(), new InMemoryMultimediaContent());
+        this.validationService = new ValidationService();
     }
     /**
     public void sendPOIForValidation(PointOfInterest poi) {
@@ -59,10 +56,9 @@ public class ValidationController {
         validationService.validation();
     }
 
-
     public void displayAllPOiPending() {
         List<PointOfInterest> pointOfInterestList = validationService.getAllPendingPOI();
-        if (pointOfInterestList == null || pointOfInterestList.isEmpty()) {
+        if (pointOfInterestList.isEmpty()) {
             System.out.println("Nessun Punto di Interesse da validare.");
         } else {
             System.out.println("Elenco dei Punti di Interesse da validare:");
@@ -74,7 +70,7 @@ public class ValidationController {
 
     public void displayAllTourPending() {
         List<Tour> tourList = validationService.getAllPendingTour();
-        if (tourList == null || tourList.isEmpty()) {
+        if (tourList.isEmpty()) {
             System.out.println("Nessun Itinerario da validare.");
         } else {
             System.out.println("Elenco degli Itinerari da validare:");
@@ -86,7 +82,7 @@ public class ValidationController {
 
     public void displayAllMultimediaContentPending() {
         List<MultimediaContent> multimediaContentList = validationService.getAllPendingMultimediaContent();
-        if (multimediaContentList == null || multimediaContentList.isEmpty()) {
+        if (multimediaContentList.isEmpty()) {
             System.out.println("Nessun Contenuto Multimediale da validare.");
         } else {
             System.out.println("Elenco dei Contenuti da validare:");

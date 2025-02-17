@@ -1,5 +1,6 @@
 package CONTEST;
 
+import POI.POIType;
 import USER.User;
 
 import java.time.LocalDate;
@@ -15,6 +16,15 @@ public class ContestService {
     public ContestService() {
         scanner = new Scanner(System.in);
         this.contestRepository = new InMemoryContestRepository();
+    }
+
+    public void initializer() {
+        User user = new User();
+        user.setUsername("SilverSimon");
+
+        LocalDate deadline = LocalDate.of(2025,02,17);
+
+        createContest("nome", "descrizione", user, "non fare il birbante", "foto piu' bella", "gita in barca", deadline);
     }
 
     public Contest createContest(String name, String description, User author, String rules, String goal, String prize, LocalDate deadline) {

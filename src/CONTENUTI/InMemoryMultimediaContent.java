@@ -9,18 +9,17 @@ public class InMemoryMultimediaContent implements MultimediaContentRepository{
     @Override
     public void save(MultimediaContent multimediaContent) {
         if (multimediaContent != null) {
-        	multimediaContent.setId(storage.size());
+            multimediaContent.setId(storage.size());
             storage.add(multimediaContent);
         }
+    }
+    @Override
+    public MultimediaContent findById(int id) {
+        return storage.get(id);
     }
 
     @Override
     public List<MultimediaContent> findAll() {
         return this.storage;
-    }
-
-    @Override
-    public MultimediaContent findById(int id) {
-        return storage.get(id);
     }
 }

@@ -10,6 +10,10 @@ public class EventController {
         this.eventService = new EventService();
     }
 
+    public void initializer() {
+        eventService.initializer();
+    }
+
     public void createEventFromInput() {
         eventService.createEventFromInput();
     }

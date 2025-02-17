@@ -1,5 +1,7 @@
 package POI;
 
+import ELEMENT.ElementStatus;
+
 import java.util.List;
 
 public interface POIRepository {
@@ -20,4 +22,5 @@ public interface POIRepository {
      */
     PointOfInterest findById(int id);
 
+    List<PointOfInterest> findByStatus(ElementStatus status);
 }

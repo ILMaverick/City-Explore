@@ -21,7 +21,7 @@ public class MainApplication {
         boolean exit = false;
         while (!exit) {
             System.out.println("=== Menu Principale ===");
-            System.out.println("0. Inizializza Punti di Interesse e Contenuti (Avviene solo una volta)");
+            System.out.println("0. Inizializza Punti di Interesse, Contenuti, Contest ed Evento (Avviene solo una volta)");
             System.out.println("1. Gestione POI");
             System.out.println("2. Gestione Tour");
             System.out.println("3. Gestione Contest");
@@ -35,7 +35,7 @@ public class MainApplication {
             
             switch (mainOption) {
                 case 0:
-                    initializer(poiController, multimediaContentController);
+                    initializer(poiController, multimediaContentController, contestController, eventController);
                     break;
                 case 1:
                     managePOI(scanner, poiController);
@@ -79,9 +79,12 @@ public class MainApplication {
         System.out.println("Programma terminato.");
     }
 
-    private static void initializer(POIController poiController, MultimediaContentController multimediaContentController) {
+    private static void initializer(POIController poiController, MultimediaContentController multimediaContentController,
+                                    ContestController contestController, EventController eventController) {
         poiController.initializer();
         multimediaContentController.initializer();
+        contestController.initializer();
+        eventController.initializer();
         System.out.println("Inizializzazione avvenuta con successo.");
     }
 
