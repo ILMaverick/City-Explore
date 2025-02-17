@@ -1,12 +1,12 @@
 package POI;
 
-import CONTENUTI.MultimediaContent;
-
 import java.util.List;
 
 public interface POIRepository {
     /**
      * Salva un oggetto PointOfInterest.
+     *
+     * @return
      */
     void save(PointOfInterest poi);
 

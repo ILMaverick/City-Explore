@@ -14,7 +14,7 @@ public class PointOfInterest extends AbstractElement{
 	private Date open_time;
 	private Date close_time;
 	private POIType type;
-	private List<MultimediaContent> multimediaContentList;
+	private final List<MultimediaContent> multimediaContentList;
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
 		super(name, description, author);

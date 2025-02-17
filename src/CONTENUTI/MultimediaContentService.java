@@ -2,6 +2,7 @@ package CONTENUTI;
 
 import POI.InMemoryPOIRepository;
 import POI.POIRepository;
+import POI.POIType;
 import POI.PointOfInterest;
 import USER.User;
 
@@ -15,60 +16,72 @@ public class MultimediaContentService {
     private Scanner scanner;
 
     public MultimediaContentService() {
+        scanner = new Scanner(System.in);
         this.multimediaContentRepository = new InMemoryMultimediaContent();
         this.poiRepository = new InMemoryPOIRepository();
-        scanner = new Scanner(System.in);
     }
 
-    public MultimediaContent loadMultimediaContent(String name, String description, User author, FormatFileEnum format, float duration, float dimension, float resolution, PointOfInterest poi) {
+    public void initializer() {
+        User user = new User();
+        user.setName("Simone");
+        user.setSurname("Stacchiotti");
+        user.setUsername("SilverSimon");
 
+        MultimediaContent mc1 = new MultimediaContent("foto", "descrizione",user);
+        MultimediaContent mc2 = new MultimediaContent("video", "secondo", user);
+        MultimediaContent mc3 = new MultimediaContent("immagine", "terzo", user);
 
+        mc1.setFormatFileEnum(FormatFileEnum.Image);
+        mc1.setDuration(1);
+        mc1.setDimension(1);
+        mc1.setResolution(100);
+        multimediaContentRepository.save(mc1);
+
+        mc2.setFormatFileEnum(FormatFileEnum.Audio);
+        mc2.setDuration(2);
+        mc2.setDimension(2);
+        mc2.setResolution(200);
+        multimediaContentRepository.save(mc2);
+
+        mc3.setFormatFileEnum(FormatFileEnum.Video);
+        mc3.setDuration(3);
+        mc3.setDimension(3);
+        mc3.setResolution(400);
+        multimediaContentRepository.save(mc3);
+
+    }
+
+    public MultimediaContent createMultimediaContent(String name, String description, User author, FormatFileEnum format, float duration, float dimension, float resolution) {
         MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
         multimediaContent.setFormatFileEnum(format);
         multimediaContent.setDuration(duration);
         multimediaContent.setDimension(dimension);
         multimediaContent.setResolution(resolution);
-        multimediaContent.setPointOfInterest(poi);
         multimediaContent.setDataCreation(LocalDateTime.now());
         multimediaContentRepository.save(multimediaContent);
         return multimediaContent;
     }
 
-    public void loadMultimediaContent() {
+    public PointOfInterest loadMultimediaContentToPOI(String idPOI, String idMC) {
 
+        PointOfInterest poi = poiRepository.findById(idPOI);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
+
+        multimediaContent.setPointOfInterest(poi);
+        multimediaContentRepository.save(multimediaContent);
+        poi.getMultimediaContentList().add(multimediaContent);
+        poiRepository.save(poi);
+        return poi;
+    }
+
+    public void createMultimediaContent() {
         System.out.println("=== Creazione di un Contenuto Multimediale ===");
-        /**
-        List<PointOfInterest> poiList = poiRepository.findAll();
-
-        if (poiList == null || poiList.isEmpty()) {
-            System.out.println("Nessun POI disponibile per caricare un Contenuto Multimediale.");
-            return;
-        }
-        // Visualizza la lista dei POI con indice
-        System.out.println("Elenco dei POI disponibili:");
-        for (int i = 0; i < poiList.size(); i++) {
-            System.out.println((i + 1) + ". " + poiList.get(i));
-        }
-
-        // L'utente seleziona il POI da utilizzare
-        System.out.print("Seleziona il POI da utilizzare (inserisci il numero): ");
-        int selection = scanner.nextInt();
-        scanner.nextLine(); // Consuma il newline
-
-        if (selection < 1 || selection > poiList.size()) {
-            System.out.println("Selezione non valida.");
-            return;
-        }
-        PointOfInterest selectedPOI = poiList.get(selection - 1);
-        */
 
         System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
 
         System.out.print("Inserisci la descrizione: ");
         String description = scanner.nextLine();
-
-        User currentUser = getCurrentUser();
 
         System.out.print("Inserisci il formato: ");
         String formatString = scanner.nextLine();
@@ -83,14 +96,30 @@ public class MultimediaContentService {
         System.out.print("Inserisci la risoluzione: ");
         float resolution = scanner.nextFloat();
 
+        User currentUser = getCurrentUser();
+
+        MultimediaContent multimediaContent = createMultimediaContent(name, description, currentUser, format, duration, dimension, resolution);
+
+        System.out.println("Contenuto Multimediale creato in data: " + multimediaContent.getDataCreation());
+        System.out.println(multimediaContent);
+    }
+
+    public void loadMultimediaContentToPOI() {
+
+        System.out.println("=== Caricamento Contenuto Multimediale  su un Punto di Interesse ===");
+
         System.out.print("Inserisci l'ID del Punto di Interesse: ");
         String idPOI = scanner.nextLine();
-        PointOfInterest poi = poiRepository.findById(idPOI);
 
-        MultimediaContent multimediaContent = loadMultimediaContent(name, description, currentUser, format, duration, dimension, resolution, poi);
+        System.out.print("Inserisci l'ID del Contenuto: ");
+        String idMC = scanner.nextLine();
 
-        System.out.println("Contenuto Multimediale caricato in data: " + multimediaContent.getDataCreation());
-        System.out.println(multimediaContent);
+        System.out.print("======");
+
+        PointOfInterest poi = loadMultimediaContentToPOI(idPOI, idMC);
+
+        System.out.println("Contenuto Multimediale caricato al Punto di Interesse: ");
+        System.out.println(poi);
     }
 
     private User getCurrentUser() {
@@ -103,10 +132,6 @@ public class MultimediaContentService {
         if (scanner != null) {
             scanner.close();
         }
-    }
-
-    public void saveMultimediaContent(MultimediaContent multimediaContent) {
-        multimediaContentRepository.save(multimediaContent);
     }
 
     public List<MultimediaContent> getAllMultimediaContent() {

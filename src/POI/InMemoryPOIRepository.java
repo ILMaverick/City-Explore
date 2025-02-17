@@ -1,9 +1,6 @@
 package POI;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryPOIRepository implements POIRepository {
     private Map<String, PointOfInterest> storage = new HashMap<>();
@@ -17,7 +14,12 @@ public class InMemoryPOIRepository implements POIRepository {
 
     @Override
     public List<PointOfInterest> findAll() {
-        return new ArrayList<>(storage.values());
+        List<PointOfInterest> poiList = new ArrayList<>();
+        for (Map.Entry<String, PointOfInterest> entry : storage.entrySet()) {
+            PointOfInterest value = entry.getValue();
+            poiList.add(value);
+        }
+        return poiList;
     }
 
     @Override

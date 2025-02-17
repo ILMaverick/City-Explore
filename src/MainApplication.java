@@ -6,7 +6,6 @@ import EVENTO.EventController;
 import POI.POIController;
 import TOUR.TourController;
 import VALIDAZIONE.ValidationController;
-import VALIDAZIONE.ValidationService;
 
 
 public class MainApplication {
@@ -22,6 +21,7 @@ public class MainApplication {
         boolean exit = false;
         while (!exit) {
             System.out.println("=== Menu Principale ===");
+            System.out.println("0. Inizializza Punti di Interesse e Contenuti (Avviene solo una volta)");
             System.out.println("1. Gestione POI");
             System.out.println("2. Gestione Tour");
             System.out.println("3. Gestione Contest");
@@ -29,11 +29,14 @@ public class MainApplication {
             System.out.println("5. Gestione Contenuti Multimediale");
             System.out.println("6. Validazione Elementi e Contenuti Pendenti");
             System.out.println("7. Esci");
-            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6, 7): ");
+            System.out.print("Seleziona un'opzione (0, 1, 2, 3, 4, 5, 6, 7): ");
             int mainOption = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
             switch (mainOption) {
+                case 0:
+                    initializer(poiController, multimediaContentController);
+                    break;
                 case 1:
                     managePOI(scanner, poiController);
                     break;
@@ -70,9 +73,18 @@ public class MainApplication {
         poiController.close();
         tourController.close();
         contestController.close();
+        eventController.close();
+        multimediaContentController.close();
+        validationController.close();
         System.out.println("Programma terminato.");
     }
-    
+
+    private static void initializer(POIController poiController, MultimediaContentController multimediaContentController) {
+        poiController.initializer();
+        multimediaContentController.initializer();
+    }
+
+
     // Sotto-menu per la gestione dei POI
     private static void managePOI(Scanner scanner, POIController poiController) {
         boolean back = false;
@@ -215,21 +227,25 @@ public class MainApplication {
         boolean back = false;
         while (!back) {
             System.out.println("\n=== Menu Gestione Contenuti Multimediali ===");
-            System.out.println("1. Carica Contenuto ad un POI");
-            System.out.println("2. Visualizza tutti i Contenuti Multimediali salvati");
-            System.out.println("3. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            System.out.println("1. Crea Contenuto");
+            System.out.println("2. Carica Contenuto ad un POI");
+            System.out.println("3. Visualizza tutti i Contenuti Multimediali salvati");
+            System.out.println("4. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3 o 4): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
 
             switch (option) {
                 case 1:
-                    multimediaContentController.loadMultimediaContent();
+                    multimediaContentController.createMultimediaContent();
                     break;
                 case 2:
-                    multimediaContentController.displayAllMultimediaContent();
+                    multimediaContentController.loadMultimediaContentToPOI();
                     break;
                 case 3:
+                    multimediaContentController.displayAllMultimediaContent();
+                    break;
+                case 4:
                     back = true;
                     break;
                 default:

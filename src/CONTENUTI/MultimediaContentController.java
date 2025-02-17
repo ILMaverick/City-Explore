@@ -1,22 +1,24 @@
 package CONTENUTI;
 
-import POI.InMemoryPOIRepository;
-import USER.User;
-
 import java.util.List;
-import java.util.Scanner;
 
 public class MultimediaContentController {
 
-    //private Scanner scanner;
     private MultimediaContentService multimediaContentService;
 
     public MultimediaContentController() {
-        //scanner = new Scanner(System.in);
         this.multimediaContentService = new MultimediaContentService();
     }
-    public void loadMultimediaContent() {
-        multimediaContentService.loadMultimediaContent();
+    public void initializer() {
+        multimediaContentService.initializer();
+    }
+
+    public void createMultimediaContent() {
+        multimediaContentService.createMultimediaContent();
+    }
+
+    public void loadMultimediaContentToPOI() {
+        multimediaContentService.loadMultimediaContentToPOI();
     }
 
     public void displayAllMultimediaContent() {
@@ -30,17 +32,9 @@ public class MultimediaContentController {
             }
         }
     }
-/**
-    private User getCurrentUser() {
-        User user = new User();
-        user.setUsername("utente_demo");
-        return user;
-    }
 
     public void close() {
-        if (scanner != null) {
-            scanner.close();
-        }
+        multimediaContentService.close();
     }
- */
+
 }

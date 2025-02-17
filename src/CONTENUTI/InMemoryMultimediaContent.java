@@ -1,5 +1,7 @@
 package CONTENUTI;
 
+import POI.PointOfInterest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +19,12 @@ public class InMemoryMultimediaContent implements MultimediaContentRepository{
 
     @Override
     public List<MultimediaContent> findAll() {
-        return new ArrayList<>(storage.values());
+        List<MultimediaContent> multimediaContentList = new ArrayList<>();
+        for (Map.Entry<String, MultimediaContent> entry : storage.entrySet()) {
+            MultimediaContent value = entry.getValue();
+            multimediaContentList.add(value);
+        }
+        return multimediaContentList;
     }
 
     @Override

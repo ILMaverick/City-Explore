@@ -33,19 +33,19 @@ public class MultimediaContent {
 
     @Override
     public String toString() {
-        return "MultimediaContent{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", formatFileEnum=" + formatFileEnum +
-                ", duration=" + duration +
-                ", dimension=" + dimension +
-                ", resolution=" + resolution +
-                ", dataCreation=" + dataCreation +
-                ", author=" + author +
-                ", poi=" + pointOfInterest +
-                ", published=" + published +
-                '}';
+        return "MultimediaContent {" +
+                "\n  id='" + id + '\'' +
+                ",\n  name='" + name + '\'' +
+                ",\n  description='" + description + '\'' +
+                ",\n  formatFileEnum=" + formatFileEnum +
+                ",\n  duration=" + duration +
+                ",\n  dimension=" + dimension +
+                ",\n  resolution=" + resolution +
+                ",\n  dataCreation=" + dataCreation +
+                ",\n  author=" + author +
+                ",\n  poi=" + pointOfInterest +
+                ",\n  published=" + published +
+                "\n}";
     }
 
     public String getId() {
