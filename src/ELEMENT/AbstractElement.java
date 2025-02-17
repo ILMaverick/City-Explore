@@ -3,7 +3,7 @@ package ELEMENT;
 import USER.User;
 
 public abstract class AbstractElement implements Element {
-	private String id;
+	private int id;
 	private String name;
 	private String description;
 	private User author;
@@ -11,7 +11,6 @@ public abstract class AbstractElement implements Element {
 	private ElementStatus status;
 	
 	public AbstractElement(String name, String description, User author) {
-		this.id = "custom_" + System.currentTimeMillis();
 		this.name = (name != null ) ? name : "Senza nome";
 		this.description = description;
 		this.author = author;
@@ -43,10 +42,10 @@ public abstract class AbstractElement implements Element {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public ElementStatus getStatus() {

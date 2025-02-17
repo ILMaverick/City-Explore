@@ -8,27 +8,23 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryMultimediaContent implements MultimediaContentRepository{
-    private Map<String, MultimediaContent> storage = new HashMap<>();
+    private List<MultimediaContent> storage = new ArrayList<MultimediaContent>();
 
     @Override
     public void save(MultimediaContent multimediaContent) {
         if (multimediaContent != null) {
-            storage.put(multimediaContent.getId(), multimediaContent);
+        	multimediaContent.setId(storage.size());
+            storage.add(multimediaContent);
         }
     }
 
     @Override
     public List<MultimediaContent> findAll() {
-        List<MultimediaContent> multimediaContentList = new ArrayList<>();
-        for (Map.Entry<String, MultimediaContent> entry : storage.entrySet()) {
-            MultimediaContent value = entry.getValue();
-            multimediaContentList.add(value);
-        }
-        return multimediaContentList;
+        return this.storage;
     }
 
     @Override
-    public MultimediaContent findById(String id) {
+    public MultimediaContent findById(int id) {
         return storage.get(id);
     }
 }

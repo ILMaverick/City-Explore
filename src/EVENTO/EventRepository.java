@@ -17,6 +17,6 @@ public interface EventRepository {
     /**
      * Restituisce il Evento con l'id specificato, oppure null se non presente.
      */
-    Event findById(String id);
+    Event findById(int id);
 
 }

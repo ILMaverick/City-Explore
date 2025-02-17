@@ -6,22 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTourRepository implements TourRepository{
-	private Map<String, Tour> storage = new HashMap<>();
+	private List<Tour> storage = new ArrayList<Tour>();
 
     @Override
     public void save(Tour tour) {
         if (tour != null) {
-            storage.put(tour.getId(), tour);
+        	tour.setId(storage.size());
+            storage.add(tour);
         }
     }
 
     @Override
     public List<Tour> findAll() {
-        return new ArrayList<>(storage.values());
+        return this.storage;
     }
 
     @Override
-    public Tour findById(String id) {
+    public Tour findById(int id) {
         return storage.get(id);
     }
 

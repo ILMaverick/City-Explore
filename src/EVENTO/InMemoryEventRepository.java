@@ -6,22 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryEventRepository implements EventRepository{
-	 private final Map<String, Event> storage = new HashMap<>();
+	 private final List<Event> storage = new ArrayList<Event>();
 
 	    @Override
 	    public void save(Event event) {
 	        if (event != null) {
-	            storage.put(event.getId(), event);
+	        	event.setId(storage.size());
+	            storage.add(event);
 	        }
 	    }
 
 	    @Override
 	    public List<Event> findAll() {
-	        return new ArrayList<>(storage.values());
+	        return this.storage;
 	    }
 
 	    @Override
-	    public Event findById(String id) {
+	    public Event findById(int id) {
 	        return storage.get(id);
 	    }
 }

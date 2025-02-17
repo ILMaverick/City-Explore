@@ -16,6 +16,6 @@ public interface TourRepository {
     /**
      * Restituisce il Tour con l'id specificato, oppure null se non presente.
      */
-    Tour findById(String id);
+    Tour findById(int id);
 
 }

@@ -1,7 +1,7 @@
 package ELEMENT;
 
 public interface Element {
-	String getId();
+	int getId();
 	String getName();
 	String getDescription();
 	boolean isPublished();

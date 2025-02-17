@@ -107,7 +107,7 @@ public class TourService {
         return tourRepository.findAll();
     }
 
-    public Tour getTourById(String id) {
+    public Tour getTourById(int id) {
         return tourRepository.findById(id);
     }
 }

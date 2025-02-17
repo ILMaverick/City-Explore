@@ -30,7 +30,7 @@ public class ContestService {
         return contestRepository.findAll();
     }
 
-    public Contest getContestById(String id) {
+    public Contest getContestById(int id) {
         return contestRepository.findById(id);
     }
 

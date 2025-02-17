@@ -48,11 +48,11 @@ public class EventService {
     /**
      * Restituisce un Evento dato il suo id.
      */
-    public Event getEventById(String id) {
+    public Event getEventById(int id) {
         return eventRepository.findById(id);
     }
 
-    public Event updateEvent(String id, Event event) {
+    public Event updateEvent(int id, Event event) {
         Event eventSelected = eventRepository.findById(id);
         if(eventSelected != null) {
             eventSelected.setName(event.getName());

@@ -16,5 +16,5 @@ public interface MultimediaContentRepository {
     /**
      * Restituisce il Contenuto con l'id specificato, oppure null se non presente.
      */
-    MultimediaContent findById(String id);
+    MultimediaContent findById(int id);
 }

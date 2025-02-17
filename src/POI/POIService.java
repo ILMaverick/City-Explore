@@ -143,7 +143,7 @@ public class POIService {
         return poiRepository.findAll();
     }
 
-    public PointOfInterest getPOIById(String id) {
+    public PointOfInterest getPOIById(int id) {
         return poiRepository.findById(id);
     }
 

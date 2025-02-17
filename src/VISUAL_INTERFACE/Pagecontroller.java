@@ -1,0 +1,23 @@
+package VISUAL_INTERFACE;
+
+public class Pagecontroller {
+
+	Page pointerPage = new MainPage();
+	
+	public void start() {
+		this.show();
+	}
+	
+	private void show() {
+		this.pointerPage.show();
+	}
+	
+	public void next(Page toShow) {
+		
+	}
+	
+	private void close() {
+		
+	}
+	
+}

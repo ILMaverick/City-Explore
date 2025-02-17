@@ -7,22 +7,23 @@ import java.util.Map;
 
 public class InMemoryContestRepository implements ContestRepository {
 
-    private Map<String, Contest> storage = new HashMap<>();
+    private List<Contest> storage = new ArrayList<Contest>();
 
     @Override
     public void save(Contest contest) {
         if (contest != null) {
-            storage.put(contest.getId(), contest);
+        	contest.setId(storage.size());
+            storage.add(contest);
         }
     }
 
     @Override
     public List<Contest> findAll() {
-        return new ArrayList<>(storage.values());
+        return this.storage;
     }
 
     @Override
-    public Contest findById(String id) {
+    public Contest findById(int id) {
         return storage.get(id);
     }
 }

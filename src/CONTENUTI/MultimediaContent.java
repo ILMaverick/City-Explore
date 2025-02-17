@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class MultimediaContent {
 
-    private String id;
+    private int id;
     private String name;
     private String description;
     private FormatFileEnum formatFileEnum;
@@ -23,7 +23,6 @@ public class MultimediaContent {
     private PointOfInterest pointOfInterest;
 
     public MultimediaContent(String name, String description, User author) {
-        this.id = "custom_" + System.currentTimeMillis();
         this.name = (name != null ) ? name : "Senza nome";
         this.description = description;
         this.author = author;
@@ -48,10 +47,10 @@ public class MultimediaContent {
                 "\n}";
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     public String getName() {

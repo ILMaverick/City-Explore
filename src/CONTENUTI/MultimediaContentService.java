@@ -62,7 +62,7 @@ public class MultimediaContentService {
         return multimediaContent;
     }
 
-    public PointOfInterest loadMultimediaContentToPOI(String idPOI, String idMC) {
+    public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
 
         PointOfInterest poi = poiRepository.findById(idPOI);
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
@@ -109,10 +109,10 @@ public class MultimediaContentService {
         System.out.println("=== Caricamento Contenuto Multimediale  su un Punto di Interesse ===");
 
         System.out.print("Inserisci l'ID del Punto di Interesse: ");
-        String idPOI = scanner.nextLine();
+        int idPOI = scanner.nextInt();
 
         System.out.print("Inserisci l'ID del Contenuto: ");
-        String idMC = scanner.nextLine();
+        int idMC = scanner.nextInt();
 
         System.out.print("======");
 
@@ -138,7 +138,7 @@ public class MultimediaContentService {
         return multimediaContentRepository.findAll();
     }
 
-    public MultimediaContent getMultimediaContentById(String id) {
+    public MultimediaContent getMultimediaContentById(int id) {
         return multimediaContentRepository.findById(id);
     }
 
