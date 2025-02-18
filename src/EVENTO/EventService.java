@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-import CONTENUTI.MultimediaContent;
 import POI.POIRepository;
 import POI.PointOfInterest;
 import USER.User;
@@ -54,7 +53,7 @@ public class EventService {
         Event event = eventRepository.findById(idEvent);
         if (poi != null) {
             System.out.println("Punto di interesse trovato: ");
-            event.setLocation(poi);
+            event.getPointOfInterestList().add(poi);
             eventRepository.save(event);
             poi.getEvents().add(event);
             poiRepository.save(poi);
@@ -138,52 +137,58 @@ public class EventService {
 
         Event selectedEvent = getEventById(idEvent);
         System.out.println(selectedEvent);
-        System.out.println("Per aggiornare l'Evento, inserire i dati negli appositi campi, compresi quelli del precedente");
+        if(selectedEvent != null) {
 
-        scanner.nextLine();
+            System.out.println("Per aggiornare l'Evento, inserire i dati negli appositi campi, compresi quelli del precedente");
 
-        System.out.print("Inserisci il nome: ");
-        String name = scanner.nextLine();
+            scanner.nextLine();
 
-        System.out.print("Inserisci la descrizione: ");
-        String description = scanner.nextLine();
+            System.out.print("Inserisci il nome: ");
+            String name = scanner.nextLine();
 
-        System.out.print("Inserisci lo scope: ");
-        String scope = scanner.nextLine();
+            System.out.print("Inserisci la descrizione: ");
+            String description = scanner.nextLine();
 
-        System.out.print("Inserisci l'attività: ");
-        String activity = scanner.nextLine();
+            System.out.print("Inserisci lo scope: ");
+            String scope = scanner.nextLine();
 
-        System.out.print("Inserisci l'organizzazione: ");
-        String organization = scanner.nextLine();
+            System.out.print("Inserisci l'attività: ");
+            String activity = scanner.nextLine();
 
-        System.out.print("Inserisci il tema: ");
-        String theme = scanner.nextLine();
+            System.out.print("Inserisci l'organizzazione: ");
+            String organization = scanner.nextLine();
 
-        System.out.print("Inserisci la categoria: ");
-        String category = scanner.nextLine();
+            System.out.print("Inserisci il tema: ");
+            String theme = scanner.nextLine();
 
-        System.out.print("Inserisci il prezzo (double): ");
-        double price = Double.parseDouble(scanner.nextLine());
+            System.out.print("Inserisci la categoria: ");
+            String category = scanner.nextLine();
 
-        System.out.print("Inserisci l'orario formato: dd-MM-yyyy HH:mm): ");
-        //Formato data e ora
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        // Legge l'input dell'utente
-        String timeString = scanner.nextLine();
-        // Converte la stringa in un oggetto LocalDateTime
-        LocalDateTime time = LocalDateTime.parse(timeString, formatter);
+            System.out.print("Inserisci il prezzo (double): ");
+            double price = Double.parseDouble(scanner.nextLine());
 
-        // Ottieni l'utente corrente (dummy, o da un servizio di autenticazione)
-        User currentUser = getCurrentUser();
+            System.out.print("Inserisci l'orario formato: dd-MM-yyyy HH:mm): ");
+            //Formato data e ora
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            // Legge l'input dell'utente
+            String timeString = scanner.nextLine();
+            // Converte la stringa in un oggetto LocalDateTime
+            LocalDateTime time = LocalDateTime.parse(timeString, formatter);
 
-        Event newEvent = new Event(name, description, currentUser, scope, activity, organization, theme, category, price, time);
-        //Event newEvent = new Event(name, "description", currentUser, "scope", "activity", "organization", "theme", "category", 0, LocalDateTime.of(2025,02,17, 15,48));
+            // Ottieni l'utente corrente (dummy, o da un servizio di autenticazione)
+            User currentUser = getCurrentUser();
 
-        selectedEvent = updateEvent(idEvent, newEvent);
+            Event newEvent = new Event(name, description, currentUser, scope, activity, organization, theme, category, price, time);
+            //Event newEvent = new Event(name, "description", currentUser, "scope", "activity", "organization", "theme", "category", 0, LocalDateTime.of(2025,02,17, 15,48));
 
-        System.out.println("Evento aggiornato: ");
-        System.out.println(selectedEvent);
+            selectedEvent = updateEvent(idEvent, newEvent);
+
+            System.out.println("Evento aggiornato: ");
+            System.out.println(selectedEvent);
+
+        } else {
+            System.out.println("L'Evento non e' presente ");
+        }
     }
 
     public void searchEventByName() {

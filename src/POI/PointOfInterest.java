@@ -7,6 +7,7 @@ import java.util.List;
 import CONTENUTI.MultimediaContent;
 import ELEMENT.AbstractElement;
 import EVENTO.Event;
+import TOUR.Tour;
 import USER.User;
 
 public class PointOfInterest extends AbstractElement{
@@ -17,6 +18,7 @@ public class PointOfInterest extends AbstractElement{
 	private POIType type;
 	private final List<MultimediaContent> multimediaContentList;
 	public final List<Event> eventList;
+	public final List<Tour> tourList;
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
 		super(name, description, author);
@@ -27,6 +29,7 @@ public class PointOfInterest extends AbstractElement{
 		this.type = type;
 		this.multimediaContentList = new ArrayList<>();
 		this.eventList = new ArrayList<>();
+		this.tourList = new ArrayList<>();
 	}
 	
 	@Override
@@ -41,8 +44,9 @@ public class PointOfInterest extends AbstractElement{
 				",\n  close_time=" + close_time +
     			",\n  author=" + super.getAuthor() +
 				",\n  type=" + type +
-				",\n  multimediaContentList=" + multimediaContentList +
-				",\n  eventList=" + eventList +
+//				",\n  multimediaContentList=" + multimediaContentList +
+//				",\n  eventList=" + eventList +
+//				",\n  tourList=" + tourList +
 				",\n  published=" + super.isPublished() +
 				",\n  ElementStatus=" + getStatus() +
 				"\n}";
@@ -91,4 +95,5 @@ public class PointOfInterest extends AbstractElement{
 		return this.eventList;
 	}
 
+	public List<Tour> getTourList() { return tourList; }
 }

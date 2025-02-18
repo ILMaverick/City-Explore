@@ -1,10 +1,7 @@
 package VALIDAZIONE;
 
-import CONTENUTI.InMemoryMultimediaContent;
 import CONTENUTI.MultimediaContent;
-import POI.InMemoryPOIRepository;
 import POI.PointOfInterest;
-import TOUR.InMemoryTourRepository;
 import TOUR.Tour;
 
 import java.util.List;

@@ -3,6 +3,7 @@ package VALIDAZIONE;
 import CONTENUTI.MultimediaContent;
 import CONTENUTI.MultimediaContentRepository;
 import ELEMENT.ElementStatus;
+import ELIMINAZIONE.DeletionService;
 import POI.POIRepository;
 import POI.PointOfInterest;
 import TOUR.Tour;
@@ -18,13 +19,15 @@ public class ValidationService {
     private POIRepository poiRepository;
     private TourRepository tourRepository;
     private MultimediaContentRepository multimediaContentRepository;
+    private DeletionService deletionService;
 
-    public ValidationService(POIRepository poiRepository, TourRepository tourRepository, MultimediaContentRepository multimediaContentRepository) {
+    public ValidationService(POIRepository poiRepository, TourRepository tourRepository, MultimediaContentRepository multimediaContentRepository, DeletionService deletionService) {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
         scanner = new Scanner(System.in);
         this.poiRepository = poiRepository;
         this.tourRepository = tourRepository;
         this.multimediaContentRepository = multimediaContentRepository;
+        this.deletionService = deletionService;
     }
 
     public void validation() {
@@ -53,10 +56,10 @@ public class ValidationService {
             System.out.print("Scrivi 1 per approvare o 2 per rifiutare: ");
             int num = scanner.nextInt();
             if(num == 1) {
-                approveTour(t);
+                approveTour(t.getId());
             } else if(num == 2) {
                 String reason = scanner.nextLine();
-                rejectTour(t, reason);
+                rejectTour(t.getId(), reason);
             } else {
                 System.out.println("Opzione inesistente, l'Itinerario e' ancora pendente.");
             }
@@ -70,13 +73,12 @@ public class ValidationService {
             System.out.print("Scrivi 1 per approvare o 2 per rifiutare: ");
             int num = scanner.nextInt();
             if(num == 1) {
-                approveMultimediaContent(mc);
+                approveMultimediaContent(mc.getId());
             } else if(num == 2) {
                 String reason = scanner.nextLine();
-                rejectMultimediaContent(mc, reason);
+                rejectMultimediaContent(mc.getId(), reason);
             } else {
                 System.out.println("Opzione inesistente, il Contenuto e' ancora pendente.");
-                continue;
             }
         }
 
@@ -100,7 +102,7 @@ public class ValidationService {
         PointOfInterest poi = poiRepository.findById(idPOI);
         poi.setStatus(ElementStatus.Rejected);
         System.out.println("Il Punto di Interesse e' stato rifiutato, " + reason);
-        poiRepository.save(poi);
+        deletionService.deletePOI(idPOI);
     }
 
     public void sendTourForValidation(Tour tour) {
@@ -108,17 +110,19 @@ public class ValidationService {
         tourRepository.save(tour);
     }
 
-    public void approveTour(Tour tour) {
+    public void approveTour(int idTour) {
+        Tour tour = tourRepository.findById(idTour);
         tour.setStatus(ElementStatus.Approved);
         tour.setPublished(true);
         System.out.println("L'Itinerario e' stato accettato");
         tourRepository.save(tour);
     }
 
-    public void rejectTour(Tour tour, String reason) {
+    public void rejectTour(int idTour, String reason) {
+        Tour tour = tourRepository.findById(idTour);
         tour.setStatus(ElementStatus.Rejected);
         System.out.println("L'Itinerario e' stato rifiutato, " + reason);
-        tourRepository.save(tour);
+        deletionService.deleteTour(idTour);
     }
 
     public void sendMultimediaContentForValidation(MultimediaContent multimediaContent) {
@@ -126,17 +130,19 @@ public class ValidationService {
         multimediaContentRepository.save(multimediaContent);
     }
 
-    public void approveMultimediaContent(MultimediaContent multimediaContent) {
+    public void approveMultimediaContent(int idMC) {
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
         multimediaContent.setStatus(ElementStatus.Approved);
         multimediaContent.setPublished(true);
         System.out.println("Il Contenuto Multimediale e' stato accettato");
         multimediaContentRepository.save(multimediaContent);
     }
 
-    public void rejectMultimediaContent(MultimediaContent multimediaContent, String reason) {
+    public void rejectMultimediaContent(int idMC, String reason) {
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
         multimediaContent.setStatus(ElementStatus.Rejected);
         System.out.println("Il Contenuto Multimediale e' stato rifiutato, " + reason);
-        multimediaContentRepository.save(multimediaContent);
+        deletionService.deleteContest(idMC);
     }
 
     public List<PointOfInterest> getAllPendingPOI() {

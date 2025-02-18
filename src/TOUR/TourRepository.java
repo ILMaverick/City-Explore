@@ -26,4 +26,6 @@ public interface TourRepository {
 
     List<Tour> searchByDescription(String description);
 
+    void deleteByID(int id);
+
 }

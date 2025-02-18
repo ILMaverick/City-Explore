@@ -22,4 +22,5 @@ public interface ContestRepository {
 
     List<Contest> searchByDescription(String description);
 
+    void deleteByID(int id);
 }

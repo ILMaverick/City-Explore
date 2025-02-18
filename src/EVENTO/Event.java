@@ -1,10 +1,13 @@
 package EVENTO;
 
+import CONTEST.Contest;
 import ELEMENT.AbstractElement;
 import POI.PointOfInterest;
 import USER.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event extends AbstractElement {
 	private String scope;
@@ -13,8 +16,9 @@ public class Event extends AbstractElement {
 	private String theme;
 	private String category;
 	private double price;
-	private PointOfInterest location;
 	private LocalDateTime time;
+	private List<PointOfInterest> pointOfInterestList;
+	private List<Contest> contestList;
 	
 	public Event(String name, String description, User author, String scope,
 				 String activity, String organization, String theme, String category,
@@ -28,6 +32,8 @@ public class Event extends AbstractElement {
 		this.price = price;
 		this.time = time;
 		super.setPublished(true);
+		this.pointOfInterestList = new ArrayList<>();
+		this.contestList = new ArrayList<>();
 	}
 	
 	@Override
@@ -42,17 +48,16 @@ public class Event extends AbstractElement {
                 ",\n  theme=" + theme +
                 ",\n  category=" + category +
                 ",\n  price=" + price +
-//                ",\n  location=" + location +
+//                ",\n  pointOfInterestList=" + pointOfInterestList +
                 ",\n  author=" + super.getAuthor() +
                 ",\n  time=" + time +
                 ",\n  published=" + super.isPublished() +
                 "\n}";
     }
 
-	public PointOfInterest getLocation() {
-		return location;
-	}
-	public void setLocation(PointOfInterest location) { this.location = location; }
+	public List<PointOfInterest> getPointOfInterestList() { return pointOfInterestList; }
+
+	public List<Contest> getContestList() { return contestList; }
 
 	public LocalDateTime getTime() {
 		return time;

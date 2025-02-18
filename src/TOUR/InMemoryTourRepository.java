@@ -11,9 +11,11 @@ public class InMemoryTourRepository implements TourRepository{
 
     @Override
     public void save(Tour tour) {
-        if (tour != null) {
-        	tour.setId(storage.size());
+        if(tour.getId() == 0) {
+            tour.setId(storage.size()+1);
             storage.add(tour);
+        } else if (tour.getId() <= storage.size()){
+            storage.set(tour.getId()-1, tour);
         }
     }
 
@@ -24,7 +26,10 @@ public class InMemoryTourRepository implements TourRepository{
 
     @Override
     public Tour findById(int id) {
-        return storage.get(id);
+        return storage.stream()
+                .filter(tour -> tour.getId() == id)
+                .toList()
+                .get(0);
     }
 
     @Override
@@ -34,12 +39,17 @@ public class InMemoryTourRepository implements TourRepository{
 
     @Override
     public List<Tour> searchByName(String name) {
-        return this.storage.stream().filter(tour -> tour.getName() == name).collect(Collectors.toList());
+        return this.storage.stream().filter(tour -> tour.getName().equals(name)).collect(Collectors.toList());
     }
 
     @Override
     public List<Tour> searchByDescription(String description) {
-        return this.storage.stream().filter(tour -> tour.getDescription() == description).collect(Collectors.toList());
+        return this.storage.stream().filter(tour -> tour.getDescription().equals(description)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteByID(int id) {
+        this.storage.removeIf(tour -> tour.getId() == id);
     }
 
 }

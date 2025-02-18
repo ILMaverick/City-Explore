@@ -1,7 +1,5 @@
 package EVENTO;
 
-import POI.PointOfInterest;
-
 import java.util.List;
 
 
@@ -25,5 +23,5 @@ public interface EventRepository {
 
     List<Event> searchByDescription(String description);
 
-    List<Event> findByPOI(PointOfInterest pointOfInterest);
+    void deleteByID(int id);
 }

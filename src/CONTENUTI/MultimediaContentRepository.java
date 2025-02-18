@@ -25,4 +25,6 @@ public interface MultimediaContentRepository {
     List<MultimediaContent> searchByName(String name);
 
     List<MultimediaContent> searchByDescription(String description);
+
+    void deleteByID(int id);
 }

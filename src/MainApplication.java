@@ -24,8 +24,9 @@ public class MainApplication {
         ContestController contestController = new ContestController(new ContestService(contestRepository));
         EventController eventController = new EventController(new EventService(eventRepository, poiRepository));
         MultimediaContentController multimediaContentController = new MultimediaContentController(new MultimediaContentService(multimediaContentRepository, poiRepository));
-        ValidationController validationController = new ValidationController(new ValidationService(poiRepository, tourRepository, multimediaContentRepository));
-        DeletionController deletionController = new DeletionController(new DeletionService(poiRepository, eventRepository));
+        ValidationController validationController = new ValidationController(new ValidationService(poiRepository, tourRepository, multimediaContentRepository,
+                new DeletionService(poiRepository, tourRepository, contestRepository, eventRepository, multimediaContentRepository)));
+        DeletionController deletionController = new DeletionController(new DeletionService(poiRepository, tourRepository, contestRepository, eventRepository, multimediaContentRepository));
 
         boolean exit = false;
         while (!exit) {
@@ -371,8 +372,12 @@ public class MainApplication {
         while (!back) {
             System.out.println("\n=== Menu Gestione Eliminazione ===");
             System.out.println("1. Elimina POI");
-            System.out.println("2. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2): ");
+            System.out.println("2. Elimina Itinerario");
+            System.out.println("3. Elimina Contest");
+            System.out.println("4. Elimina Evento");
+            System.out.println("5. Elimina Contenuto");
+            System.out.println("6. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
 
@@ -381,6 +386,18 @@ public class MainApplication {
                     deletionController.deletePOI();
                     break;
                 case 2:
+                    deletionController.deleteTour();
+                    break;
+                case 3:
+                    deletionController.deleteContest();
+                    break;
+                case 4:
+                    deletionController.deleteEvent();
+                    break;
+                case 5:
+                    deletionController.deleteMultimediaContent();
+                    break;
+                case 6:
                     back = true;
                     break;
                 default:

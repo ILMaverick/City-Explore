@@ -1,7 +1,6 @@
 package CONTENUTI;
 
 import ELEMENT.ElementStatus;
-import POI.PointOfInterest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +11,19 @@ public class InMemoryMultimediaContent implements MultimediaContentRepository{
 
     @Override
     public void save(MultimediaContent multimediaContent) {
-        if (multimediaContent != null) {
-            multimediaContent.setId(storage.size());
+        if(multimediaContent.getId() == 0) {
+            multimediaContent.setId(storage.size()+1);
             storage.add(multimediaContent);
+        } else if (multimediaContent.getId() <= storage.size()){
+            storage.set(multimediaContent.getId()-1, multimediaContent);
         }
     }
     @Override
     public MultimediaContent findById(int id) {
-        return storage.get(id);
+        return storage.stream()
+                .filter(multimediaContent -> multimediaContent.getId() == id)
+                .toList()
+                .get(0);
     }
 
     @Override
@@ -40,5 +44,10 @@ public class InMemoryMultimediaContent implements MultimediaContentRepository{
     @Override
     public List<MultimediaContent> searchByDescription(String description) {
         return this.storage.stream().filter(multimediaContent -> multimediaContent.getDescription().equals(description)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteByID(int id) {
+        this.storage.removeIf(multimediaContent -> multimediaContent.getId() == id);
     }
 }

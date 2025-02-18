@@ -1,6 +1,5 @@
 package EVENTO;
 
-import POI.PointOfInterest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class InMemoryEventRepository implements EventRepository{
 	}
 
 	@Override
-	public List<Event> findByPOI(PointOfInterest pointOfInterest) {
-		return this.storage.stream().filter(event -> Objects.equals(event.getLocation(), pointOfInterest)).toList();
+	public void deleteByID(int id) {
+		this.storage.removeIf(event -> event.getId() == id);
 	}
 }

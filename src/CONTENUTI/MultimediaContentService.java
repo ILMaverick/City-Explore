@@ -89,10 +89,13 @@ public class MultimediaContentService {
         System.out.print("Inserisci l'ID del Contenuto: ");
         int idMC = scanner.nextInt();
 
-        PointOfInterest poi = loadMultimediaContentToPOI(idPOI, idMC);
+        PointOfInterest pointOfInterest = loadMultimediaContentToPOI(idPOI, idMC);
 
         System.out.println("Contenuto Multimediale caricato al Punto di Interesse: ");
-        System.out.println(poi);
+        System.out.println(pointOfInterest);
+
+
+
     }
 
     public void searchMultimediaContentByName() {
@@ -142,7 +145,6 @@ public class MultimediaContentService {
 
         PointOfInterest poi = poiRepository.findById(idPOI);
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
-
         multimediaContent.setPointOfInterest(poi);
         save(multimediaContent);
         poi.getMultimediaContentList().add(multimediaContent);
