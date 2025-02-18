@@ -42,7 +42,7 @@ public class MultimediaContent {
                 ",\n  resolution=" + resolution +
                 ",\n  dataCreation=" + dataCreation +
                 ",\n  author=" + author +
-                ",\n  poi=" + pointOfInterest +
+//                ",\n  poi=" + pointOfInterest +
                 ",\n  published=" + published +
                 ",\n  elementStatus=" + status +
                 "\n}";

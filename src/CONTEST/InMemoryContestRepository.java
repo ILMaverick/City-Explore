@@ -2,6 +2,7 @@ package CONTEST;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryContestRepository implements ContestRepository {
 
@@ -23,5 +24,16 @@ public class InMemoryContestRepository implements ContestRepository {
     @Override
     public Contest findById(int id) {
         return storage.get(id);
+    }
+
+
+    @Override
+    public List<Contest> searchByName(String name) {
+        return this.storage.stream().filter(contest -> contest.getName() == name).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Contest> searchByDescription(String description) {
+        return this.storage.stream().filter(contest -> contest.getDescription() == description).collect(Collectors.toList());
     }
 }

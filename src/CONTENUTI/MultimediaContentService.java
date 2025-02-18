@@ -49,29 +49,6 @@ public class MultimediaContentService {
 
     }
 
-    public MultimediaContent createMultimediaContent(String name, String description, User author, FormatFileEnum format, float duration, float dimension, float resolution) {
-        MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
-        multimediaContent.setFormatFileEnum(format);
-        multimediaContent.setDuration(duration);
-        multimediaContent.setDimension(dimension);
-        multimediaContent.setResolution(resolution);
-        multimediaContent.setDataCreation(LocalDateTime.now());
-        save(multimediaContent);
-        return multimediaContent;
-    }
-
-    public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
-
-        PointOfInterest poi = poiRepository.findById(idPOI);
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
-
-        multimediaContent.setPointOfInterest(poi);
-        save(multimediaContent);
-        poi.getMultimediaContentList().add(multimediaContent);
-        poiRepository.save(poi);
-        return poi;
-    }
-
     public void createMultimediaContent() {
         System.out.println("=== Creazione di un Contenuto Multimediale ===");
 
@@ -104,7 +81,7 @@ public class MultimediaContentService {
 
     public void loadMultimediaContentToPOI() {
 
-        System.out.println("=== Caricamento Contenuto Multimediale  su un Punto di Interesse ===");
+        System.out.println("=== Caricamento Contenuto Multimediale su un Punto di Interesse ===");
 
         System.out.print("Inserisci l'ID del Punto di Interesse: ");
         int idPOI = scanner.nextInt();
@@ -118,6 +95,81 @@ public class MultimediaContentService {
         System.out.println(poi);
     }
 
+    public void searchMultimediaContentByName() {
+        System.out.println("=== Ricerca Contenuti Multimediali tramite nome ===");
+        System.out.print("Inserisci il nome: ");
+
+        String name = scanner.nextLine();
+        List<MultimediaContent> multimediaContentList = searchMultimediaContentByName(name);
+        if(multimediaContentList.isEmpty()) {
+            System.out.println("Non e' presente un Contenuto Multimediale con questo nome.");
+        } else {
+            System.out.println("Elenco Contenuti Multimediali con il nome cercato:");
+            for(MultimediaContent multimediaContent: multimediaContentList) {
+                System.out.println(multimediaContent);
+            }
+        }
+    }
+
+    public void searchMultimediaContentByDescription() {
+        System.out.println("=== Ricerca Contenuti Multimediali tramite descrizione ===");
+        System.out.print("Inserisci la descrizione: ");
+
+        String description = scanner.nextLine();
+        List<MultimediaContent> multimediaContentList = searchMultimediaContentByDescription(description);
+        if(multimediaContentList.isEmpty()) {
+            System.out.println("Non e' presente un Contenuto Multimediale con questa descrizione.");
+        } else {
+            System.out.println("Elenco Contenuti Multimediali con la descrizione cercata:");
+            for(MultimediaContent multimediaContent: multimediaContentList) {
+                System.out.println(multimediaContent);
+            }
+        }
+    }
+
+    public MultimediaContent createMultimediaContent(String name, String description, User author, FormatFileEnum format, float duration, float dimension, float resolution) {
+        MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
+        multimediaContent.setFormatFileEnum(format);
+        multimediaContent.setDuration(duration);
+        multimediaContent.setDimension(dimension);
+        multimediaContent.setResolution(resolution);
+        multimediaContent.setDataCreation(LocalDateTime.now());
+        save(multimediaContent);
+        return multimediaContent;
+    }
+
+    public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
+
+        PointOfInterest poi = poiRepository.findById(idPOI);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
+
+        multimediaContent.setPointOfInterest(poi);
+        save(multimediaContent);
+        poi.getMultimediaContentList().add(multimediaContent);
+        poiRepository.save(poi);
+        return poi;
+    }
+
+    public void save(MultimediaContent multimediaContent) {
+        multimediaContentRepository.save(multimediaContent);
+    }
+
+    public List<MultimediaContent> getAllMultimediaContent() {
+        return multimediaContentRepository.findAll();
+    }
+
+    public MultimediaContent getMultimediaContentById(int id) {
+        return multimediaContentRepository.findById(id);
+    }
+
+    public List<MultimediaContent> searchMultimediaContentByName(String name) {
+        return multimediaContentRepository.searchByName(name);
+    }
+
+    public List<MultimediaContent> searchMultimediaContentByDescription(String description) {
+        return multimediaContentRepository.searchByDescription(description);
+    }
+
     private User getCurrentUser() {
         User user = new User();
         user.setUsername("utente_demo");
@@ -128,19 +180,6 @@ public class MultimediaContentService {
         if (scanner != null) {
             scanner.close();
         }
-    }
-
-    public void save(MultimediaContent multimediaContent) {
-        multimediaContentRepository.save(multimediaContent);
-    }
-
-
-    public List<MultimediaContent> getAllMultimediaContent() {
-        return multimediaContentRepository.findAll();
-    }
-
-    public MultimediaContent getMultimediaContentById(int id) {
-        return multimediaContentRepository.findById(id);
     }
 
 }

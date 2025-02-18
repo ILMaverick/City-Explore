@@ -23,4 +23,8 @@ public interface POIRepository {
     PointOfInterest findById(int id);
 
     List<PointOfInterest> findByStatus(ElementStatus status);
+
+    List<PointOfInterest> searchByName(String name);
+
+    List<PointOfInterest> searchByDescription(String description);
 }

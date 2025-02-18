@@ -3,7 +3,6 @@ package POI;
 import java.util.List;
 import java.util.Scanner;
 
-import EVENTO.Event;
 import OSM.OSMSearchService;
 import OSM.OverpassElement;
 import USER.User;
@@ -27,18 +26,6 @@ public class POIService {
         createPOIFromScratch("primo", "primo", 1, 1, user, POIType.Turismo);
         createPOIFromScratch("secondo", "secondo", 2, 2, user, POIType.Alloggio);
         createPOIFromScratch("terzo", "terzo", 3, 3, user, POIType.Natura);
-    }
-
-    public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
-        PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
-        poiRepository.save(poi);
-        return poi;
-    }
-    
-    public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
-        PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
-        poiRepository.save(poi);
-        return poi;
     }
 
     /**
@@ -136,6 +123,58 @@ public class POIService {
 
         System.out.println("\nPointOfInterest creato dalla ricerca OSM:");
         System.out.println(newPoi);
+    }
+
+    public void searchPOIByName() {
+        System.out.println("=== Ricerca Punti di Interesse tramite nome ===");
+        System.out.print("Inserisci il nome: ");
+
+        String name = scanner.nextLine();
+        List<PointOfInterest> pointOfInterestList = searchPOIByName(name);
+        if(pointOfInterestList.isEmpty()) {
+            System.out.println("Non e' presente un Punto di Interesse con questo nome.");
+        } else {
+            System.out.println("Elenco Punti di Interesse con il nome cercato:");
+            for(PointOfInterest pointOfInterest: pointOfInterestList) {
+                System.out.println(pointOfInterest);
+            }
+        }
+    }
+
+    public void searchPOIByDescription() {
+        System.out.println("=== Ricerca Punti di Interesse tramite descrizione ===");
+        System.out.print("Inserisci la descrizione: ");
+
+        String description = scanner.nextLine();
+        List<PointOfInterest> pointOfInterestList = searchPOIByDescription(description);
+        if(pointOfInterestList.isEmpty()) {
+            System.out.println("Non e' presente un Punto di Interesse con questa descrizione.");
+        } else {
+            System.out.println("Elenco Punti di Interesse con la descrizione cercata:");
+            for(PointOfInterest pointOfInterest: pointOfInterestList) {
+                System.out.println(pointOfInterest);
+            }
+        }
+    }
+
+    public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
+        PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
+        poiRepository.save(poi);
+        return poi;
+    }
+
+    public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
+        PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
+        poiRepository.save(poi);
+        return poi;
+    }
+
+    public List<PointOfInterest> searchPOIByName(String name) {
+        return poiRepository.searchByName(name);
+    }
+
+    public List<PointOfInterest> searchPOIByDescription(String description) {
+        return poiRepository.searchByDescription(description);
     }
 
     public List<PointOfInterest> getAllPOIs() {

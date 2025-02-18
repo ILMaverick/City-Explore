@@ -1,5 +1,7 @@
 package TOUR;
 
+import ELEMENT.ElementStatus;
+
 import java.util.List;
 
 public interface TourRepository {
@@ -17,5 +19,11 @@ public interface TourRepository {
      * Restituisce il Tour con l'id specificato, oppure null se non presente.
      */
     Tour findById(int id);
+
+    List<Tour> findByStatus(ElementStatus status);
+
+    List<Tour> searchByName(String name);
+
+    List<Tour> searchByDescription(String description);
 
 }

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import POI.InMemoryPOIRepository;
+import CONTENUTI.MultimediaContent;
 import POI.POIRepository;
-import POI.POIService;
 import POI.PointOfInterest;
 import USER.User;
 
@@ -76,6 +75,39 @@ public class TourService {
         System.out.println("\nTour creato e salvato con successo:");
         System.out.println(tour);
     }
+
+    public void searchTourByName() {
+        System.out.println("=== Ricerca Itinerario tramite nome ===");
+        System.out.print("Inserisci il nome: ");
+
+        String name = scanner.nextLine();
+        List<Tour> tourList = searchTourByName(name);
+        if(tourList.isEmpty()) {
+            System.out.println("Non e' presente un Itinerario con questo nome.");
+        } else {
+            System.out.println("Elenco Itinerari con il nome cercato:");
+            for(Tour tour: tourList) {
+                System.out.println(tour);
+            }
+        }
+    }
+
+    public void searchTourByDescription() {
+        System.out.println("=== Ricerca Itinerario tramite descrizione ===");
+        System.out.print("Inserisci la descrizione: ");
+
+        String description = scanner.nextLine();
+        List<Tour> tourList = searchTourByName(description);
+        if(tourList.isEmpty()) {
+            System.out.println("Non e' presente un Itinerario con questa descrizione.");
+        } else {
+            System.out.println("Elenco Itinerari con la descrizione cercata:");
+            for(Tour tour: tourList) {
+                System.out.println(tour);
+            }
+        }
+    }
+
     
     /**
      * Metodo interattivo per costruire un Tour a partire da una lista di PointOfInterest.
@@ -157,6 +189,14 @@ public class TourService {
             }
         }
         return gruppi;
+    }
+
+    public List<Tour> searchTourByName(String name) {
+        return tourRepository.searchByName(name);
+    }
+
+    public List<Tour> searchTourByDescription(String description) {
+        return tourRepository.searchByDescription(description);
     }
 
     public void save(Tour tour) {

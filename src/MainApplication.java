@@ -1,37 +1,25 @@
 import java.util.Scanner;
 
-import CONTENUTI.InMemoryMultimediaContent;
-import CONTENUTI.MultimediaContentController;
-import CONTENUTI.MultimediaContentRepository;
-import CONTENUTI.MultimediaContentService;
-import CONTEST.ContestController;
-import EVENTO.EventController;
-import EVENTO.EventRepository;
-import EVENTO.EventService;
-import EVENTO.InMemoryEventRepository;
-import POI.InMemoryPOIRepository;
-import POI.POIController;
-import POI.POIRepository;
-import POI.POIService;
-import TOUR.InMemoryTourRepository;
-import TOUR.TourController;
-import TOUR.TourRepository;
-import TOUR.TourService;
-import VALIDAZIONE.ValidationController;
-import VALIDAZIONE.ValidationService;
+import CONTENUTI.*;
+import CONTEST.*;
+import EVENTO.*;
+import POI.*;
+import TOUR.*;
+import VALIDAZIONE.*;
 
 
 public class MainApplication {
     public static void main(String[] args) {
         POIRepository poiRepository = new InMemoryPOIRepository();
         TourRepository tourRepository = new InMemoryTourRepository();
+        ContestRepository contestRepository = new InMemoryContestRepository();
         EventRepository eventRepository = new InMemoryEventRepository();
         MultimediaContentRepository multimediaContentRepository = new InMemoryMultimediaContent();
 
         Scanner scanner = new Scanner(System.in);
         POIController poiController = new POIController(new POIService(poiRepository));
         TourController tourController = new TourController(new TourService(tourRepository, poiRepository));
-        ContestController contestController = new ContestController();
+        ContestController contestController = new ContestController(new ContestService(contestRepository));
         EventController eventController = new EventController(new EventService(eventRepository, poiRepository));
         MultimediaContentController multimediaContentController = new MultimediaContentController(new MultimediaContentService(multimediaContentRepository, poiRepository));
         ValidationController validationController = new ValidationController(new ValidationService(poiRepository, tourRepository, multimediaContentRepository));
@@ -115,8 +103,10 @@ public class MainApplication {
             System.out.println("1. Crea PointOfInterest da zero");
             System.out.println("2. Crea PointOfInterest da OSM");
             System.out.println("3. Visualizza tutti i PointOfInterest salvati");
-            System.out.println("4. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2, 3 o 4): ");
+            System.out.println("4. Ricerca Punto di Interesse tramite nome");
+            System.out.println("5. Ricerca Punto di Interesse tramite descrizione");
+            System.out.println("6. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -131,6 +121,11 @@ public class MainApplication {
                     poiController.displayAllPOIs();
                     break;
                 case 4:
+                    poiController.searchPOIByName();
+                    break;
+                case 5:
+                    poiController.searchPOIByDescription();
+                case 6:
                     back = true;
                     break;
                 default:
@@ -149,10 +144,12 @@ public class MainApplication {
         boolean back = false;
         while (!back) {
             System.out.println("\n=== Menu Gestione Tour ===");
-            System.out.println("1. Crea Tour da POI");
-            System.out.println("2. Visualizza tutti i Tour salvati");
-            System.out.println("3. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            System.out.println("1. Crea Itinerario da POI");
+            System.out.println("2. Visualizza tutti gli Itinerari salvati");
+            System.out.println("3. Ricerca Itinerario tramite nome");
+            System.out.println("4. Ricerca Itinerario tramite descrizione");
+            System.out.println("5. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -164,6 +161,11 @@ public class MainApplication {
                     tourController.displayAllTours();
                     break;
                 case 3:
+                    tourController.searchTourByName();
+                    break;
+                case 4:
+                    tourController.searchTourByDescription();
+                case 5:
                     back = true;
                     break;
                 default:
@@ -185,8 +187,10 @@ public class MainApplication {
             System.out.println("\n=== Menu Gestione Contest ===");
             System.out.println("1. Crea Contest");
             System.out.println("2. Visualizza tutti i Contest salvati");
-            System.out.println("3. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2 o 3): ");
+            System.out.println("3. Ricerca Contest tramite nome");
+            System.out.println("4. Ricerca Contest tramite descrizione");
+            System.out.println("5. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
 
@@ -198,6 +202,11 @@ public class MainApplication {
                     contestController.displayAllContest();
                     break;
                 case 3:
+                    contestController.searchContestByName();
+                    break;
+                case 4:
+                    contestController.searchContestByDescription();
+                case 5:
                     back = true;
                     break;
                 default:
@@ -221,8 +230,10 @@ public class MainApplication {
             System.out.println("3. Aggiorna Evento");
             System.out.println("4. Visualizza tutti gli Eventi salvati");
             System.out.println("5. Visualizza tutti i POI salvati");
-            System.out.println("6. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5 o 6): ");
+            System.out.println("6. Ricerca Evento tramite nome");
+            System.out.println("7. Ricerca Evento tramite descrizione");
+            System.out.println("8. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6, 7, 8): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -243,6 +254,12 @@ public class MainApplication {
                     eventController.displayAllPoI();
                     break;
                 case 6:
+                    eventController.searchEventByName();
+                    break;
+                case 7:
+                    eventController.searchEventByDescription();
+                    break;
+                case 8:
                     back = true;
                     break;
                 default:
@@ -264,8 +281,10 @@ public class MainApplication {
             System.out.println("1. Crea Contenuto");
             System.out.println("2. Carica Contenuto ad un POI");
             System.out.println("3. Visualizza tutti i Contenuti Multimediali salvati");
-            System.out.println("4. Torna al menu principale");
-            System.out.print("Seleziona un'opzione (1, 2, 3 o 4): ");
+            System.out.println("4. Ricerca Contenuto tramite nome");
+            System.out.println("5. Ricerca Contenuto tramite descrizione");
+            System.out.println("6. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6): ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
 
@@ -280,6 +299,12 @@ public class MainApplication {
                     multimediaContentController.displayAllMultimediaContent();
                     break;
                 case 4:
+                    multimediaContentController.searchMultimediaContentByName();
+                    break;
+                case 5:
+                    multimediaContentController.searchMultimediaContentByDescription();
+                    break;
+                case 6:
                     back = true;
                     break;
                 default:

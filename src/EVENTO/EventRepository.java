@@ -1,5 +1,8 @@
 package EVENTO;
 
+import ELEMENT.ElementStatus;
+import TOUR.Tour;
+
 import java.util.List;
 
 
@@ -18,5 +21,9 @@ public interface EventRepository {
      * Restituisce il Evento con l'id specificato, oppure null se non presente.
      */
     Event findById(int id);
+
+    List<Event> searchByName(String name);
+
+    List<Event> searchByDescription(String description);
 
 }

@@ -5,8 +5,8 @@ import java.util.List;
 public class ContestController {
     private ContestService contestService;
 
-    public ContestController() {
-        this.contestService = new ContestService();
+    public ContestController(ContestService contestService) {
+        this.contestService = contestService;
     }
 
     public void initializer() {
@@ -27,6 +27,13 @@ public class ContestController {
                 System.out.println(contest);
             }
         }
+    }
+    public void searchContestByName() {
+        contestService.searchContestByName();
+    }
+
+    public void searchContestByDescription() {
+        contestService.searchContestByDescription();
     }
 
     public void close() {

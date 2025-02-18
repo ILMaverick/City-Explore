@@ -27,6 +27,14 @@ public class TourController {
             }
         }
     }
+
+    public void searchTourByName() {
+        tourService.searchTourByName();
+    }
+
+    public void searchTourByDescription() {
+        tourService.searchTourByDescription();
+    }
     
     public void close() {
         tourService.close();

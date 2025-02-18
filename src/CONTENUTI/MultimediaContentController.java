@@ -33,6 +33,14 @@ public class MultimediaContentController {
         }
     }
 
+    public void searchMultimediaContentByName() {
+        multimediaContentService.searchMultimediaContentByName();
+    }
+
+    public void searchMultimediaContentByDescription() {
+        multimediaContentService.searchMultimediaContentByDescription();
+    }
+
     public void close() {
         multimediaContentService.close();
     }

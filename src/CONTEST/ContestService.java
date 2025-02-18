@@ -1,5 +1,6 @@
 package CONTEST;
 
+import EVENTO.Event;
 import POI.POIType;
 import USER.User;
 
@@ -13,9 +14,9 @@ public class ContestService {
     private Scanner scanner;
     private ContestRepository contestRepository;
 
-    public ContestService() {
+    public ContestService(ContestRepository contestRepository) {
         scanner = new Scanner(System.in);
-        this.contestRepository = new InMemoryContestRepository();
+        this.contestRepository = contestRepository;
     }
 
     public void initializer() {
@@ -74,6 +75,39 @@ public class ContestService {
         System.out.println(newContest);
     }
 
+    public void searchContestByName() {
+
+        System.out.println("=== Ricerca Contest tramite nome ===");
+        System.out.print("Inserisci il nome: ");
+
+        String name = scanner.nextLine();
+        List<Contest> contestList = searchContestByName(name);
+        if(contestList.isEmpty()) {
+            System.out.println("Non e' presente un Contest con questo nome.");
+        } else {
+            System.out.println("Elenco Contest con il nome cercato:");
+            for(Contest contest: contestList) {
+                System.out.println(contest);
+            }
+        }
+    }
+
+    public void searchContestByDescription() {
+        System.out.println("=== Ricerca Contest tramite descrizione ===");
+        System.out.print("Inserisci la descrizione: ");
+
+        String description = scanner.nextLine();
+        List<Contest> contestList = searchContestByDescription(description);
+        if(contestList.isEmpty()) {
+            System.out.println("Non e' presente un Contest con questa descrizione.");
+        } else {
+            System.out.println("Elenco Contest con la descrizione cercata:");
+            for(Contest contest: contestList) {
+                System.out.println(contest);
+            }
+        }
+    }
+
     public void saveContest(Contest contest) {
         contestRepository.save(contest);
     }
@@ -84,6 +118,14 @@ public class ContestService {
 
     public Contest getContestById(int id) {
         return contestRepository.findById(id);
+    }
+
+    public List<Contest> searchContestByName(String name) {
+        return contestRepository.searchByName(name);
+    }
+
+    public List<Contest> searchContestByDescription(String description) {
+        return contestRepository.searchByDescription(description);
     }
 
     private User getCurrentUser() {

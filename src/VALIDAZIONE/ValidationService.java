@@ -2,15 +2,11 @@ package VALIDAZIONE;
 
 import CONTENUTI.MultimediaContent;
 import CONTENUTI.MultimediaContentRepository;
-import CONTENUTI.MultimediaContentService;
 import ELEMENT.ElementStatus;
-import POI.InMemoryPOIRepository;
 import POI.POIRepository;
-import POI.POIService;
 import POI.PointOfInterest;
 import TOUR.Tour;
 import TOUR.TourRepository;
-import TOUR.TourService;
 import USER.User;
 
 import java.util.List;
@@ -33,39 +29,54 @@ public class ValidationService {
 
     public void validation() {
         System.out.println("=== Validazione Punti di Interesse ===");
-        System.out.println("Seleziona 1 per approvare o 2 per rifiutare: ");
 
         List<PointOfInterest> pointOfInterestList = getAllPendingPOI();
         for(PointOfInterest p: pointOfInterestList) {
-            if(scanner.nextLine().equals("1")) {
+            System.out.println(p);
+            System.out.print("Scrivi 1 per approvare o 2 per rifiutare: ");
+            int num = scanner.nextInt();
+            if(num == 1) {
                 approvePOI(p.getId());
-            } else if(scanner.nextLine().equals("2")) {
+            } else if(num == 2) {
                 String reason = scanner.nextLine();
                 rejectPOI(p.getId(), reason);
+            } else {
+                System.out.println("Opzione inesistente, il Punto di Interesse e' ancora pendente.");
             }
         }
 
         System.out.println("=== Validazione Itinerari ===");
-        System.out.println("Seleziona 1 per approvare o 2 per rifiutare: ");
+
         List<Tour> tourList = getAllPendingTour();
         for(Tour t: tourList) {
-            if(scanner.nextLine().equals("1")) {
+            System.out.println(t);
+            System.out.print("Scrivi 1 per approvare o 2 per rifiutare: ");
+            int num = scanner.nextInt();
+            if(num == 1) {
                 approveTour(t);
-            } else if(scanner.nextLine().equals("2")) {
+            } else if(num == 2) {
                 String reason = scanner.nextLine();
                 rejectTour(t, reason);
+            } else {
+                System.out.println("Opzione inesistente, l'Itinerario e' ancora pendente.");
             }
         }
 
         System.out.println("=== Validazione Contenuti Multimediali ===");
-        System.out.println("Seleziona 1 per approvare o 2 per rifiutare: ");
+
         List<MultimediaContent> multimediaContentList = getAllPendingMultimediaContent();
         for(MultimediaContent mc: multimediaContentList) {
-            if(scanner.nextLine().equals("1")) {
+            System.out.println(mc);
+            System.out.print("Scrivi 1 per approvare o 2 per rifiutare: ");
+            int num = scanner.nextInt();
+            if(num == 1) {
                 approveMultimediaContent(mc);
-            } else if(scanner.nextLine().equals("2")) {
+            } else if(num == 2) {
                 String reason = scanner.nextLine();
                 rejectMultimediaContent(mc, reason);
+            } else {
+                System.out.println("Opzione inesistente, il Contenuto e' ancora pendente.");
+                continue;
             }
         }
 
@@ -129,15 +140,15 @@ public class ValidationService {
     }
 
     public List<PointOfInterest> getAllPendingPOI() {
-        return poiRepository.findAll().stream().filter(poi -> poi.getStatus() == ElementStatus.Pending).toList();
+        return poiRepository.findByStatus(ElementStatus.Pending);
     }
 
     public List<Tour> getAllPendingTour() {
-        return tourRepository.findAll().stream().filter(tour -> tour.getStatus() == ElementStatus.Pending).toList();
+        return tourRepository.findByStatus(ElementStatus.Pending);
     }
 
     public List<MultimediaContent> getAllPendingMultimediaContent() {
-        return multimediaContentRepository.findAll().stream().filter(multimediaContent -> multimediaContent.getStatus().equals(ElementStatus.Pending)).toList();
+        return multimediaContentRepository.findByStatus(ElementStatus.Pending);
     }
 
     private User getCurrentUser() {

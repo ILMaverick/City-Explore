@@ -55,6 +55,14 @@ public class EventController {
         }
     }
 
+    public void searchEventByName() {
+        eventService.searchEventByName();
+    }
+
+    public void searchEventByDescription() {
+        eventService.searchEventByDescription();
+    }
+
     public void close() {
         eventService.close();
     }

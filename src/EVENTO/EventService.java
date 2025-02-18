@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+import CONTENUTI.MultimediaContent;
 import POI.POIRepository;
 import POI.PointOfInterest;
 import USER.User;
@@ -71,10 +72,10 @@ public class EventService {
     public void createEventFromInput() {
         System.out.println("=== Creazione di un nuovo Evento ===");
 
-        System.out.print("Inserisci il nome dell'evento: ");
+        System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
 
-        System.out.print("Inserisci la descrizione dell'evento: ");
+        System.out.print("Inserisci la descrizione: ");
         String description = scanner.nextLine();
 
         System.out.print("Inserisci lo scope: ");
@@ -126,7 +127,7 @@ public class EventService {
         PointOfInterest poi = addEventToPOI(idPOI, idEvent);
 
         System.out.println("Evento aggiunto al Punto di Interesse: ");
-        //System.out.print(poi);
+        System.out.print(poi);
     }
 
     public void updateEvent() {
@@ -137,11 +138,12 @@ public class EventService {
 
         Event selectedEvent = getEventById(idEvent);
         System.out.println(selectedEvent);
+        System.out.println("Per aggiornare l'Evento, inserire i dati negli appositi campi, compresi quelli del precedente");
 
-        System.out.print("Inserisci il nome dell'evento: ");
+        System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
 
-        System.out.print("Inserisci la descrizione dell'evento: ");
+        System.out.print("Inserisci la descrizione: ");
         String description = scanner.nextLine();
 
         System.out.print("Inserisci lo scope: ");
@@ -181,6 +183,39 @@ public class EventService {
         System.out.println(selectedEvent);
     }
 
+    public void searchEventByName() {
+
+        System.out.println("=== Ricerca Contenuti Multimediali tramite nome ===");
+        System.out.print("Inserisci il nome: ");
+
+        String name = scanner.nextLine();
+        List<Event> eventList = searchEventByName(name);
+        if(eventList.isEmpty()) {
+            System.out.println("Non e' presente un Evento con questo nome.");
+        } else {
+            System.out.println("Elenco Eventi con il nome cercato:");
+            for(Event event: eventList) {
+                System.out.println(event);
+            }
+        }
+    }
+
+    public void searchEventByDescription() {
+        System.out.println("=== Ricerca Contenuti Multimediali tramite descrizione ===");
+        System.out.print("Inserisci la descrizione: ");
+
+        String description = scanner.nextLine();
+        List<Event> eventList = searchEventByDescription(description);
+        if(eventList.isEmpty()) {
+            System.out.println("Non e' presente un Evento con questa descrizione.");
+        } else {
+            System.out.println("Elenco Eventi con la descrizione cercata:");
+            for(Event event: eventList) {
+                System.out.println(event);
+            }
+        }
+    }
+
     /**
      * Salva l'Evento nella repository.
      */
@@ -215,9 +250,20 @@ public class EventService {
             eventSelected.setTime(event.getTime());
             eventSelected.setPrice(event.getPrice());
             eventRepository.save(eventSelected);
-            return eventSelected;
         }
-        return null;
+        return eventSelected;
+    }
+
+    public List<PointOfInterest> getAllPoiFromEventRepository() {
+        return poiRepository.findAll();
+    }
+
+    public List<Event> searchEventByName(String name) {
+        return eventRepository.searchByName(name);
+    }
+
+    public List<Event> searchEventByDescription(String description) {
+        return eventRepository.searchByDescription(description);
     }
 
     // Metodo dummy per ottenere l'utente corrente (da sostituire con logica reale)
@@ -236,8 +282,6 @@ public class EventService {
     /**
      * Restituisce tutti i poi.
      */
-    public List<PointOfInterest> getAllPoiFromEventRepository() {
-        return poiRepository.findAll();
-    }
+
 }
 

@@ -38,7 +38,13 @@ public class POIController {
             }
         }
     }
+    public void searchPOIByName() {
+        poiService.searchPOIByName();
+    }
 
+    public void searchPOIByDescription() {
+        poiService.searchPOIByDescription();
+    }
     public void close() {
         poiService.close();
     }
