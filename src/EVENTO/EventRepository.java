@@ -3,20 +3,25 @@ package EVENTO;
 import java.util.List;
 
 
-public interface EventoRepository {
+public interface EventRepository {
 	/**
      * Salva un oggetto Evento.
      */
-    void save(Evento evento);
+    void save(Event event);
 
     /**
      * Restituisce tutti gli oggetti Evento salvati.
      */
-    List<Evento> findAll();
+    List<Event> findAll();
 
     /**
      * Restituisce il Evento con l'id specificato, oppure null se non presente.
      */
-    Evento findById(String id);
+    Event findById(int id);
 
+    List<Event> searchByName(String name);
+
+    List<Event> searchByDescription(String description);
+
+    void deleteByID(int id);
 }

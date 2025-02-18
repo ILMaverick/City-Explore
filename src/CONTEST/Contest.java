@@ -1,6 +1,7 @@
 package CONTEST;
 
 import ELEMENT.AbstractElement;
+import EVENTO.Event;
 import USER.User;
 
 import java.time.LocalDate;
@@ -14,8 +15,12 @@ public class Contest extends AbstractElement {
     private String prize;
     private List<User> participationContestList = new ArrayList<>();
     private LocalDate deadline;
+
+    public final List<Event> eventList;
+
     public Contest(String name, String description, User author) {
         super(name, description, author);
+        this.eventList = new ArrayList<>();
     }
 
     public String getRules() {
@@ -54,18 +59,22 @@ public class Contest extends AbstractElement {
         this.deadline = deadline;
     }
 
+    public List<Event> getEventList() {
+        return eventList;
+    }
+
     @Override
     public String toString() {
         return "Contest{" +
                 "id='" + super.getId() + "\'" +
-                ", name='" + super.getName() + "\'" +
-                ", description='" + super.getDescription() + "\'" +
-                ", author='" + super.getAuthor() + "\'" +
-                ", rules='" + rules + '\'' +
-                ", goal='" + goal + '\'' +
-                ", prize='" + prize + '\'' +
-                ", participationContestList='" + participationContestList + '\'' +
-                ", deadline='" + deadline +
-                '}';
+                ",\n  name='" + super.getName() + "\'" +
+                ",\n  description='" + super.getDescription() + "\'" +
+                ",\n  author='" + super.getAuthor() + "\'" +
+                ",\n  rules='" + rules + '\'' +
+                ",\n  goal='" + goal + '\'' +
+                ",\n  prize='" + prize + '\'' +
+                ",\n  participationContestList='" + participationContestList + '\'' +
+                ",\n  deadline='" + deadline +
+                "\n}";
     }
 }

@@ -1,12 +1,14 @@
 package POI;
 
-import CONTENUTI.MultimediaContent;
+import ELEMENT.ElementStatus;
 
 import java.util.List;
 
 public interface POIRepository {
     /**
      * Salva un oggetto PointOfInterest.
+     *
+     * @return
      */
     void save(PointOfInterest poi);
 
@@ -18,6 +20,13 @@ public interface POIRepository {
     /**
      * Restituisce il PointOfInterest con l'id specificato, oppure null se non presente.
      */
-    PointOfInterest findById(String id);
+    PointOfInterest findById(int id);
 
+    List<PointOfInterest> findByStatus(ElementStatus status);
+
+    List<PointOfInterest> searchByName(String name);
+
+    List<PointOfInterest> searchByDescription(String description);
+
+    void deleteByID(int id);
 }

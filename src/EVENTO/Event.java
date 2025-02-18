@@ -1,22 +1,28 @@
 package EVENTO;
 
+import CONTEST.Contest;
 import ELEMENT.AbstractElement;
 import POI.PointOfInterest;
 import USER.User;
 
-public class Evento extends AbstractElement {
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Event extends AbstractElement {
 	private String scope;
 	private String activity;
 	private String organization;
 	private String theme;
 	private String category;
 	private double price;
-	private PointOfInterest location;
-	private double orario;
+	private LocalDateTime time;
+	private List<PointOfInterest> pointOfInterestList;
+	private List<Contest> contestList;
 	
-	public Evento(String name, String description, User author, String scope,
-			String activity, String organization, String theme, String category,
-			double price, PointOfInterest location, double orario) {
+	public Event(String name, String description, User author, String scope,
+				 String activity, String organization, String theme, String category,
+				 double price, LocalDateTime time) {
 		super(name, description, author);
 		this.scope = scope;
 		this.activity = activity;
@@ -24,36 +30,41 @@ public class Evento extends AbstractElement {
 		this.theme = theme;
 		this.category = category;
 		this.price = price;
-		this.location = location;
-		this.orario = orario;
+		this.time = time;
 		super.setPublished(true);
+		this.pointOfInterestList = new ArrayList<>();
+		this.contestList = new ArrayList<>();
 	}
 	
 	@Override
     public String toString() {
         return "Evento {" +
-                "\n  id='" + super.getId() + '\'' +
-                ",\n  name='" + super.getName() + '\'' +
-                ",\n  description='" + super.getDescription() + '\'' +
-                ",\n  scopo=" + scope +
+                "\n  id=" + super.getId() +
+                ",\n  name=" + super.getName() +
+                ",\n  description='" + super.getDescription() +
+                ",\n  scope=" + scope +
                 ",\n  activity=" + activity +
                 ",\n  organization=" + organization +
-                ",\n  tema=" + theme +
-                ",\n  categoria=" + category +
+                ",\n  theme=" + theme +
+                ",\n  category=" + category +
                 ",\n  price=" + price +
-                ",\n  luogo=" + location.toString() +
+//                ",\n  pointOfInterestList=" + pointOfInterestList +
                 ",\n  author=" + super.getAuthor() +
-                ",\n  orario=" + orario +
+                ",\n  time=" + time +
                 ",\n  published=" + super.isPublished() +
                 "\n}";
     }
 
-	public PointOfInterest getLocation() {
-		return location;
+	public List<PointOfInterest> getPointOfInterestList() { return pointOfInterestList; }
+
+	public List<Contest> getContestList() { return contestList; }
+
+	public LocalDateTime getTime() {
+		return time;
 	}
 
-	public double getOrario() {
-		return orario;
+	public void setTime(LocalDateTime time) {
+		this.time = time;
 	}
 
 	public String getScope() {
@@ -84,8 +95,8 @@ public class Evento extends AbstractElement {
 		return theme;
 	}
 
-	public void setTheme(String teme) {
-		this.theme = teme;
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
 	public String getCategory() {

@@ -1,5 +1,6 @@
 package CONTENUTI;
 
+import ELEMENT.ElementStatus;
 import POI.PointOfInterest;
 
 import USER.User;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class MultimediaContent {
 
-    private String id;
+    private int id;
     private String name;
     private String description;
     private FormatFileEnum formatFileEnum;
@@ -18,37 +19,39 @@ public class MultimediaContent {
     private LocalDateTime dataCreation;
     private User author;
     private boolean published;
+    private ElementStatus status;
     private PointOfInterest pointOfInterest;
 
     public MultimediaContent(String name, String description, User author) {
-        this.id = "custom_" + System.currentTimeMillis();
         this.name = (name != null ) ? name : "Senza nome";
         this.description = description;
         this.author = author;
         this.published = false;
+        this.status = ElementStatus.Pending;
     }
 
     @Override
     public String toString() {
-        return "MultimediaContent{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", formatFileEnum=" + formatFileEnum +
-                ", duration=" + duration +
-                ", dimension=" + dimension +
-                ", resolution=" + resolution +
-                ", dataCreation=" + dataCreation +
-                ", author=" + author +
-                ", poi=" + pointOfInterest +
-                ", published=" + published +
-                '}';
+        return "MultimediaContent {" +
+                "\n  id='" + id + '\'' +
+                ",\n  name='" + name + '\'' +
+                ",\n  description='" + description + '\'' +
+                ",\n  formatFileEnum=" + formatFileEnum +
+                ",\n  duration=" + duration +
+                ",\n  dimension=" + dimension +
+                ",\n  resolution=" + resolution +
+                ",\n  dataCreation=" + dataCreation +
+                ",\n  author=" + author +
+//                ",\n  poi=" + pointOfInterest +
+                ",\n  published=" + published +
+                ",\n  elementStatus=" + status +
+                "\n}";
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     public String getName() {
@@ -84,6 +87,12 @@ public class MultimediaContent {
     }
     public void setPublished(boolean published) {
         this.published = published;
+    }
+    public ElementStatus getStatus() {
+        return status;
+    }
+    public void setStatus(ElementStatus status) {
+        this.status = status;
     }
     public PointOfInterest getPointOfInterest() {
         return pointOfInterest;

@@ -1,5 +1,7 @@
 package CONTENUTI;
 
+import ELEMENT.ElementStatus;
+
 import java.util.List;
 
 public interface MultimediaContentRepository {
@@ -16,5 +18,13 @@ public interface MultimediaContentRepository {
     /**
      * Restituisce il Contenuto con l'id specificato, oppure null se non presente.
      */
-    MultimediaContent findById(String id);
+    MultimediaContent findById(int id);
+
+    List<MultimediaContent> findByStatus(ElementStatus status);
+
+    List<MultimediaContent> searchByName(String name);
+
+    List<MultimediaContent> searchByDescription(String description);
+
+    void deleteByID(int id);
 }

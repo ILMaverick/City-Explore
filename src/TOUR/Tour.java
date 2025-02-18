@@ -1,23 +1,26 @@
 package TOUR;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import ELEMENT.AbstractElement;
 import USER.User;
 
 public class Tour extends AbstractElement {
-	private List<Percorso> percorsi;
+	private List<Way> wayList;
 
-	public Tour(String name, String description, User author, List<Percorso> percorsi) {
+	public Tour(String name, String description, User author) {
 		super(name, description, author);
-		this.percorsi = percorsi;
+		this.wayList = new ArrayList<>();
 	}
 
-	public List<Percorso> getPercorsi() {
-		return percorsi;
+	public List<Way> getWayList() {
+		return wayList;
 	}
 
+	public void setWayList(List<Way> wayList) {
+		this.wayList = wayList;
+	}
 	
 	@Override
 	public String toString() {
@@ -28,11 +31,11 @@ public class Tour extends AbstractElement {
 	      .append(",\n  description='").append(super.getDescription()).append('\'')
 	      .append(",\n  percorsi=");
 	    
-	    if (percorsi == null || percorsi.isEmpty()) {
+	    if (wayList == null || wayList.isEmpty()) {
 	        sb.append("Nessun percorso");
 	    } else {
 	        // Itera la lista dei percorsi e chiama il loro toString()
-	        for (Percorso p : percorsi) {
+	        for (Way p : wayList) {
 	            sb.append("\n    ").append(p.toString());
 	        }
 	    }

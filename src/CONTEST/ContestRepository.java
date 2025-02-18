@@ -16,5 +16,11 @@ public interface ContestRepository {
     /**
      * Restituisce il Contest con l'id specificato, oppure null se non presente.
      */
-    Contest findById(String id);
+    Contest findById(int id);
+
+    List<Contest> searchByName(String name);
+
+    List<Contest> searchByDescription(String description);
+
+    void deleteByID(int id);
 }

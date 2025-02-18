@@ -1,27 +1,53 @@
 package CONTENUTI;
 
+import ELEMENT.ElementStatus;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class InMemoryMultimediaContent implements MultimediaContentRepository{
-    private Map<String, MultimediaContent> storage = new HashMap<>();
+    private final List<MultimediaContent> storage = new ArrayList<>();
 
     @Override
     public void save(MultimediaContent multimediaContent) {
-        if (multimediaContent != null) {
-            storage.put(multimediaContent.getId(), multimediaContent);
+        if(multimediaContent.getId() == 0) {
+            multimediaContent.setId(storage.size()+1);
+            storage.add(multimediaContent);
+        } else if (multimediaContent.getId() <= storage.size()){
+            storage.set(multimediaContent.getId()-1, multimediaContent);
         }
+    }
+    @Override
+    public MultimediaContent findById(int id) {
+        return storage.stream()
+                .filter(multimediaContent -> multimediaContent.getId() == id)
+                .toList()
+                .get(0);
     }
 
     @Override
     public List<MultimediaContent> findAll() {
-        return new ArrayList<>(storage.values());
+        return this.storage;
     }
 
     @Override
-    public MultimediaContent findById(String id) {
-        return storage.get(id);
+    public List<MultimediaContent> findByStatus(ElementStatus status) {
+        return this.storage.stream().filter(multimediaContent -> multimediaContent.getStatus() == status).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MultimediaContent> searchByName(String name) {
+        return this.storage.stream().filter(multimediaContent -> multimediaContent.getName().equals(name)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MultimediaContent> searchByDescription(String description) {
+        return this.storage.stream().filter(multimediaContent -> multimediaContent.getDescription().equals(description)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteByID(int id) {
+        this.storage.removeIf(multimediaContent -> multimediaContent.getId() == id);
     }
 }

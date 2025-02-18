@@ -6,6 +6,8 @@ import java.util.List;
 
 import CONTENUTI.MultimediaContent;
 import ELEMENT.AbstractElement;
+import EVENTO.Event;
+import TOUR.Tour;
 import USER.User;
 
 public class PointOfInterest extends AbstractElement{
@@ -14,7 +16,9 @@ public class PointOfInterest extends AbstractElement{
 	private Date open_time;
 	private Date close_time;
 	private POIType type;
-	private List<MultimediaContent> multimediaContentList;
+	private final List<MultimediaContent> multimediaContentList;
+	public final List<Event> eventList;
+	public final List<Tour> tourList;
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
 		super(name, description, author);
@@ -23,23 +27,28 @@ public class PointOfInterest extends AbstractElement{
 		this.open_time = null;  
 		this.close_time = null; 
 		this.type = type;
-		multimediaContentList = new ArrayList<>();
+		this.multimediaContentList = new ArrayList<>();
+		this.eventList = new ArrayList<>();
+		this.tourList = new ArrayList<>();
 	}
 	
 	@Override
 	public String toString() {
 		return "PointOfInterest {" +
-				"\n  id='" + super.getId() + '\'' +
-				",\n  name='" + super.getName() + '\'' +
-				",\n  description='" + super.getDescription() + '\'' +
+				"\n  id=" + super.getId() +
+				",\n  name=" + super.getName() +
+				",\n  description=" + super.getDescription() +
 				",\n  latitude=" + latitude +
 				",\n  longitude=" + longitude +
 				",\n  open_time=" + open_time +
 				",\n  close_time=" + close_time +
-				",\n  author=" + super.getAuthor() +
+    			",\n  author=" + super.getAuthor() +
 				",\n  type=" + type +
-				",\n  multimediaContent=" + multimediaContentList +
+//				",\n  multimediaContentList=" + multimediaContentList +
+//				",\n  eventList=" + eventList +
+//				",\n  tourList=" + tourList +
 				",\n  published=" + super.isPublished() +
+				",\n  ElementStatus=" + getStatus() +
 				"\n}";
 	}
 
@@ -80,5 +89,11 @@ public class PointOfInterest extends AbstractElement{
 	        this.type = type;
 	    }
 
-	public List<MultimediaContent> getMultimediaContentList() { return multimediaContentList; }
+	public List<MultimediaContent> getMultimediaContentList() { return this.multimediaContentList; }
+
+	public List<Event> getEvents() {
+		return this.eventList;
+	}
+
+	public List<Tour> getTourList() { return tourList; }
 }

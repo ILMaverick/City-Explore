@@ -8,6 +8,14 @@ public class User {
 	public String email;
 	public String password;
 	public Role role;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 	
 	 public String getUsername() {
 		 return username;
@@ -20,4 +28,6 @@ public class User {
 	 public String toString() {
 		 return "User: " + username;
 	 }
+
+
 }
