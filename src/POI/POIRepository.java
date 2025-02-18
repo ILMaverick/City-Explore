@@ -27,4 +27,6 @@ public interface POIRepository {
     List<PointOfInterest> searchByName(String name);
 
     List<PointOfInterest> searchByDescription(String description);
+
+    void deleteByID(int id);
 }

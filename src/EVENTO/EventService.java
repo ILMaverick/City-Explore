@@ -56,7 +56,7 @@ public class EventService {
             System.out.println("Punto di interesse trovato: ");
             event.setLocation(poi);
             eventRepository.save(event);
-            poi.setEvent(event);
+            poi.getEvents().add(event);
             poiRepository.save(poi);
         } else {
             System.out.println("Punto di interesse non trovato.");
@@ -140,6 +140,8 @@ public class EventService {
         System.out.println(selectedEvent);
         System.out.println("Per aggiornare l'Evento, inserire i dati negli appositi campi, compresi quelli del precedente");
 
+        scanner.nextLine();
+
         System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
 
@@ -176,6 +178,7 @@ public class EventService {
         User currentUser = getCurrentUser();
 
         Event newEvent = new Event(name, description, currentUser, scope, activity, organization, theme, category, price, time);
+        //Event newEvent = new Event(name, "description", currentUser, "scope", "activity", "organization", "theme", "category", 0, LocalDateTime.of(2025,02,17, 15,48));
 
         selectedEvent = updateEvent(idEvent, newEvent);
 

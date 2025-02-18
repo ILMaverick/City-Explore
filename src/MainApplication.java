@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 import CONTENUTI.*;
 import CONTEST.*;
+import ELIMINAZIONE.DeletionController;
+import ELIMINAZIONE.DeletionService;
 import EVENTO.*;
 import POI.*;
 import TOUR.*;
@@ -23,6 +25,7 @@ public class MainApplication {
         EventController eventController = new EventController(new EventService(eventRepository, poiRepository));
         MultimediaContentController multimediaContentController = new MultimediaContentController(new MultimediaContentService(multimediaContentRepository, poiRepository));
         ValidationController validationController = new ValidationController(new ValidationService(poiRepository, tourRepository, multimediaContentRepository));
+        DeletionController deletionController = new DeletionController(new DeletionService(poiRepository, eventRepository));
 
         boolean exit = false;
         while (!exit) {
@@ -34,8 +37,9 @@ public class MainApplication {
             System.out.println("4. Gestione Evento");
             System.out.println("5. Gestione Contenuti Multimediale");
             System.out.println("6. Validazione Elementi e Contenuti Pendenti");
-            System.out.println("7. Esci");
-            System.out.print("Seleziona un'opzione (0, 1, 2, 3, 4, 5, 6, 7): ");
+            System.out.println("7. Eliminazione Elementi e Contenuti");
+            System.out.println("8. Esci");
+            System.out.print("Seleziona un'opzione (0, 1, 2, 3, 4, 5, 6, 7, 8): ");
             int mainOption = scanner.nextInt();
             scanner.nextLine(); // Consuma il newline
             
@@ -62,6 +66,9 @@ public class MainApplication {
                     manageValidation(scanner, validationController);
                     break;
                 case 7:
+                    manageDeletion(scanner, deletionController);
+                    break;
+                case 8:
                     exit = true;
                     System.out.println("Uscita dal programma...");
                     break;
@@ -82,6 +89,7 @@ public class MainApplication {
         eventController.close();
         multimediaContentController.close();
         validationController.close();
+        deletionController.close();
         System.out.println("Programma terminato.");
     }
 
@@ -345,6 +353,34 @@ public class MainApplication {
                     validationController.displayAllMultimediaContentPending();
                     break;
                 case 5:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Opzione non valida.");
+                    break;
+            }
+            if (!back) {
+                System.out.println("\nPremi INVIO per continuare...");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private static void manageDeletion(Scanner scanner, DeletionController deletionController) {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n=== Menu Gestione Eliminazione ===");
+            System.out.println("1. Elimina POI");
+            System.out.println("2. Torna al menu principale");
+            System.out.print("Seleziona un'opzione (1, 2): ");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consuma il newline
+
+            switch (option) {
+                case 1:
+                    deletionController.deletePOI();
+                    break;
+                case 2:
                     back = true;
                     break;
                 default:

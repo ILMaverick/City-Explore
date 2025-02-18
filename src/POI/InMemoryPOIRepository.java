@@ -10,12 +10,19 @@ public class InMemoryPOIRepository implements POIRepository {
 
     @Override
     public void save(PointOfInterest poi) {
-        poi.setId(storage.size());
-        storage.add(poi);
+        if(poi.getId() == 0) {
+            poi.setId(storage.size()+1);
+            storage.add(poi);
+        } else if (poi.getId() <= storage.size()){
+            storage.set(poi.getId()-1, poi);
+        }
     }
     @Override
     public PointOfInterest findById(int id) {
-        return storage.get(id);
+        return storage.stream()
+                .filter(pointOfInterest -> pointOfInterest.getId() == id)
+                .toList()
+                .get(0);
     }
 
     @Override
@@ -36,6 +43,11 @@ public class InMemoryPOIRepository implements POIRepository {
     @Override
     public List<PointOfInterest> searchByDescription(String description) {
         return this.storage.stream().filter(pointOfInterest -> pointOfInterest.getDescription().equals(description)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteByID(int id) {
+        this.storage.removeIf(pointOfInterest -> pointOfInterest.getId() == id);
     }
 
 }

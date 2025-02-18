@@ -1,7 +1,6 @@
 package EVENTO;
 
-import ELEMENT.ElementStatus;
-import TOUR.Tour;
+import POI.PointOfInterest;
 
 import java.util.List;
 
@@ -26,4 +25,5 @@ public interface EventRepository {
 
     List<Event> searchByDescription(String description);
 
+    List<Event> findByPOI(PointOfInterest pointOfInterest);
 }

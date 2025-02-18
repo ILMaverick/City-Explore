@@ -1,7 +1,10 @@
 package EVENTO;
 
+import POI.PointOfInterest;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class InMemoryEventRepository implements EventRepository{
@@ -9,17 +12,20 @@ public class InMemoryEventRepository implements EventRepository{
 
 	@Override
 	public void save(Event event) {
-		if(event.getId() < storage.size()) {
-			storage.set(event.getId(), event);
-		} else {
-			event.setId(storage.size());
+		if(event.getId() == 0) {
+			event.setId(storage.size()+1);
 			storage.add(event);
+		} else if (event.getId() <= storage.size()){
+			storage.set(event.getId()-1, event);
 		}
 	}
 
 	@Override
 	public Event findById(int id) {
-		return storage.get(id);
+		return storage.stream()
+				.filter(event -> event.getId() == id)
+				.toList()
+				.get(0);
 	}
 
 	@Override
@@ -29,11 +35,16 @@ public class InMemoryEventRepository implements EventRepository{
 
 	@Override
 	public List<Event> searchByName(String name) {
-		return this.storage.stream().filter(event -> event.getName() == name).collect(Collectors.toList());
+		return this.storage.stream().filter(event -> Objects.equals(event.getName(), name)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Event> searchByDescription(String description) {
-		return this.storage.stream().filter(event -> event.getDescription() == description).collect(Collectors.toList());
+		return this.storage.stream().filter(event -> Objects.equals(event.getDescription(), description)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Event> findByPOI(PointOfInterest pointOfInterest) {
+		return this.storage.stream().filter(event -> Objects.equals(event.getLocation(), pointOfInterest)).toList();
 	}
 }
