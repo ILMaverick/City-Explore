@@ -3,13 +3,13 @@ import java.util.Scanner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import CONTENUTI.MultimediaContentController;
-import CONTEST.ContestController;
-import ELIMINAZIONE.DeletionController;
-import EVENTO.EventController;
-import POI.POIController;
-import TOUR.TourController;
-import VALIDAZIONE.ValidationController;
+import contenuti.MultimediaContentController;
+import contest.ContestController;
+import eliminazione.DeletionController;
+import evento.EventController;
+import poi.POIController;
+import tour.TourController;
+import validazione.ValidationController;
 
 
 @SpringBootApplication
