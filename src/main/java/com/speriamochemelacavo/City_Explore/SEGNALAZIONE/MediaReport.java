@@ -53,4 +53,15 @@ public class MediaReport {
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
     }
+
+    @Override
+    public String toString() {
+        return "MediaReport {" +
+                "\n id=" + id +
+                ",\n message='" + message + '\'' +
+                ",\n author=" + author +
+                ",\n multimediaContent=" + multimediaContent +
+                ",\n localDateTime=" + localDateTime +
+                '}';
+    }
 }
