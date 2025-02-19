@@ -5,7 +5,6 @@ import java.util.Scanner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContentController;
 import com.speriamochemelacavo.City_Explore.CONTEST.ContestController;
 import com.speriamochemelacavo.City_Explore.ELIMINAZIONE.DeletionController;

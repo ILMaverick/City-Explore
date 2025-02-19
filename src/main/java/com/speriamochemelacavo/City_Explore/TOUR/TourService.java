@@ -1,6 +1,7 @@
 package com.speriamochemelacavo.City_Explore.TOUR;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -176,22 +177,13 @@ public class TourService {
         List<List<Tappa>> gruppi = new ArrayList<>();
         int total = tappe.size();
         
-        if (total >= 3 && total % 2 == 1) {
-            for (int i = 0; i < total - 3; i += 2) {
-                gruppi.add(new ArrayList<>(tappe.subList(i, i + 2)));
-            }
-            gruppi.add(new ArrayList<>(tappe.subList(total - 3, total)));
-        } else {
-            for (int i = 0; i < total; i += 2) {
-                if (i + 1 < total) {
-                    gruppi.add(new ArrayList<>(tappe.subList(i, i + 2)));
-                } else {
-                    gruppi.add(new ArrayList<>(tappe.subList(i, total)));
-                }
-            }
+        for (int i = 0; i < total - 1; i++) {
+            gruppi.add(Arrays.asList(tappe.get(i), tappe.get(i + 1)));
         }
+        
         return gruppi;
-    }
+        }
+
 
     public List<Tour> searchTourByName(String name) {
         return tourRepository.searchByName(name);
