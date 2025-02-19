@@ -1,14 +1,20 @@
 package user;
 
+import jakarta.persistence.*;
+
+@Entity
 public class PermissionRequest {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
     private User user;
 
     private String requestMessage;
 
-    private boolean approved;
+    private boolean isApproved;
 
     public int getId() {
         return id;
@@ -32,10 +38,10 @@ public class PermissionRequest {
         this.requestMessage = requestMessage;
     }
     public boolean isApproved() {
-        return approved;
+        return isApproved;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
+    public void setApproved(boolean isApproved) {
+        this.isApproved = isApproved;
     }
 }

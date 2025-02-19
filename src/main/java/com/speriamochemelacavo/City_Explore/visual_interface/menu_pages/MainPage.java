@@ -10,6 +10,7 @@ public class MainPage extends MenuPage{
 
 	public MainPage() {
 		super ("Menu Principale");
+		/**
 		HashMap<String, Page> chapters = new HashMap<String, Page>();
 		chapters.put("Gestione POI", new );
 		chapters.add("Gestione Tour");
@@ -18,5 +19,6 @@ public class MainPage extends MenuPage{
 		chapters.add("Gestione Contenuti Multimediali");
 		chapters.add("Validazione Elementi e Contenuti Pendenti");
 		this.setChapters(chapters);
+		 */
 	}
 }

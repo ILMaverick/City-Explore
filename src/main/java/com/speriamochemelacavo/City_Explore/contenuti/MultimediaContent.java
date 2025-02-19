@@ -2,19 +2,18 @@ package contenuti;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import element.Status;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import poi.PointOfInterest;
 import user.User;
 
-@Component
 @Entity
 public class MultimediaContent {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;

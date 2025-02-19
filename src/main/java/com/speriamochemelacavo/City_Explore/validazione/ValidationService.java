@@ -4,6 +4,7 @@ import contenuti.MultimediaContent;
 import contenuti.MultimediaContentRepository;
 import element.Status;
 import eliminazione.DeletionService;
+import notifica.NotificationListener;
 import poi.POIRepository;
 import poi.PointOfInterest;
 import tour.Tour;
@@ -27,6 +28,7 @@ public class ValidationService {
     private MultimediaContentRepository multimediaContentRepository;
     @Autowired
     private DeletionService deletionService;
+
 
     public ValidationService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)

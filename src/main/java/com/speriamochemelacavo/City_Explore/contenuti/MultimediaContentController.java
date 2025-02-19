@@ -19,11 +19,16 @@ public class MultimediaContentController {
     }
 
     public void createMultimediaContent() {
+        //return multimediaContentService.createMultimediaContent();
         multimediaContentService.createMultimediaContent();
     }
 
     public void loadMultimediaContentToPOI() {
         multimediaContentService.loadMultimediaContentToPOI();
+    }
+
+    public MultimediaContent updateMultimediaContent(int idMC, MultimediaContent multimediaContent) {
+        return multimediaContentService.updateMultimediaContent(idMC, multimediaContent);
     }
 
     public void displayAllMultimediaContent() {

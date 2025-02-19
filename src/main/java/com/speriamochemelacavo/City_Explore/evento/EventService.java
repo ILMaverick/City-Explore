@@ -7,10 +7,12 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Service;
 import poi.POIRepository;
 import poi.PointOfInterest;
 import user.User;
 
+@Service
 public class EventService {
     private Scanner scanner;
     @Autowired

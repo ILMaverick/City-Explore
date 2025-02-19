@@ -110,6 +110,20 @@ public class ContestService {
         }
     }
 
+    public Contest updateContest(int idContest, Contest contest) {
+        Contest contestSelected = getContestById(idContest);
+        if(contestSelected != null) {
+            contestSelected.setName(contest.getName());
+            contestSelected.setDescription(contest.getDescription());
+            contestSelected.setRules(contest.getRules());
+            contestSelected.setGoal(contest.getGoal());
+            contestSelected.setPrize(contest.getPrize());
+            contestSelected.setDeadline(contest.getDeadline());
+            contestRepository.save(contestSelected);
+        }
+        return contestSelected;
+    }
+
     public void saveContest(Contest contest) {
         contestRepository.save(contest);
     }

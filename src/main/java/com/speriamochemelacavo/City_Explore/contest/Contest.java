@@ -14,7 +14,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import user.User;
 
-@Component
 @Entity
 public class Contest extends AbstractElement {
 

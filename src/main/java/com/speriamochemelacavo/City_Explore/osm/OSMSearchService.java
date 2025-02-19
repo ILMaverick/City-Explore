@@ -1,9 +1,11 @@
 package osm;
 
+import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class OSMSearchService {
 	public List<OverpassElement> search(String city, String poi) {
 	System.out.println("Ricerca per: " + poi + " a " + city);

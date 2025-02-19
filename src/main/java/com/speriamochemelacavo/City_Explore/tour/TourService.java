@@ -19,6 +19,7 @@ public class TourService {
 	 private TourRepository tourRepository;
     @Autowired
      private POIRepository poiRepository;
+
      public TourService() {
             scanner = new Scanner(System.in);
      }
@@ -95,6 +96,7 @@ public class TourService {
             }
         }
     }
+
 
     public void searchTourByDescription() {
         System.out.println("=== Ricerca Itinerario tramite descrizione ===");
@@ -185,6 +187,17 @@ public class TourService {
         return gruppi;
         }
 
+
+    public Tour updateTour(int idTour, Tour tour) {
+        Tour tourSelected = getTourById(idTour);
+        if(tourSelected != null) {
+            tourSelected.setName(tour.getName());
+            tourSelected.setDescription(tour.getDescription());
+            tourSelected.setWayList(tour.getWayList());
+            tourRepository.save(tourSelected);
+        }
+        return tourSelected;
+    }
 
     public List<Tour> searchTourByName(String name) {
         return tourRepository.searchByName(name);

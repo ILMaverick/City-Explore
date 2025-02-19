@@ -130,6 +130,21 @@ public class POIService {
         System.out.println(newPoi);
     }
 
+    public PointOfInterest updatePOI(int idPOI, PointOfInterest pointOfInterest) {
+        PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
+        if(pointOfInterestSelected != null) {
+            pointOfInterestSelected.setName(pointOfInterest.getName());
+            pointOfInterestSelected.setDescription(pointOfInterest.getDescription());
+            pointOfInterestSelected.setLatitude(pointOfInterest.getLatitude());
+            pointOfInterestSelected.setLongitude(pointOfInterest.getLongitude());
+            pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
+            pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
+            pointOfInterestSelected.setType(pointOfInterest.getType());
+            poiRepository.save(pointOfInterest);
+        }
+        return pointOfInterestSelected;
+    }
+
     public void searchPOIByName() {
         System.out.println("=== Ricerca Punti di Interesse tramite nome ===");
         System.out.print("Inserisci il nome: ");

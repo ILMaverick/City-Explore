@@ -33,19 +33,19 @@ public class MultimediaContentService {
         MultimediaContent mc2 = new MultimediaContent("video", "secondo", user);
         MultimediaContent mc3 = new MultimediaContent("immagine", "terzo", user);
 
-        mc1.setFormatFileEnum(FormatFileEnum.Image);
+        mc1.setFormatFileEnum(FormatFileEnum.IMAGE);
         mc1.setDuration(1);
         mc1.setDimension(1);
         mc1.setResolution(100);
         save(mc1);
 
-        mc2.setFormatFileEnum(FormatFileEnum.Audio);
+        mc2.setFormatFileEnum(FormatFileEnum.AUDIO);
         mc2.setDuration(2);
         mc2.setDimension(2);
         mc2.setResolution(200);
         save(mc2);
 
-        mc3.setFormatFileEnum(FormatFileEnum.Video);
+        mc3.setFormatFileEnum(FormatFileEnum.VIDEO);
         mc3.setDuration(3);
         mc3.setDimension(3);
         mc3.setResolution(400);
@@ -156,6 +156,20 @@ public class MultimediaContentService {
         return poi;
     }
 
+    public MultimediaContent updateMultimediaContent(int idMC, MultimediaContent multimediaContent) {
+        MultimediaContent multimediaContentSelected = getMultimediaContentById(idMC);
+        if(multimediaContentSelected != null) {
+            multimediaContentSelected.setName(multimediaContent.getName());
+            multimediaContentSelected.setDescription(multimediaContent.getDescription());
+            multimediaContentSelected.setFormatFileEnum(multimediaContent.getFormatFileEnum());
+            multimediaContentSelected.setDuration(multimediaContent.getDimension());
+            multimediaContentSelected.setResolution(multimediaContent.getResolution());
+            multimediaContentSelected.setDataCreation(LocalDateTime.now());
+            multimediaContentRepository.save(multimediaContentSelected);
+        }
+        return multimediaContentSelected;
+    }
+
     public MultimediaContent save(MultimediaContent multimediaContent) {
        return multimediaContentRepository.save(multimediaContent);
     }
@@ -191,5 +205,6 @@ public class MultimediaContentService {
             scanner.close();
         }
     }
+
 
 }

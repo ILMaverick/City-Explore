@@ -5,35 +5,38 @@ import user.User;
 
 import java.time.LocalDateTime;
 
+
 public class MediaReport {
-    private int id;
-    private String message;
-    private User author;
+
+    private String reason;
+
+    private User reporter;
+
     private MultimediaContent multimediaContent;
+
     private LocalDateTime localDateTime;
 
-    public int getId() {
-        return id;
+    public MediaReport(String reason, User reporter, MultimediaContent multimediaContent) {
+        this.reason = reason;
+        this.reporter = reporter;
+        this.multimediaContent = multimediaContent;
+        this.localDateTime = LocalDateTime.now();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getReason() {
+        return reason;
     }
 
-    public String getMessage() {
-        return message;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public User getReporter() {
+        return reporter;
     }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setReporter(User reporter) {
+        this.reporter = reporter;
     }
 
     public MultimediaContent getMultimediaContent() {
@@ -48,7 +51,6 @@ public class MediaReport {
         return this.localDateTime;
     }
 
-
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
     }
@@ -56,9 +58,8 @@ public class MediaReport {
     @Override
     public String toString() {
         return "MediaReport {" +
-                "\n id=" + id +
-                ",\n message='" + message + '\'' +
-                ",\n author=" + author +
+                ",\n reason='" + reason + '\'' +
+                ",\n reporter=" + reporter +
                 ",\n multimediaContent=" + multimediaContent +
                 ",\n localDateTime=" + localDateTime +
                 '}';
