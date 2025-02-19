@@ -7,6 +7,7 @@ import com.speriamochemelacavo.City_Explore.USER.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class Event extends AbstractElement {
 	private List<PointOfInterest> pointOfInterestList;
 	@ManyToMany
 	private List<Contest> contestList;
+	@OneToMany
+	private List<User> participants;
 	
 	public Event(String name, String description, User author, String scope,
 				 String activity, String organization, String theme, String category,
@@ -40,6 +43,7 @@ public class Event extends AbstractElement {
 		super.setPublished(true);
 		this.pointOfInterestList = new ArrayList<>();
 		this.contestList = new ArrayList<>();
+		this.participants = new ArrayList<>();
 	}
 	
 	@Override
@@ -60,18 +64,6 @@ public class Event extends AbstractElement {
                 ",\n  published=" + super.isPublished() +
                 "\n}";
     }
-
-	public List<PointOfInterest> getPointOfInterestList() { return pointOfInterestList; }
-
-	public List<Contest> getContestList() { return contestList; }
-
-	public LocalDateTime getTime() {
-		return time;
-	}
-
-	public void setTime(LocalDateTime time) {
-		this.time = time;
-	}
 
 	public String getScope() {
 		return scope;
@@ -119,6 +111,21 @@ public class Event extends AbstractElement {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public List<User> getParticipants() {
+		return participants;
+	}
+	public List<PointOfInterest> getPointOfInterestList() { return pointOfInterestList; }
+
+	public List<Contest> getContestList() { return contestList; }
+
+	public LocalDateTime getTime() {
+		return time;
+	}
+
+	public void setTime(LocalDateTime time) {
+		this.time = time;
 	}
 
 }

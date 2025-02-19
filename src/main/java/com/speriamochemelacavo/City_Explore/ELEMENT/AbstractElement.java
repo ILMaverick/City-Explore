@@ -22,7 +22,7 @@ public abstract class AbstractElement implements Element {
 		this.description = description;
 		this.author = author;
 		this.published = false;
-		this.status = ElementStatus.Pending;
+		this.status = ElementStatus.PENDING;
 	}
 	
 	public boolean isPublished() {

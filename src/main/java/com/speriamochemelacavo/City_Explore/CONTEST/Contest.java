@@ -1,6 +1,5 @@
 package com.speriamochemelacavo.City_Explore.CONTEST;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +8,8 @@ import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
 import com.speriamochemelacavo.City_Explore.EVENTO.Event;
 import com.speriamochemelacavo.City_Explore.USER.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Contest extends AbstractElement {
@@ -16,9 +17,11 @@ public class Contest extends AbstractElement {
     private String rules;
     private String goal;
     private String prize;
-    private List<User> participationContestList = new ArrayList<>();
-    private LocalDate deadline;
 
+    private LocalDate deadline;
+    @OneToMany
+    private List<ContestParticipation> participationContestList = new ArrayList<>();
+    @ManyToMany
     public final List<Event> eventList;
 
     public Contest(String name, String description, User author) {
@@ -50,7 +53,7 @@ public class Contest extends AbstractElement {
         this.prize = prize;
     }
 
-    public List<User>  getParticipationContestList() {
+    public List<ContestParticipation>  getParticipationContestList() {
         return participationContestList;
     }
 

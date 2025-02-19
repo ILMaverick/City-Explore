@@ -1,7 +1,7 @@
 package com.speriamochemelacavo.City_Explore.POI;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
@@ -11,19 +11,18 @@ import com.speriamochemelacavo.City_Explore.TOUR.Tour;
 import com.speriamochemelacavo.City_Explore.USER.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
 public class PointOfInterest extends AbstractElement{
 	private double latitude;
 	private double longitude;
-	private Date open_time;
-	private Date close_time;
+	private LocalDate open_time;
+	private LocalDate close_time;
 	private POIType type;
 	@OneToMany
 	private final List<MultimediaContent> multimediaContentList;
-	@OneToMany
+	@ManyToMany
 	public final List<Event> eventList;
 	@ManyToMany
 	public final List<Tour> tourList;
@@ -73,19 +72,19 @@ public class PointOfInterest extends AbstractElement{
 	        this.longitude = longitude;
 	    }
 
-	public Date getOpen_time() {
+	public LocalDate getOpen_time() {
 	        return open_time;
 	    }
 
-	public void setOpen_time(Date open_time) {
+	public void setOpen_time(LocalDate open_time) {
 	        this.open_time = open_time;
 	    }
 
-	public Date getClose_time() {
+	public LocalDate getClose_time() {
 	        return close_time;
 	    }
 
-	public void setClose_time(Date close_time) {
+	public void setClose_time(LocalDate close_time) {
 	        this.close_time = close_time;
 	    }
 

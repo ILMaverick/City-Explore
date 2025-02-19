@@ -30,7 +30,7 @@ public class MultimediaContent {
         this.description = description;
         this.author = author;
         this.published = false;
-        this.status = ElementStatus.Pending;
+        this.status = ElementStatus.PENDING;
     }
 
     @Override

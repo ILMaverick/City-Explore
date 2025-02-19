@@ -92,13 +92,13 @@ public class ValidationService {
     }
 
     public void sendPOIForValidation(PointOfInterest poi) {
-        poi.setStatus(ElementStatus.Pending);
+        poi.setStatus(ElementStatus.PENDING);
         poiRepository.save(poi);
     }
 
     public void approvePOI(int idPOI) {
         PointOfInterest poi = poiRepository.findById(idPOI);
-        poi.setStatus(ElementStatus.Approved);
+        poi.setStatus(ElementStatus.APPROVED);
         poi.setPublished(true);
         System.out.println("Il Punto di Interesse e' stato accettato");
         poiRepository.save(poi);
@@ -106,19 +106,19 @@ public class ValidationService {
 
     public void rejectPOI(int idPOI, String reason) {
         PointOfInterest poi = poiRepository.findById(idPOI);
-        poi.setStatus(ElementStatus.Rejected);
+        poi.setStatus(ElementStatus.REJECTED);
         System.out.println("Il Punto di Interesse e' stato rifiutato, " + reason);
         deletionService.deletePOI(idPOI);
     }
 
     public void sendTourForValidation(Tour tour) {
-        tour.setStatus(ElementStatus.Pending);
+        tour.setStatus(ElementStatus.PENDING);
         tourRepository.save(tour);
     }
 
     public void approveTour(int idTour) {
         Tour tour = tourRepository.findById(idTour);
-        tour.setStatus(ElementStatus.Approved);
+        tour.setStatus(ElementStatus.APPROVED);
         tour.setPublished(true);
         System.out.println("L'Itinerario e' stato accettato");
         tourRepository.save(tour);
@@ -126,19 +126,19 @@ public class ValidationService {
 
     public void rejectTour(int idTour, String reason) {
         Tour tour = tourRepository.findById(idTour);
-        tour.setStatus(ElementStatus.Rejected);
+        tour.setStatus(ElementStatus.REJECTED);
         System.out.println("L'Itinerario e' stato rifiutato, " + reason);
         deletionService.deleteTour(idTour);
     }
 
     public void sendMultimediaContentForValidation(MultimediaContent multimediaContent) {
-        multimediaContent.setStatus(ElementStatus.Pending);
+        multimediaContent.setStatus(ElementStatus.PENDING);
         multimediaContentRepository.save(multimediaContent);
     }
 
     public void approveMultimediaContent(int idMC) {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
-        multimediaContent.setStatus(ElementStatus.Approved);
+        multimediaContent.setStatus(ElementStatus.APPROVED);
         multimediaContent.setPublished(true);
         System.out.println("Il Contenuto Multimediale e' stato accettato");
         multimediaContentRepository.save(multimediaContent);
@@ -146,21 +146,21 @@ public class ValidationService {
 
     public void rejectMultimediaContent(int idMC, String reason) {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
-        multimediaContent.setStatus(ElementStatus.Rejected);
+        multimediaContent.setStatus(ElementStatus.REJECTED);
         System.out.println("Il Contenuto Multimediale e' stato rifiutato, " + reason);
         deletionService.deleteContest(idMC);
     }
 
     public List<PointOfInterest> getAllPendingPOI() {
-        return poiRepository.findByStatus(ElementStatus.Pending);
+        return poiRepository.findByStatus(ElementStatus.PENDING);
     }
 
     public List<Tour> getAllPendingTour() {
-        return tourRepository.findByStatus(ElementStatus.Pending);
+        return tourRepository.findByStatus(ElementStatus.PENDING);
     }
 
     public List<MultimediaContent> getAllPendingMultimediaContent() {
-        return multimediaContentRepository.findByStatus(ElementStatus.Pending);
+        return multimediaContentRepository.findByStatus(ElementStatus.PENDING);
     }
 
     private User getCurrentUser() {

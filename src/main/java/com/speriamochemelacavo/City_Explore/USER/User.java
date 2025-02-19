@@ -1,9 +1,10 @@
 package com.speriamochemelacavo.City_Explore.USER;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.speriamochemelacavo.City_Explore.EVENTO.Event;
+import com.speriamochemelacavo.City_Explore.NOTIFICA.Notification;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -16,6 +17,10 @@ public class User {
 	public String email;
 	public String password;
 	public Role role;
+	@OneToMany
+	private List<Notification> notificationList;
+	@OneToMany
+	private List<Event> eventList;
 
 	public String getName() {
 		return name;
@@ -50,8 +55,21 @@ public class User {
 	public Role getRole() { return role; }
 	public void setRole(Role role) {this.role = role;}
 
-	 @Override
+	public List<Notification> getNotificationList() {
+		return notificationList;
+	}
+
+	public List<Event> getEventList() {
+		return eventList;
+	}
+
+	@Override
 	public String toString() {
-		 return "User: " + username;
+		 return "User: " +
+				 "\n" + name +
+				 ",\n" + surname +
+				 ",\n"+ username+
+				 ",\n" + email +
+				 ",\n" + role;
 	 }
 }
