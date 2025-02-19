@@ -180,14 +180,14 @@ public class DeletionService {
 
     public void deleteTour(int idTour) {
         Tour tour = tourRepository.findById(idTour).get();
-        tourRepository.deleteById(idTour);
+        tourRepository.deleteById(tour.getId());
     }
 
     public void deleteContest(int idContest) {
         Contest contest = contestRepository.findById(idContest).get();
         List<Event> eventList = contest.getEventList();
         for (Event event : eventList) {
-            event.getPointOfInterestList().remove(contest);
+            event.getContestList().remove(contest);
             eventRepository.save(event);
         }
         contestRepository.deleteById(idContest);
