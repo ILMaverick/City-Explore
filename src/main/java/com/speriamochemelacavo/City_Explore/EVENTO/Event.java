@@ -4,11 +4,15 @@ import com.speriamochemelacavo.City_Explore.CONTEST.Contest;
 import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Event extends AbstractElement {
 	private String scope;
 	private String activity;
@@ -17,7 +21,9 @@ public class Event extends AbstractElement {
 	private String category;
 	private double price;
 	private LocalDateTime time;
+	@ManyToMany
 	private List<PointOfInterest> pointOfInterestList;
+	@ManyToMany
 	private List<Contest> contestList;
 	
 	public Event(String name, String description, User author, String scope,

@@ -9,15 +9,23 @@ import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
 import com.speriamochemelacavo.City_Explore.EVENTO.Event;
 import com.speriamochemelacavo.City_Explore.TOUR.Tour;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
+@Entity
 public class PointOfInterest extends AbstractElement{
 	private double latitude;
 	private double longitude;
 	private Date open_time;
 	private Date close_time;
 	private POIType type;
+	@OneToMany
 	private final List<MultimediaContent> multimediaContentList;
+	@OneToMany
 	public final List<Event> eventList;
+	@ManyToMany
 	public final List<Tour> tourList;
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {

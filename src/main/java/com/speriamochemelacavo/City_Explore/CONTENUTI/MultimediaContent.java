@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 import com.speriamochemelacavo.City_Explore.ELEMENT.ElementStatus;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 
+@Entity
 public class MultimediaContent {
 
     private int id;
@@ -19,6 +22,7 @@ public class MultimediaContent {
     private User author;
     private boolean published;
     private ElementStatus status;
+    @ManyToOne
     private PointOfInterest pointOfInterest;
 
     public MultimediaContent(String name, String description, User author) {

@@ -1,9 +1,12 @@
 package com.speriamochemelacavo.City_Explore.POI;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
-
+@RestController
 public class POIController {
-
+    @Autowired
     private POIService poiService;
 
     public POIController(POIService poiService) {

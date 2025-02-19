@@ -1,10 +1,11 @@
 package com.speriamochemelacavo.City_Explore.TOUR;
 
 import com.speriamochemelacavo.City_Explore.ELEMENT.ElementStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TourRepository {
+public interface TourRepository extends JpaRepository<Tour, Integer> {
     /**
      * Salva un oggetto Tour.
      */

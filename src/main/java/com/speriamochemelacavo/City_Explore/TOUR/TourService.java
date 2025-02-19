@@ -7,10 +7,16 @@ import java.util.Scanner;
 import com.speriamochemelacavo.City_Explore.POI.POIRepository;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
+@Service
 public class TourService {
     private Scanner scanner;
+    @Autowired
 	 private TourRepository tourRepository;
+    @Autowired
      private POIRepository poiRepository;
      public TourService(TourRepository tourRepository, POIRepository poiRepository) {
             scanner = new Scanner(System.in);
@@ -213,7 +219,11 @@ public class TourService {
     // Metodo dummy per ottenere l'utente attuale (da sostituire con logica reale)
     private User getCurrentUser() {
         User user = new User();
+        user.setName("utente");
+        user.setSurname("demo");
         user.setUsername("utente_demo");
+        user.setEmail("utente_demo.mail@gmail.com");
+        user.setPassword("1234567890");
         return user;
     }
 

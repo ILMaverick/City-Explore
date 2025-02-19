@@ -11,16 +11,24 @@ import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.TOUR.Tour;
 import com.speriamochemelacavo.City_Explore.TOUR.TourRepository;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 public class DeletionService {
     private Scanner scanner;
+    @Autowired
     private POIRepository poiRepository;
+    @Autowired
     private TourRepository tourRepository;
+    @Autowired
     private ContestRepository contestRepository;
+    @Autowired
     private EventRepository eventRepository;
+    @Autowired
     private MultimediaContentRepository multimediaContentRepository;
 
     public DeletionService(POIRepository poiRepository, TourRepository tourRepository, ContestRepository contestRepository,
@@ -216,7 +224,11 @@ public class DeletionService {
 
     private User getCurrentUser() {
         User user = new User();
+        user.setName("utente");
+        user.setSurname("demo");
         user.setUsername("utente_demo");
+        user.setEmail("utente_demo.mail@gmail.com");
+        user.setPassword("1234567890");
         return user;
     }
 

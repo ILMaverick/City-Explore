@@ -1,10 +1,11 @@
 package com.speriamochemelacavo.City_Explore.POI;
 
 import com.speriamochemelacavo.City_Explore.ELEMENT.ElementStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface POIRepository {
+public interface POIRepository extends JpaRepository<POIController, Integer> {
     /**
      * Salva un oggetto PointOfInterest.
      *

@@ -1,8 +1,12 @@
 package com.speriamochemelacavo.City_Explore.CONTEST;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+@RestController
 public class ContestController {
+    @Autowired
     private ContestService contestService;
 
     public ContestController(ContestService contestService) {

@@ -1,6 +1,11 @@
 package com.speriamochemelacavo.City_Explore.ELIMINAZIONE;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 public class DeletionController {
+    @Autowired
     private final DeletionService deletionService;
 
     public DeletionController(DeletionService deletionService) {

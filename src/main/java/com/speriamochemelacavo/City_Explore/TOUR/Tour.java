@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import jakarta.persistence.Entity;
 
+@Entity
 public class Tour extends AbstractElement {
 	private List<Way> wayList;
 

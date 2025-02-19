@@ -3,11 +3,13 @@ package com.speriamochemelacavo.City_Explore.VALIDAZIONE;
 import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.TOUR.Tour;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+@RestController
 public class ValidationController {
-
+    @Autowired
     private ValidationService validationService;
 
     public ValidationController(ValidationService validationService) {

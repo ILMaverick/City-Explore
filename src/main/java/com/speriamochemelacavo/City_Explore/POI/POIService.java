@@ -6,10 +6,14 @@ import java.util.Scanner;
 import com.speriamochemelacavo.City_Explore.OSM.OSMSearchService;
 import com.speriamochemelacavo.City_Explore.OSM.OverpassElement;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class POIService {
     // Scanner condiviso per l'input da riga di comando.
     private Scanner scanner;
+    @Autowired
     private POIRepository poiRepository;
 
     public POIService(POIRepository poiRepository) {
@@ -192,7 +196,11 @@ public class POIService {
         // Metodo dummy per ottenere l'utente attuale
     private User getCurrentUser() {
         User user = new User();
+        user.setName("utente");
+        user.setSurname("demo");
         user.setUsername("utente_demo");
+        user.setEmail("utente_demo.mail@gmail.com");
+        user.setPassword("1234567890");
         return user;
     }
 

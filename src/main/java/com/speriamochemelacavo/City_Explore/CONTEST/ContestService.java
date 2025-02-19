@@ -1,6 +1,8 @@
 package com.speriamochemelacavo.City_Explore.CONTEST;
 
 import com.speriamochemelacavo.City_Explore.USER.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,8 +10,10 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 public class ContestService {
     private Scanner scanner;
+    @Autowired
     private ContestRepository contestRepository;
 
     public ContestService(ContestRepository contestRepository) {
@@ -128,7 +132,11 @@ public class ContestService {
 
     private User getCurrentUser() {
         User user = new User();
+        user.setName("utente");
+        user.setSurname("demo");
         user.setUsername("utente_demo");
+        user.setEmail("utente_demo.mail@gmail.com");
+        user.setPassword("1234567890");
         return user;
     }
 

@@ -1,7 +1,5 @@
 package com.speriamochemelacavo.City_Explore.CONTENUTI;
 
-
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
@@ -9,9 +7,14 @@ import java.util.Scanner;
 import com.speriamochemelacavo.City_Explore.POI.POIRepository;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MultimediaContentService {
+    @Autowired
     private MultimediaContentRepository multimediaContentRepository;
+    @Autowired
     private POIRepository poiRepository;
     private Scanner scanner;
 
@@ -176,7 +179,11 @@ public class MultimediaContentService {
 
     private User getCurrentUser() {
         User user = new User();
+        user.setName("utente");
+        user.setSurname("demo");
         user.setUsername("utente_demo");
+        user.setEmail("utente_demo.mail@gmail.com");
+        user.setPassword("1234567890");
         return user;
     }
 

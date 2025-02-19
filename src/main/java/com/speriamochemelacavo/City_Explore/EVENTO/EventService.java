@@ -277,7 +277,11 @@ public class EventService {
     // Metodo dummy per ottenere l'utente corrente (da sostituire con logica reale)
     private User getCurrentUser() {
         User user = new User();
+        user.setName("utente");
+        user.setSurname("demo");
         user.setUsername("utente_demo");
+        user.setEmail("utente_demo.mail@gmail.com");
+        user.setPassword("1234567890");
         return user;
     }
 

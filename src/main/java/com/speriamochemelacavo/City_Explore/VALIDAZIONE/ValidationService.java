@@ -9,16 +9,22 @@ import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.TOUR.Tour;
 import com.speriamochemelacavo.City_Explore.TOUR.TourRepository;
 import com.speriamochemelacavo.City_Explore.USER.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Scanner;
-
+@Service
 public class ValidationService {
     // Scanner condiviso per l'input da riga di comando.
     private Scanner scanner;
+    @Autowired
     private POIRepository poiRepository;
+    @Autowired
     private TourRepository tourRepository;
+    @Autowired
     private MultimediaContentRepository multimediaContentRepository;
+    @Autowired
     private DeletionService deletionService;
 
     public ValidationService(POIRepository poiRepository, TourRepository tourRepository, MultimediaContentRepository multimediaContentRepository, DeletionService deletionService) {
@@ -159,7 +165,11 @@ public class ValidationService {
 
     private User getCurrentUser() {
         User user = new User();
+        user.setName("utente");
+        user.setSurname("demo");
         user.setUsername("utente_demo");
+        user.setEmail("utente_demo.mail@gmail.com");
+        user.setPassword("1234567890");
         return user;
     }
 

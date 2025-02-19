@@ -1,9 +1,11 @@
 package com.speriamochemelacavo.City_Explore.EVENTO;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
 
-public interface EventRepository {
+public interface EventRepository extends JpaRepository<Event, Integer> {
 	/**
      * Salva un oggetto Evento.
      */

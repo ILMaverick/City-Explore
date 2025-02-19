@@ -2,8 +2,9 @@ package com.speriamochemelacavo.City_Explore.CONTENUTI;
 
 import java.util.List;
 import com.speriamochemelacavo.City_Explore.ELEMENT.ElementStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MultimediaContentRepository {
+public interface MultimediaContentRepository extends JpaRepository<MultimediaContent, Integer> {
     /**
      * Salva un oggetto Contenuto.
      */

@@ -1,8 +1,10 @@
 package com.speriamochemelacavo.City_Explore.CONTEST;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
-public interface ContestRepository {
+public interface ContestRepository extends JpaRepository<Contest, Integer> {
     /**
      * Salva un oggetto Contest.
      */
