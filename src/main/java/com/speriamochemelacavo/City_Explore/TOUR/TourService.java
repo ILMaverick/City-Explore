@@ -9,7 +9,6 @@ import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 @Service
 public class TourService {
@@ -18,10 +17,8 @@ public class TourService {
 	 private TourRepository tourRepository;
     @Autowired
      private POIRepository poiRepository;
-     public TourService(TourRepository tourRepository, POIRepository poiRepository) {
+     public TourService() {
             scanner = new Scanner(System.in);
-	        this.tourRepository = tourRepository;
-            this.poiRepository = poiRepository;
      }
 
 
@@ -213,7 +210,7 @@ public class TourService {
     }
 
     public Tour getTourById(int id) {
-        return tourRepository.findById(id);
+        return tourRepository.findById(id).get();
     }
 
     // Metodo dummy per ottenere l'utente attuale (da sostituire con logica reale)

@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DeletionController {
     @Autowired
-    private final DeletionService deletionService;
+    private DeletionService deletionService;
 
-    public DeletionController(DeletionService deletionService) {
-        this.deletionService = deletionService;
+    public DeletionController() {
     }
 
     public void deletePOI() {

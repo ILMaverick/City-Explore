@@ -5,20 +5,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.speriamochemelacavo.City_Explore.POI.POIRepository;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
 
 public class EventService {
     private Scanner scanner;
+    @Autowired
     private EventRepository eventRepository;
+    @Autowired
     private POIRepository poiRepository;
 
-    public EventService(EventRepository eventRepository, POIRepository poiRepository) {
+    public EventService() {
         // Inizializza lo scanner (non lo chiudiamo subito, per evitare di chiudere System.in)
         scanner = new Scanner(System.in);
-        this.eventRepository = eventRepository;
-        this.poiRepository = poiRepository;
     }
 
     public void initializer() {
@@ -49,8 +51,8 @@ public class EventService {
      */
 
     public PointOfInterest addEventToPOI(int idPOI, int idEvent) {
-        PointOfInterest poi = poiRepository.findById(idPOI);
-        Event event = eventRepository.findById(idEvent);
+        PointOfInterest poi = poiRepository.findById(idPOI).get();
+        Event event = getEventById(idEvent);
         if (poi != null) {
             System.out.println("Punto di interesse trovato: ");
             event.getPointOfInterestList().add(poi);
@@ -242,11 +244,11 @@ public class EventService {
      * Restituisce un Evento dato il suo id.
      */
     public Event getEventById(int id) {
-        return eventRepository.findById(id);
+        return eventRepository.findById(id).get();
     }
 
     public Event updateEvent(int id, Event event) {
-        Event eventSelected = eventRepository.findById(id);
+        Event eventSelected = getEventById(id);
         if(eventSelected != null) {
             eventSelected.setName(event.getName());
             eventSelected.setDescription(event.getDescription());

@@ -2,6 +2,7 @@ package com.speriamochemelacavo.City_Explore.EVENTO;
 
 import com.speriamochemelacavo.City_Explore.CONTEST.Contest;
 import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
+import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
 import jakarta.persistence.Entity;
@@ -40,7 +41,7 @@ public class Event extends AbstractElement {
 		this.category = category;
 		this.price = price;
 		this.time = time;
-		super.setPublished(true);
+		super.setStatus(Status.APPROVED);
 		this.pointOfInterestList = new ArrayList<>();
 		this.contestList = new ArrayList<>();
 		this.participants = new ArrayList<>();

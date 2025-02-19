@@ -1,29 +1,15 @@
 package com.speriamochemelacavo.City_Explore.EVENTO;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.speriamochemelacavo.City_Explore.ELEMENT.ElementRepository;
+import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
 
 import java.util.List;
 
+public interface EventRepository extends ElementRepository<Event> {
 
-public interface EventRepository extends JpaRepository<Event, Integer> {
-	/**
-     * Salva un oggetto Evento.
-     */
-    void save(Event event);
+	List<Event> searchByName(String name);
 
-    /**
-     * Restituisce tutti gli oggetti Evento salvati.
-     */
-    List<Event> findAll();
-
-    /**
-     * Restituisce il Evento con l'id specificato, oppure null se non presente.
-     */
-    Event findById(int id);
-
-    List<Event> searchByName(String name);
-
-    List<Event> searchByDescription(String description);
-
-    void deleteByID(int id);
+	List<Event> searchByDescription(String description);
+	
+	List<Event> searchByStatus(Status status);
 }

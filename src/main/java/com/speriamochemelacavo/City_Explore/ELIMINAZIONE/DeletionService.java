@@ -31,15 +31,9 @@ public class DeletionService {
     @Autowired
     private MultimediaContentRepository multimediaContentRepository;
 
-    public DeletionService(POIRepository poiRepository, TourRepository tourRepository, ContestRepository contestRepository,
-                           EventRepository eventRepository, MultimediaContentRepository multimediaContentRepository) {
+    public DeletionService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
         scanner = new Scanner(System.in);
-        this.poiRepository = poiRepository;
-        this.tourRepository = tourRepository;
-        this.contestRepository = contestRepository;
-        this.eventRepository = eventRepository;
-        this.multimediaContentRepository = multimediaContentRepository;
     }
 
     public void deletePOI() {
@@ -47,7 +41,7 @@ public class DeletionService {
         System.out.print("Inserisci l'ID del POI da eliminare: ");
         int idPOI = scanner.nextInt();
 
-        PointOfInterest poi = poiRepository.findById(idPOI);
+        PointOfInterest poi = poiRepository.findById(idPOI).get();
         List<Event> eventList = poi.getEvents();
         List<MultimediaContent> multimediaContentList = poi.getMultimediaContentList();
         if(eventList.isEmpty()) {
@@ -79,7 +73,7 @@ public class DeletionService {
         System.out.print("Inserisci l'ID dell'Itinerario da eliminare: ");
         int idTour = scanner.nextInt();
 
-        Tour tour = tourRepository.findById(idTour);
+        Tour tour = tourRepository.findById(idTour).get();
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione: ");
         String reason = scanner.nextLine();
@@ -92,7 +86,7 @@ public class DeletionService {
         System.out.print("Inserisci l'ID del Contest da eliminare: ");
         int idContest = scanner.nextInt();
 
-        Contest contest = contestRepository.findById(idContest);
+        Contest contest = contestRepository.findById(idContest).get();
         List<Event> eventList = contest.getEventList();
         if(eventList.isEmpty()) {
             System.out.println("Non ci sono Eventi associati a questo Contest.");
@@ -116,7 +110,7 @@ public class DeletionService {
         System.out.print("Inserisci l'ID dell'Evento da eliminare: ");
         int idEvent = scanner.nextInt();
 
-        Event event = eventRepository.findById(idEvent);
+        Event event = eventRepository.findById(idEvent).get();
         List<PointOfInterest> pointOfInterestList = event.getPointOfInterestList();
         List<Contest> contestList = event.getContestList();
         if(pointOfInterestList.isEmpty()) {
@@ -150,7 +144,7 @@ public class DeletionService {
         System.out.print("Inserisci l'ID del Contenuto da eliminare: ");
         int idMC = scanner.nextInt();
 
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
         PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
         if(pointOfInterest == null) {
             System.out.println("Non ci sono Punti di Interesse associati a questo Contenuto.");
@@ -167,7 +161,7 @@ public class DeletionService {
     }
 
     public void deletePOI(int idPOI) {
-        PointOfInterest poi = poiRepository.findById(idPOI);
+        PointOfInterest poi = poiRepository.findById(idPOI).get();
         List<Event> eventList = poi.getEvents();
         //List<Tour> tourList = poi.getTourList();
         List<MultimediaContent> multimediaContentList = poi.getMultimediaContentList();
@@ -181,26 +175,26 @@ public class DeletionService {
             multimediaContent.setPointOfInterest(null);
             multimediaContentRepository.save(multimediaContent);
         }
-        poiRepository.deleteByID(idPOI);
+        poiRepository.deleteById(idPOI);;
     }
 
     public void deleteTour(int idTour) {
-        Tour tour = tourRepository.findById(idTour);
-        tourRepository.deleteByID(idTour);
+        Tour tour = tourRepository.findById(idTour).get();
+        tourRepository.deleteById(idTour);
     }
 
     public void deleteContest(int idContest) {
-        Contest contest = contestRepository.findById(idContest);
+        Contest contest = contestRepository.findById(idContest).get();
         List<Event> eventList = contest.getEventList();
         for (Event event : eventList) {
             event.getPointOfInterestList().remove(contest);
             eventRepository.save(event);
         }
-        contestRepository.deleteByID(idContest);
+        contestRepository.deleteById(idContest);
     }
 
     public void deleteEvent(int idEvent) {
-        Event event = eventRepository.findById(idEvent);
+        Event event = eventRepository.findById(idEvent).get();
         List<PointOfInterest> pointOfInterestList = event.getPointOfInterestList();
         List<Contest> contestList = event.getContestList();
         for (PointOfInterest poi : pointOfInterestList) {
@@ -211,15 +205,15 @@ public class DeletionService {
             contest.getEventList().remove(event);
             contestRepository.save(contest);
         }
-        eventRepository.deleteByID(idEvent);
+        eventRepository.deleteById(idEvent);
     }
 
     public void deleteMultimediaContent(int idMC) {
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
         PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
         pointOfInterest.getMultimediaContentList().remove(multimediaContent);
         poiRepository.save(pointOfInterest);
-        multimediaContentRepository.deleteByID(idMC);
+        multimediaContentRepository.deleteById(idMC);
     }
 
     private User getCurrentUser() {

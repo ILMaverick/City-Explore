@@ -12,8 +12,7 @@ public class ValidationController {
     @Autowired
     private ValidationService validationService;
 
-    public ValidationController(ValidationService validationService) {
-        this.validationService = validationService;
+    public ValidationController() {
     }
     /**
     public void sendPOIForValidation(PointOfInterest poi) {

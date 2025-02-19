@@ -1,28 +1,15 @@
 package com.speriamochemelacavo.City_Explore.CONTEST;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.speriamochemelacavo.City_Explore.ELEMENT.ElementRepository;
+import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
 
 import java.util.List;
 
-public interface ContestRepository extends JpaRepository<Contest, Integer> {
-    /**
-     * Salva un oggetto Contest.
-     */
-    void save(Contest contest);
+public interface ContestRepository extends ElementRepository<Contest> {
 
-    /**
-     * Restituisce tutti gli oggetti Contest salvati.
-     */
-    List<Contest> findAll();
+	List<Contest> searchByName(String name);
 
-    /**
-     * Restituisce il Contest con l'id specificato, oppure null se non presente.
-     */
-    Contest findById(int id);
-
-    List<Contest> searchByName(String name);
-
-    List<Contest> searchByDescription(String description);
-
-    void deleteByID(int id);
+	List<Contest> searchByDescription(String description);
+	
+	List<Contest> findByStatus(Status status);
 }

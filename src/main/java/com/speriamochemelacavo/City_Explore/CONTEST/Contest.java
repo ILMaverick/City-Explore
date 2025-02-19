@@ -4,13 +4,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
+import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
 import com.speriamochemelacavo.City_Explore.EVENTO.Event;
 import com.speriamochemelacavo.City_Explore.USER.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
+@Component
 @Entity
 public class Contest extends AbstractElement {
 
@@ -26,6 +30,7 @@ public class Contest extends AbstractElement {
 
     public Contest(String name, String description, User author) {
         super(name, description, author);
+        super.setStatus(Status.APPROVED);
         this.eventList = new ArrayList<>();
     }
 

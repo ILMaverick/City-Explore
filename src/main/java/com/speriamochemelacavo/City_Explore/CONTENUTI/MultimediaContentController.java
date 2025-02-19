@@ -12,8 +12,7 @@ public class MultimediaContentController {
     @Autowired
     private MultimediaContentService multimediaContentService;
 
-    public MultimediaContentController(MultimediaContentService multimediaContentService) {
-        this.multimediaContentService = multimediaContentService;
+    public MultimediaContentController() {
     }
     public void initializer() {
         multimediaContentService.initializer();

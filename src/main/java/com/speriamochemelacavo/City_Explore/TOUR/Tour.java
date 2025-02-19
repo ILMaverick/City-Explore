@@ -3,17 +3,24 @@ package com.speriamochemelacavo.City_Explore.TOUR;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
 import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
 import com.speriamochemelacavo.City_Explore.USER.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Tour extends AbstractElement {
+	@OneToMany
 	private List<Way> wayList;
+	
+	@OneToMany
+	private final List<MultimediaContent> multimediaContentList;
 
 	public Tour(String name, String description, User author) {
 		super(name, description, author);
 		this.wayList = new ArrayList<>();
+		this.multimediaContentList = new ArrayList<>();
 	}
 
 	public List<Way> getWayList() {

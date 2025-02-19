@@ -16,10 +16,10 @@ public class POIService {
     @Autowired
     private POIRepository poiRepository;
 
-    public POIService(POIRepository poiRepository) {
+    public POIService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
         scanner = new Scanner(System.in);
-        this.poiRepository = poiRepository;
+        
     }
 
     //Inizializza dei Punti di Interesse
@@ -186,7 +186,7 @@ public class POIService {
     }
 
     public PointOfInterest getPOIById(int id) {
-        return poiRepository.findById(id);
+        return poiRepository.findById(id).get();
     }
 
     public void save(PointOfInterest pointOfInterest) {

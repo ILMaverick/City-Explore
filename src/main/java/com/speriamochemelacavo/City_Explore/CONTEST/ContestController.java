@@ -9,8 +9,7 @@ public class ContestController {
     @Autowired
     private ContestService contestService;
 
-    public ContestController(ContestService contestService) {
-        this.contestService = contestService;
+    public ContestController() {
     }
 
     public void initializer() {

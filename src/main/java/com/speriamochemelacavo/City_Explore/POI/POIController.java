@@ -9,8 +9,7 @@ public class POIController {
     @Autowired
     private POIService poiService;
 
-    public POIController(POIService poiService) {
-        this.poiService = poiService;
+    public POIController() {
     }
 
     public void createPOIFromScratch() {

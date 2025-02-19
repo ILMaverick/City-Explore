@@ -1,7 +1,8 @@
 package com.speriamochemelacavo.City_Explore.ELEMENT;
 
-public enum ElementStatus {
+public enum Status {
     PENDING,
     APPROVED,
-    REJECTED;
+    REJECTED,
+    REPORTED;
 }

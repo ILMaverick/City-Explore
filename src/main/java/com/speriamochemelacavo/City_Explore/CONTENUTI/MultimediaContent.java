@@ -2,12 +2,17 @@ package com.speriamochemelacavo.City_Explore.CONTENUTI;
 
 import java.time.LocalDateTime;
 
-import com.speriamochemelacavo.City_Explore.ELEMENT.ElementStatus;
+import org.springframework.stereotype.Component;
+
+import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
 import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 import com.speriamochemelacavo.City_Explore.USER.User;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
+@Component
 @Entity
 public class MultimediaContent {
 
@@ -19,9 +24,9 @@ public class MultimediaContent {
     private float dimension;
     private float resolution;
     private LocalDateTime dataCreation;
+    @ManyToOne(cascade = CascadeType.ALL)
     private User author;
-    private boolean published;
-    private ElementStatus status;
+    private Status status;
     @ManyToOne
     private PointOfInterest pointOfInterest;
 
@@ -29,8 +34,7 @@ public class MultimediaContent {
         this.name = (name != null ) ? name : "Senza nome";
         this.description = description;
         this.author = author;
-        this.published = false;
-        this.status = ElementStatus.PENDING;
+        this.status = Status.PENDING;
     }
 
     @Override
@@ -45,8 +49,7 @@ public class MultimediaContent {
                 ",\n  resolution=" + resolution +
                 ",\n  dataCreation=" + dataCreation +
                 ",\n  author=" + author +
-//                ",\n  poi=" + pointOfInterest +
-                ",\n  published=" + published +
+                ",\n  poi=" + pointOfInterest +
                 ",\n  elementStatus=" + status +
                 "\n}";
     }
@@ -85,16 +88,10 @@ public class MultimediaContent {
     public void setAuthor(User author) {
         this.author = author;
     }
-    public boolean isPublished() {
-        return published;
-    }
-    public void setPublished(boolean published) {
-        this.published = published;
-    }
-    public ElementStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
-    public void setStatus(ElementStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
     public PointOfInterest getPointOfInterest() {

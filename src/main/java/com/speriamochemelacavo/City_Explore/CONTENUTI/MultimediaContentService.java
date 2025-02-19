@@ -18,10 +18,8 @@ public class MultimediaContentService {
     private POIRepository poiRepository;
     private Scanner scanner;
 
-    public MultimediaContentService(MultimediaContentRepository multimediaContentRepository, POIRepository poiRepository) {
+    public MultimediaContentService() {
         scanner = new Scanner(System.in);
-        this.multimediaContentRepository = multimediaContentRepository;
-        this.poiRepository = poiRepository;
     }
 
     public void initializer() {
@@ -147,8 +145,8 @@ public class MultimediaContentService {
     }
 
     public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
-    	PointOfInterest poi = poiRepository.findById(idPOI);
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC);
+    	PointOfInterest poi = poiRepository.findById(idPOI).get();
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
 
         multimediaContent.setPointOfInterest(poi);
         save(multimediaContent);
@@ -157,8 +155,8 @@ public class MultimediaContentService {
         return poi;
     }
 
-    public void save(MultimediaContent multimediaContent) {
-        multimediaContentRepository.save(multimediaContent);
+    public MultimediaContent save(MultimediaContent multimediaContent) {
+       return multimediaContentRepository.save(multimediaContent);
     }
 
     public List<MultimediaContent> getAllMultimediaContent() {
@@ -166,7 +164,7 @@ public class MultimediaContentService {
     }
 
     public MultimediaContent getMultimediaContentById(int id) {
-        return multimediaContentRepository.findById(id);
+        return multimediaContentRepository.findById(id).get();
     }
 
     public List<MultimediaContent> searchMultimediaContentByName(String name) {

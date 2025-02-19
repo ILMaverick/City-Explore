@@ -5,25 +5,15 @@ import java.util.Scanner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.speriamochemelacavo.City_Explore.CONTENUTI.InMemoryMultimediaContentRepository;
+
 import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContentController;
-import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContentService;
 import com.speriamochemelacavo.City_Explore.CONTEST.ContestController;
-import com.speriamochemelacavo.City_Explore.CONTEST.ContestService;
-import com.speriamochemelacavo.City_Explore.CONTEST.InMemoryContestRepository;
 import com.speriamochemelacavo.City_Explore.ELIMINAZIONE.DeletionController;
-import com.speriamochemelacavo.City_Explore.ELIMINAZIONE.DeletionService;
 import com.speriamochemelacavo.City_Explore.EVENTO.EventController;
-import com.speriamochemelacavo.City_Explore.EVENTO.EventService;
-import com.speriamochemelacavo.City_Explore.EVENTO.InMemoryEventRepository;
-import com.speriamochemelacavo.City_Explore.POI.InMemoryPOIRepository;
 import com.speriamochemelacavo.City_Explore.POI.POIController;
-import com.speriamochemelacavo.City_Explore.POI.POIService;
-import com.speriamochemelacavo.City_Explore.TOUR.InMemoryTourRepository;
 import com.speriamochemelacavo.City_Explore.TOUR.TourController;
-import com.speriamochemelacavo.City_Explore.TOUR.TourService;
 import com.speriamochemelacavo.City_Explore.VALIDAZIONE.ValidationController;
-import com.speriamochemelacavo.City_Explore.VALIDAZIONE.ValidationService;
+
 
 @SpringBootApplication
 public class CityExploreApplication {
@@ -31,21 +21,15 @@ public class CityExploreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CityExploreApplication.class, args);
 	}
-	InMemoryPOIRepository poiRepository = new InMemoryPOIRepository();
-    InMemoryTourRepository tourRepository = new InMemoryTourRepository();
-    InMemoryContestRepository contestRepository = new InMemoryContestRepository();
-    InMemoryEventRepository eventRepository = new InMemoryEventRepository();
-    InMemoryMultimediaContentRepository multimediaContentRepository = new InMemoryMultimediaContentRepository();
-
+	
     Scanner scanner = new Scanner(System.in);
-    POIController poiController = new POIController(new POIService(poiRepository));
-    TourController tourController = new TourController(new TourService(tourRepository, poiRepository));
-    ContestController contestController = new ContestController(new ContestService(contestRepository));
-    EventController eventController = new EventController(new EventService(eventRepository, poiRepository));
-    MultimediaContentController multimediaContentController = new MultimediaContentController(new MultimediaContentService(multimediaContentRepository, poiRepository));
-    ValidationController validationController = new ValidationController(new ValidationService(poiRepository, tourRepository, multimediaContentRepository,
-            new DeletionService(poiRepository, tourRepository, contestRepository, eventRepository, multimediaContentRepository)));
-    DeletionController deletionController = new DeletionController(new DeletionService(poiRepository, tourRepository, contestRepository, eventRepository, multimediaContentRepository));
+    POIController poiController = new POIController();
+    TourController tourController = new TourController();
+    ContestController contestController = new ContestController();
+    EventController eventController = new EventController();
+    MultimediaContentController multimediaContentController = new MultimediaContentController();
+    ValidationController validationController = new ValidationController();
+    DeletionController deletionController = new DeletionController();
 
     boolean exit = false;{
     while (!exit) {

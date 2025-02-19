@@ -16,9 +16,8 @@ public class ContestService {
     @Autowired
     private ContestRepository contestRepository;
 
-    public ContestService(ContestRepository contestRepository) {
+    public ContestService() {
         scanner = new Scanner(System.in);
-        this.contestRepository = contestRepository;
     }
 
     public void initializer() {
@@ -119,7 +118,7 @@ public class ContestService {
     }
 
     public Contest getContestById(int id) {
-        return contestRepository.findById(id);
+        return contestRepository.findById(id).get();
     }
 
     public List<Contest> searchContestByName(String name) {

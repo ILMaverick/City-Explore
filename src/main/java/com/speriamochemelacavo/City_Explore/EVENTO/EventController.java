@@ -4,12 +4,13 @@ import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
 
 import java.util.List;
 
-public class EventController {
+import org.springframework.beans.factory.annotation.Autowired;
 
+public class EventController {
+	@Autowired
     private EventService eventService; // Service per la gestione degli eventi
 
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
+    public EventController() {
     }
 
     public void initializer() {

@@ -9,8 +9,7 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
-    public TourController(TourService tourService) {
-        this.tourService = tourService;
+    public TourController() {
     }
 
     public void createTourFromPOIs() {
