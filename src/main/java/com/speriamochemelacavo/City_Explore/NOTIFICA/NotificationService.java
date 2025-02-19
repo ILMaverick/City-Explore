@@ -11,21 +11,34 @@ import java.util.List;
 @Service
 public class NotificationService {
     @Autowired
-    private List<Notification> notificationList;
+    private final List<Notification> notificationList;
 
-    private void sendNotification(Notification notification) {
-        // Logica per inviare la notifica
-        System.out.println("Notifica per " + notification.getUser() + ": " + notification.getMessage());
+    public NotificationService(List<Notification> notificationList) {
+        this.notificationList = notificationList;
     }
 
-    public Notification createNotification(String message, NotificationType notificationType, User user) {
+    public Notification createNotification(String message, NotificationType notificationType) {
         Notification notification = new Notification();
         notification.setMessage(message);
         notification.setNotificationType(notificationType);
-        notification.setUser(user);
         notification.setLocalDateTime(LocalDateTime.now());
         notificationList.add(notification);
         return notification;
+    }
+
+    public List<Notification> getNotificationsForUser(User user) {
+        List<Notification> userNotifications = new ArrayList<>();
+        for (Notification notification : notificationList) {
+            if (notification.getUser().equals(user)) {
+                userNotifications.add(notification);
+            }
+        }
+        return userNotifications;
+    }
+    public void sendNotification(Notification notification, User user) {
+        notification.setUser(user);
+        user.getNotificationList().add(notification);
+        System.out.println("Notifica per " + user + ": " + notification.getMessage());
     }
 
     public List<Notification> getAllNotifications() {
@@ -34,15 +47,5 @@ public class NotificationService {
 
     public void deleteNotification(Notification notification) {
         notificationList.remove(notification);
-    }
-
-    public List<Notification> getNotificationsForUser(String user) {
-        List<Notification> userNotifications = new ArrayList<>();
-        for (Notification notification : notificationList) {
-            if (notification.getUser().equals(user)) {
-                userNotifications.add(notification);
-            }
-        }
-        return userNotifications;
     }
 }
