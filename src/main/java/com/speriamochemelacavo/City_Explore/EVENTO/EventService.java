@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.EVENTO;
+package EVENTO;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.speriamochemelacavo.City_Explore.POI.POIRepository;
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import POI.POIRepository;
+import POI.PointOfInterest;
+import USER.User;
 
 public class EventService {
     private Scanner scanner;

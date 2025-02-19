@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.CONTEST;
+package CONTEST;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

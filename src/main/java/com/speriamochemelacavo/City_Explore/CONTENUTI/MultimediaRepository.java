@@ -1,10 +1,10 @@
-package com.speriamochemelacavo.City_Explore.CONTENUTI;
+package CONTENUTI;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
+import ELEMENT.Status;
 
 public interface MultimediaRepository<T extends MultimediaContent> extends JpaRepository<T, Integer>{
 	

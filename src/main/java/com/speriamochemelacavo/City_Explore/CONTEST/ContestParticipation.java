@@ -1,7 +1,7 @@
-package com.speriamochemelacavo.City_Explore.CONTEST;
+package CONTEST;
 
-import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import CONTENUTI.MultimediaContent;
+import USER.User;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

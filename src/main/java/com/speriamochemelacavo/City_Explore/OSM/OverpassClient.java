@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.OSM;
+package OSM;
 
 import java.io.*;
 import java.net.HttpURLConnection;

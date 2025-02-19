@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.NOTIFICA;
+package NOTIFICA;
 
 public enum NotificationType {
     CREATION,

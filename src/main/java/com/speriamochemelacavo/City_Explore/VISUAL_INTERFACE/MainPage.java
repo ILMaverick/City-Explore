@@ -1,18 +1,19 @@
-package com.speriamochemelacavo.City_Explore.VISUAL_INTERFACE;
+package VISUAL_INTERFACE;
 
-public class MainPage implements Page {
+import java.util.ArrayList;
+import java.util.HashMap;
 
-	@Override
-	public void show() {
-		System.out.println("=== Menu Principale ===");
-        System.out.println("1. Gestione POI");
-        System.out.println("2. Gestione Tour");
-        System.out.println("3. Gestione Contest");
-        System.out.println("4. Gestione Evento");
-        System.out.println("5. Gestione Contenuti Multimediale");
-        System.out.println("6. Validazione Elementi e Contenuti Pendenti");
-        System.out.println("7. Esci");
-        System.out.print("Seleziona un'opzione (1, 2, 3, 4, 5, 6, 7): ");
+public class MainPage extends MenuPage{
+
+	public MainPage() {
+		super ("Menu Principale");
+		HashMap<String, Page> chapters = new HashMap<String, Page>();
+		chapters.add("Gestione POI");
+		chapters.add("Gestione Tour");
+		chapters.add("Gestione Contest");
+		chapters.add("Gestione Evento");
+		chapters.add("Gestione Contenuti Multimediali");
+		chapters.add("Validazione Elementi e Contenuti Pendenti");
+		this.setChapters(chapters);
 	}
-
 }

@@ -1,6 +1,6 @@
-package com.speriamochemelacavo.City_Explore.ELEMENT;
+package ELEMENT;
 
-import com.speriamochemelacavo.City_Explore.USER.User;
+import USER.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

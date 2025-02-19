@@ -1,7 +1,7 @@
-package com.speriamochemelacavo.City_Explore.USER;
+package USER;
 
-import com.speriamochemelacavo.City_Explore.EVENTO.Event;
-import com.speriamochemelacavo.City_Explore.NOTIFICA.Notification;
+import EVENTO.Event;
+import NOTIFICA.Notification;
 import jakarta.persistence.*;
 
 import java.util.List;

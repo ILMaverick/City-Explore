@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.USER;
+package USER;
 
 public enum Role {
 	TOURIST,

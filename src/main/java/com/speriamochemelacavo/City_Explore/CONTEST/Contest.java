@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.CONTEST;
+package CONTEST;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
-import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
-import com.speriamochemelacavo.City_Explore.EVENTO.Event;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import ELEMENT.AbstractElement;
+import ELEMENT.Status;
+import EVENTO.Event;
+import USER.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;

@@ -1,6 +1,6 @@
-package com.speriamochemelacavo.City_Explore.NOTIFICA;
+package NOTIFICA;
 
-import com.speriamochemelacavo.City_Explore.USER.User;
+import USER.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

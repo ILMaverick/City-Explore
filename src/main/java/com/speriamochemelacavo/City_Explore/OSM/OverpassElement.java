@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.OSM;
+package OSM;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

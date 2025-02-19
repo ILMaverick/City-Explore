@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.TOUR;
+package TOUR;
 
 public enum WayDifficultyType {
 	Facile,

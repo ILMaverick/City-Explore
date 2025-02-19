@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.POI;
+package POI;
 
 public enum POIType {
 	Turismo,

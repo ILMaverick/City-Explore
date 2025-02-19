@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.CONTEST;
+package CONTEST;
 
 public class QuoteCriterion {
     private int vote;

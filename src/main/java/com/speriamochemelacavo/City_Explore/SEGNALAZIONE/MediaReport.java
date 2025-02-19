@@ -1,8 +1,8 @@
-package com.speriamochemelacavo.City_Explore.SEGNALAZIONE;
+package SEGNALAZIONE;
 
-import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
+import CONTENUTI.MultimediaContent;
 
-import com.speriamochemelacavo.City_Explore.USER.User;
+import USER.User;
 
 import java.time.LocalDateTime;
 

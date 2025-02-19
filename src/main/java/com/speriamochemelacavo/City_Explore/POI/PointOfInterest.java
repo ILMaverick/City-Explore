@@ -1,14 +1,14 @@
-package com.speriamochemelacavo.City_Explore.POI;
+package POI;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
-import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
-import com.speriamochemelacavo.City_Explore.EVENTO.Event;
-import com.speriamochemelacavo.City_Explore.TOUR.Tour;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import CONTENUTI.MultimediaContent;
+import ELEMENT.AbstractElement;
+import EVENTO.Event;
+import TOUR.Tour;
+import USER.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;

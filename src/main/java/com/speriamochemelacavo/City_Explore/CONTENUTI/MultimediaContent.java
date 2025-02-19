@@ -1,12 +1,12 @@
-package com.speriamochemelacavo.City_Explore.CONTENUTI;
+package CONTENUTI;
 
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
-import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import ELEMENT.Status;
+import POI.PointOfInterest;
+import USER.User;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

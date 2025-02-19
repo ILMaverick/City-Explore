@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.CONTENUTI;
+package CONTENUTI;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

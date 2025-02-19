@@ -1,13 +1,13 @@
-package com.speriamochemelacavo.City_Explore.TOUR;
+package TOUR;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import com.speriamochemelacavo.City_Explore.POI.POIRepository;
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import POI.POIRepository;
+import POI.PointOfInterest;
+import USER.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

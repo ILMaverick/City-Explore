@@ -1,7 +1,7 @@
-package com.speriamochemelacavo.City_Explore.EVENTO;
+package EVENTO;
 
-import com.speriamochemelacavo.City_Explore.ELEMENT.ElementRepository;
-import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
+import ELEMENT.ElementRepository;
+import ELEMENT.Status;
 
 import java.util.List;
 

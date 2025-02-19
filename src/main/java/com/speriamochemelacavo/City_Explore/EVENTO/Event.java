@@ -1,10 +1,10 @@
-package com.speriamochemelacavo.City_Explore.EVENTO;
+package EVENTO;
 
-import com.speriamochemelacavo.City_Explore.CONTEST.Contest;
-import com.speriamochemelacavo.City_Explore.ELEMENT.AbstractElement;
-import com.speriamochemelacavo.City_Explore.ELEMENT.Status;
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import CONTEST.Contest;
+import ELEMENT.AbstractElement;
+import ELEMENT.Status;
+import POI.PointOfInterest;
+import USER.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;

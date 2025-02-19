@@ -1,17 +1,15 @@
-package com.speriamochemelacavo.City_Explore;
-
 import java.util.Scanner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContentController;
-import com.speriamochemelacavo.City_Explore.CONTEST.ContestController;
-import com.speriamochemelacavo.City_Explore.ELIMINAZIONE.DeletionController;
-import com.speriamochemelacavo.City_Explore.EVENTO.EventController;
-import com.speriamochemelacavo.City_Explore.POI.POIController;
-import com.speriamochemelacavo.City_Explore.TOUR.TourController;
-import com.speriamochemelacavo.City_Explore.VALIDAZIONE.ValidationController;
+import CONTENUTI.MultimediaContentController;
+import CONTEST.ContestController;
+import ELIMINAZIONE.DeletionController;
+import EVENTO.EventController;
+import POI.POIController;
+import TOUR.TourController;
+import VALIDAZIONE.ValidationController;
 
 
 @SpringBootApplication

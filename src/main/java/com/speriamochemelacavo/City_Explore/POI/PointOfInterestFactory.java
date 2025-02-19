@@ -1,7 +1,7 @@
-package com.speriamochemelacavo.City_Explore.POI;
+package POI;
 
-import com.speriamochemelacavo.City_Explore.OSM.OverpassElement;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import OSM.OverpassElement;
+import USER.User;
 
 public class PointOfInterestFactory {
     public static PointOfInterest createFromOverpassElement(OverpassElement element, User author, POIType type) {

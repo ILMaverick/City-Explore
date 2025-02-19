@@ -1,8 +1,8 @@
-package com.speriamochemelacavo.City_Explore.VALIDAZIONE;
+package VALIDAZIONE;
 
-import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
-import com.speriamochemelacavo.City_Explore.TOUR.Tour;
+import CONTENUTI.MultimediaContent;
+import POI.PointOfInterest;
+import TOUR.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

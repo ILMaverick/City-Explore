@@ -1,19 +1,30 @@
-package com.speriamochemelacavo.City_Explore.VISUAL_INTERFACE;
+package VISUAL_INTERFACE;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class PageController {
 
-	Page pointerPage = new MainPage();
+	@Autowired
+	private PageDisplay viewer;
 	
+	private Page pointerPage = new MainPage();
+	
+	public PageController() {
+		
+	}
+
 	public void start() {
 		this.show();
 	}
 	
 	private void show() {
-		this.pointerPage.show();
+		this.viewer.display(pointerPage);
 	}
 	
 	public void next(Page toShow) {
-		
+		this.pointerPage = toShow;
 	}
 	
 	private void close() {

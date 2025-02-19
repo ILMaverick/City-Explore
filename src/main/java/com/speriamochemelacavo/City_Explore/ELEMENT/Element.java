@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.ELEMENT;
+package ELEMENT;
 
 public interface Element {
 	int getId();

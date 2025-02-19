@@ -1,8 +1,8 @@
-package com.speriamochemelacavo.City_Explore.TOUR;
+package TOUR;
 
-import com.speriamochemelacavo.City_Explore.POI.POIType;
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import POI.POIType;
+import POI.PointOfInterest;
+import USER.User;
 
 public class Tappa extends PointOfInterest{
 	private int numeroTappa;

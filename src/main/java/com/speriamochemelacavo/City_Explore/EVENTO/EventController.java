@@ -1,6 +1,6 @@
-package com.speriamochemelacavo.City_Explore.EVENTO;
+package EVENTO;
 
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
+import POI.PointOfInterest;
 
 import java.util.List;
 

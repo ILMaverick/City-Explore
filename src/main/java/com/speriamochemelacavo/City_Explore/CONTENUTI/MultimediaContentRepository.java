@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.CONTENUTI;
+package CONTENUTI;
 
 public interface MultimediaContentRepository extends MultimediaRepository<MultimediaContent> {
 	

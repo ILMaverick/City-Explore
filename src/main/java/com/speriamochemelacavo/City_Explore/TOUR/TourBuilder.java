@@ -1,8 +1,8 @@
-package com.speriamochemelacavo.City_Explore.TOUR;
+package TOUR;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import USER.User;
 
 public class TourBuilder {
 	 private String name;

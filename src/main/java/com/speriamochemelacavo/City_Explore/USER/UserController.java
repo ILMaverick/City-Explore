@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.USER;
+package USER;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

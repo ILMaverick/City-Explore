@@ -1,14 +1,14 @@
-package com.speriamochemelacavo.City_Explore.NOTIFICA;
+package NOTIFICA;
 
-import com.speriamochemelacavo.City_Explore.CONTENUTI.MultimediaContent;
-import com.speriamochemelacavo.City_Explore.CONTEST.Contest;
-import com.speriamochemelacavo.City_Explore.EVENTO.Event;
-import com.speriamochemelacavo.City_Explore.POI.PointOfInterest;
-import com.speriamochemelacavo.City_Explore.SEGNALAZIONE.MediaReport;
-import com.speriamochemelacavo.City_Explore.TOUR.Tour;
-import com.speriamochemelacavo.City_Explore.USER.Role;
-import com.speriamochemelacavo.City_Explore.USER.User;
-import com.speriamochemelacavo.City_Explore.USER.UserRepository;
+import CONTENUTI.MultimediaContent;
+import CONTEST.Contest;
+import EVENTO.Event;
+import POI.PointOfInterest;
+import SEGNALAZIONE.MediaReport;
+import TOUR.Tour;
+import USER.Role;
+import USER.User;
+import USER.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.USER;
+package USER;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

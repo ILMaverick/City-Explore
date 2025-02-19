@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.OSM;
+package OSM;
 
 public class OverpassQueryFactory {
 	public static String createQuery(String city, String poiFilter) {

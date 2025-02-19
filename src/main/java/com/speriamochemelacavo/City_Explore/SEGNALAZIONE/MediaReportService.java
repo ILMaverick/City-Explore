@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.SEGNALAZIONE;
+package SEGNALAZIONE;
 
 public class MediaReportService {
 }

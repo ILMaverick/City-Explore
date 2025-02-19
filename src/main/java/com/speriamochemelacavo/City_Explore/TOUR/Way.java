@@ -1,4 +1,4 @@
-package com.speriamochemelacavo.City_Explore.TOUR;
+package TOUR;
 
 import java.util.List;
 

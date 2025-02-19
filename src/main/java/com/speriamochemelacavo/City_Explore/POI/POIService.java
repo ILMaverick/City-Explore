@@ -1,11 +1,11 @@
-package com.speriamochemelacavo.City_Explore.POI;
+package POI;
 
 import java.util.List;
 import java.util.Scanner;
 
-import com.speriamochemelacavo.City_Explore.OSM.OSMSearchService;
-import com.speriamochemelacavo.City_Explore.OSM.OverpassElement;
-import com.speriamochemelacavo.City_Explore.USER.User;
+import OSM.OSMSearchService;
+import OSM.OverpassElement;
+import USER.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
