@@ -25,6 +25,7 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(password);
         user.setRole(role);
+        notificationListener.handleCreateUser(user);
         return user;
     }
 
@@ -47,24 +48,28 @@ public class UserService {
             userSelected.setSurname(user.getSurname());
             userSelected.setUsername(user.getUsername());
             user.setEmail(user.getEmail());
+            notificationListener.handleUpdateUser(user);
             userRepository.save(userSelected);
             return userSelected;
         }
         return null;
     }
 
-    public void deleteUser(int idUser) {
-        userRepository.findById(idUser).ifPresent(userRepository::delete);
+    public void deleteUser(int idUser, String reason) {
+        User user = userRepository.findById(idUser).orElse(null);
+        if(user != null) {
+            notificationListener.handleDeleteUser(user, reason);
+            userRepository.delete(user);
+        }
     }
 
-    public User updateUserRole(int idUser, Role role) {
+    public void updateUserRole(int idUser, Role role) {
         User user = userRepository.findById(idUser).orElse(null);
         if(user != null) {
             user.setRole(role);
+            notificationListener.handleUpdateUserRole(user, role);
             userRepository.save(user);
-            return user;
         }
-        return null;
     }
 
     public List<User> searchUsersByRole(Role role) {

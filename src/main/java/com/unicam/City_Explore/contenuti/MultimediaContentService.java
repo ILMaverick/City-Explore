@@ -4,6 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/contenuti/MultimediaContentService.java
+=======
+import notifica.NotificationListener;
+import poi.POIRepository;
+import poi.PointOfInterest;
+import user.User;
+
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/contenuti/MultimediaContentService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +25,8 @@ public class MultimediaContentService {
     private MultimediaContentRepository multimediaContentRepository;
     @Autowired
     private POIRepository poiRepository;
+    @Autowired
+    private NotificationListener notificationListener;
     private Scanner scanner;
 
     public MultimediaContentService() {
@@ -141,19 +151,24 @@ public class MultimediaContentService {
         multimediaContent.setDimension(dimension);
         multimediaContent.setResolution(resolution);
         multimediaContent.setDataCreation(LocalDateTime.now());
-        save(multimediaContent);
+        notificationListener.handleCreateMultimediaContent(multimediaContent);
+        multimediaContentRepository.save(multimediaContent);
         return multimediaContent;
     }
 
     public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
-    	PointOfInterest poi = poiRepository.findById(idPOI).get();
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
+    	PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        if(poi != null & multimediaContent != null) {
+            multimediaContent.setPointOfInterest(poi);
+            save(multimediaContent);
+            poi.getMultimediaContentList().add(multimediaContent);
+            notificationListener.handleLoadMultimediaContentToPOI(poi, multimediaContent);
+            poiRepository.save(poi);
+            return poi;
+        }
 
-        multimediaContent.setPointOfInterest(poi);
-        save(multimediaContent);
-        poi.getMultimediaContentList().add(multimediaContent);
-        poiRepository.save(poi);
-        return poi;
+        return null;
     }
 
     public MultimediaContent updateMultimediaContent(int idMC, MultimediaContent multimediaContent) {
@@ -165,9 +180,11 @@ public class MultimediaContentService {
             multimediaContentSelected.setDuration(multimediaContent.getDimension());
             multimediaContentSelected.setResolution(multimediaContent.getResolution());
             multimediaContentSelected.setDataCreation(LocalDateTime.now());
+            notificationListener.handleUpdateMultimediaContent(multimediaContent);
             multimediaContentRepository.save(multimediaContentSelected);
+            return multimediaContentSelected;
         }
-        return multimediaContentSelected;
+        return null;
     }
 
     public MultimediaContent save(MultimediaContent multimediaContent) {

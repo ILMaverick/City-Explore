@@ -24,11 +24,11 @@ public class Event extends AbstractElement {
 	private double price;
 	private LocalDateTime time;
 	@ManyToMany
-	private List<PointOfInterest> pointOfInterestList;
+	private final List<PointOfInterest> pointOfInterestList;
 	@ManyToMany
-	private List<Contest> contestList;
+	private final List<Contest> contestList;
 	@OneToMany
-	private List<User> participants;
+	private final List<User> participants;
 	
 	public Event(String name, String description, User author, String scope,
 				 String activity, String organization, String theme, String category,

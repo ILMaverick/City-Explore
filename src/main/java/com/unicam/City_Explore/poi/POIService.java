@@ -3,6 +3,14 @@ package com.unicam.City_Explore.poi;
 import java.util.List;
 import java.util.Scanner;
 
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/poi/POIService.java
+=======
+import notifica.NotificationListener;
+import osm.OSMSearchService;
+import osm.OverpassElement;
+import user.User;
+
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/poi/POIService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +24,8 @@ public class POIService {
     private Scanner scanner;
     @Autowired
     private POIRepository poiRepository;
+    @Autowired
+    private NotificationListener notificationListener;
 
     public POIService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
@@ -164,11 +174,13 @@ public class POIService {
 
     public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
+        notificationListener.handleCreatePOI(poi);
         return poiRepository.save(poi);
     }
 
     public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
+        notificationListener.handleCreatePOI(poi);
         return poiRepository.save(poi);
     }
 
@@ -182,6 +194,7 @@ public class POIService {
             pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
             pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
             pointOfInterestSelected.setType(pointOfInterest.getType());
+            notificationListener.handleUpdatePOI(pointOfInterestSelected);
             poiRepository.save(pointOfInterest);
         }
         return pointOfInterestSelected;

@@ -38,7 +38,17 @@ public class NotificationService {
     public void sendNotification(Notification notification, User user) {
         notification.setUser(user);
         user.getNotificationList().add(notification);
-        System.out.println("Notifica per " + user + ": " + notification.getMessage());
+        System.out.println("Hai una nuova Notifica: " + user + ": " + notification.getMessage());
+    }
+
+    public Notification openNotification(int idNotification) {
+        for(Notification notification: getAllNotifications()) {
+            if(notification.getId()==idNotification) {
+                notification.setRead(true);
+                return notification;
+            }
+        }
+        return null;
     }
 
     public List<Notification> getAllNotifications() {

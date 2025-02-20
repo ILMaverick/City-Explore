@@ -12,6 +12,7 @@ public class ContestParticipation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/contest/ContestParticipation.java
     @OneToOne
     private Contest contest;
     @OneToOne
@@ -19,7 +20,19 @@ public class ContestParticipation {
     @OneToMany
     private final List<MultimediaContent> multimediaContentList = new ArrayList<>();
     @OneToOne
+=======
+    @ManyToOne
+    private Contest contest;
+    @ManyToOne
+    private User user;
+    @OneToMany
+    private final List<MultimediaContent> multimediaContentList;
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/contest/ContestParticipation.java
     private QuoteCriterion quoteCriterion;
+
+    public ContestParticipation() {
+        this.multimediaContentList = new ArrayList<>();
+    }
 
     public int getId() {
         return id;

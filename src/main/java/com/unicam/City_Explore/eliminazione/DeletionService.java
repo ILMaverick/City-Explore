@@ -1,4 +1,21 @@
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/eliminazione/DeletionService.java
 package com.unicam.City_Explore.eliminazione;
+=======
+package eliminazione;
+
+import contenuti.MultimediaContent;
+import contenuti.MultimediaContentRepository;
+import contest.Contest;
+import contest.ContestRepository;
+import evento.Event;
+import evento.EventRepository;
+import notifica.NotificationListener;
+import poi.POIRepository;
+import poi.PointOfInterest;
+import tour.Tour;
+import tour.TourRepository;
+import user.User;
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/eliminazione/DeletionService.java
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +48,8 @@ public class DeletionService {
     private EventRepository eventRepository;
     @Autowired
     private MultimediaContentRepository multimediaContentRepository;
+    @Autowired
+    private NotificationListener notificationListener;
 
     public DeletionService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
@@ -162,59 +181,75 @@ public class DeletionService {
     }
 
     public void deletePOI(int idPOI) {
-        PointOfInterest poi = poiRepository.findById(idPOI).get();
-        List<Event> eventList = poi.getEvents();
-        //List<Tour> tourList = poi.getTourList();
-        List<MultimediaContent> multimediaContentList = poi.getMultimediaContentList();
-        for (Event event : eventList) {
-            event.getPointOfInterestList().remove(poi);
-            eventRepository.save(event);
-        }
-        //TODO: Aggiungere Controllo per il Tour
+        PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
+        if(poi != null) {
+            List<Event> eventList = poi.getEvents();
+            //List<Tour> tourList = poi.getTourList();
+            List<MultimediaContent> multimediaContentList = poi.getMultimediaContentList();
+            for (Event event : eventList) {
+                event.getPointOfInterestList().remove(poi);
+                eventRepository.save(event);
+            }
+            //TODO: Aggiungere Controllo per il Tour
 
-        for (MultimediaContent multimediaContent : multimediaContentList) {
-            multimediaContent.setPointOfInterest(null);
-            multimediaContentRepository.save(multimediaContent);
+            for (MultimediaContent multimediaContent : multimediaContentList) {
+                multimediaContent.setPointOfInterest(null);
+                multimediaContentRepository.save(multimediaContent);
+            }
+            notificationListener.handleDeletePOI(poi);
+            poiRepository.deleteById(idPOI);
         }
-        poiRepository.deleteById(idPOI);;
     }
 
     public void deleteTour(int idTour) {
-        Tour tour = tourRepository.findById(idTour).get();
-        tourRepository.deleteById(tour.getId());
+        Tour tour = tourRepository.findById(idTour).orElse(null);
+        if(tour != null) {
+            //TODO: Aggiungere Controllo dei POI
+            notificationListener.handleDeleteTour(tour);
+            tourRepository.deleteById(tour.getId());
+        }
     }
 
     public void deleteContest(int idContest) {
-        Contest contest = contestRepository.findById(idContest).get();
-        List<Event> eventList = contest.getEventList();
-        for (Event event : eventList) {
-            event.getContestList().remove(contest);
-            eventRepository.save(event);
+        Contest contest = contestRepository.findById(idContest).orElse(null);
+        if(contest != null) {
+            List<Event> eventList = contest.getEventList();
+            for(Event event : eventList) {
+                event.getContestList().remove(contest);
+                eventRepository.save(event);
+            }
+            notificationListener.handleDeleteContest(contest);
+            contestRepository.deleteById(idContest);
         }
-        contestRepository.deleteById(idContest);
     }
 
     public void deleteEvent(int idEvent) {
-        Event event = eventRepository.findById(idEvent).get();
-        List<PointOfInterest> pointOfInterestList = event.getPointOfInterestList();
-        List<Contest> contestList = event.getContestList();
-        for (PointOfInterest poi : pointOfInterestList) {
-            poi.getEvents().remove(event);
-            poiRepository.save(poi);
+        Event event = eventRepository.findById(idEvent).orElse(null);
+        if(event != null) {
+            List<PointOfInterest> pointOfInterestList = event.getPointOfInterestList();
+            List<Contest> contestList = event.getContestList();
+            for(PointOfInterest poi : pointOfInterestList) {
+                poi.getEvents().remove(event);
+                poiRepository.save(poi);
+            }
+            for (Contest contest : contestList) {
+                contest.getEventList().remove(event);
+                contestRepository.save(contest);
+            }
+            notificationListener.handleDeleteEvent(event);
+            eventRepository.deleteById(idEvent);
         }
-        for (Contest contest : contestList) {
-            contest.getEventList().remove(event);
-            contestRepository.save(contest);
-        }
-        eventRepository.deleteById(idEvent);
     }
 
     public void deleteMultimediaContent(int idMC) {
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
-        PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
-        pointOfInterest.getMultimediaContentList().remove(multimediaContent);
-        poiRepository.save(pointOfInterest);
-        multimediaContentRepository.deleteById(idMC);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        if(multimediaContent != null) {
+            PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
+            pointOfInterest.getMultimediaContentList().remove(multimediaContent);
+            poiRepository.save(pointOfInterest);
+            notificationListener.handleDeleteMultimediaContent(multimediaContent);
+            multimediaContentRepository.deleteById(idMC);
+        }
     }
 
     private User getCurrentUser() {

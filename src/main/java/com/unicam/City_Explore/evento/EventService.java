@@ -3,15 +3,24 @@ package com.unicam.City_Explore.evento;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
+import notifica.NotificationListener;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/evento/EventService.java
 
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
+=======
+import poi.POIRepository;
+import poi.PointOfInterest;
+import user.User;
+import user.UserRepository;
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/evento/EventService.java
 
 @Service
 public class EventService {
@@ -20,6 +29,10 @@ public class EventService {
     private EventRepository eventRepository;
     @Autowired
     private POIRepository poiRepository;
+    @Autowired
+    private NotificationListener notificationListener;
+    @Autowired
+    private UserRepository userRepository;
 
     public EventService() {
         // Inizializza lo scanner (non lo chiudiamo subito, per evitare di chiudere System.in)
@@ -35,37 +48,6 @@ public class EventService {
         createEvent("nome", "descrizione", user, "Raccolta fondi", "Gioco libero",
                 "SilverSimonCorp", "Fantasy", "Giochi in presenza", 0.0, time);
 
-    }
-    
-    /**
-     * Crea un nuovo Evento a partire dai dati forniti.
-     */
-    public Event createEvent(String name, String description, User author, String scope,
-                             String activity, String organization, String theme, String category,
-                             double price, LocalDateTime time) {
-
-        Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time);
-        eventRepository.save(event);
-        return event;
-    }
-
-    /**
-     * Aggiungi un Evento a un Punto di Interesse
-     */
-
-    public PointOfInterest addEventToPOI(int idPOI, int idEvent) {
-        PointOfInterest poi = poiRepository.findById(idPOI).get();
-        Event event = getEventById(idEvent);
-        if (poi != null) {
-            System.out.println("Punto di interesse trovato: ");
-            event.getPointOfInterestList().add(poi);
-            eventRepository.save(event);
-            poi.getEvents().add(event);
-            poiRepository.save(poi);
-        } else {
-            System.out.println("Punto di interesse non trovato.");
-        }
-        return poi;
     }
 
     /**
@@ -230,10 +212,43 @@ public class EventService {
     }
 
     /**
+     * Crea un nuovo Evento a partire dai dati forniti.
+     */
+    public Event createEvent(String name, String description, User author, String scope,
+                             String activity, String organization, String theme, String category,
+                             double price, LocalDateTime time) {
+
+        Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time);
+        notificationListener.handleNewEvent(event);
+        eventRepository.save(event);
+        return event;
+    }
+
+    /**
+     * Aggiungi un Evento a un Punto di Interesse
+     */
+
+    public PointOfInterest addEventToPOI(int idPOI, int idEvent) {
+        PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
+        Event event = getEventById(idEvent);
+        if (poi != null) {
+            System.out.println("Punto di interesse trovato: ");
+            event.getPointOfInterestList().add(poi);
+            eventRepository.save(event);
+            poi.getEvents().add(event);
+            notificationListener.handleAddEventToPOI(event, poi);
+            poiRepository.save(poi);
+        } else {
+            System.out.println("Punto di interesse non trovato.");
+        }
+        return poi;
+    }
+
+    /**
      * Salva l'Evento nella repository.
      */
-    public void saveEvent(Event event) {
-        eventRepository.save(event);
+    public Event save(Event event) {
+        return eventRepository.save(event);
     }
     
     /**
@@ -250,8 +265,8 @@ public class EventService {
         return eventRepository.findById(id).get();
     }
 
-    public Event updateEvent(int id, Event event) {
-        Event eventSelected = getEventById(id);
+    public Event updateEvent(int idEvent, Event event) {
+        Event eventSelected = eventRepository.findById(idEvent).orElse(null);
         if(eventSelected != null) {
             eventSelected.setName(event.getName());
             eventSelected.setDescription(event.getDescription());
@@ -262,6 +277,7 @@ public class EventService {
             eventSelected.setCategory(event.getCategory());
             eventSelected.setTime(event.getTime());
             eventSelected.setPrice(event.getPrice());
+            notificationListener.handleUpdateEvent(event);
             eventRepository.save(eventSelected);
         }
         return eventSelected;
@@ -278,6 +294,39 @@ public class EventService {
     public List<Event> searchEventByDescription(String description) {
         return eventRepository.searchByDescription(description);
     }
+
+    public void participateEvent(int idEvent, int idUser) {
+        Optional<Event> optionalEvent = eventRepository.findById(idEvent);
+        Optional<User> optionalUser = userRepository.findById(idUser);
+
+        if(optionalEvent.isPresent() && optionalUser.isPresent()) {
+            Event event = optionalEvent.get();
+            User user = optionalUser.get();
+            user.getEventList().add(event);
+            event.getParticipants().add(user);
+            notificationListener.handleParticipationEvent(event, user);
+            eventRepository.save(event);
+        } else {
+            throw new RuntimeException("Evento o Utente non trovato.");
+        }
+    }
+
+    public void deleteParticipateEvent(int idEvent, int idUser, String reason) {
+        Optional<Event> optionalEvent = eventRepository.findById(idEvent);
+        Optional<User> optionalUser = userRepository.findById(idUser);
+
+        if(optionalEvent.isPresent() && optionalUser.isPresent()) {
+            Event event = optionalEvent.get();
+            User user = optionalUser.get();
+            user.getEventList().remove(event);
+            event.getParticipants().remove(user);
+            notificationListener.handleDeleteParticipationEvent(event, user, reason);
+            eventRepository.save(event);
+        } else {
+            throw new RuntimeException("Evento o Utente non trovato.");
+        }
+    }
+
 
     // Metodo dummy per ottenere l'utente corrente (da sostituire con logica reale)
     private User getCurrentUser() {

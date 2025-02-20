@@ -1,4 +1,21 @@
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/validazione/ValidationService.java
 package com.unicam.City_Explore.validazione;
+=======
+package validazione;
+
+import contenuti.MultimediaContent;
+import contenuti.MultimediaContentRepository;
+import element.Status;
+import eliminazione.DeletionService;
+import notifica.NotificationListener;
+import poi.POIRepository;
+import poi.PointOfInterest;
+import segnalazione.MediaReport;
+import segnalazione.MediaReportService;
+import tour.Tour;
+import tour.TourRepository;
+import user.User;
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/validazione/ValidationService.java
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +49,8 @@ public class ValidationService {
     private DeletionService deletionService;
     @Autowired
     private MediaReportService reportService;
+    @Autowired
+    private NotificationListener notificationListener;
 
 
     public ValidationService() {
@@ -96,44 +115,55 @@ public class ValidationService {
 
     public void sendPOIForValidation(PointOfInterest poi) {
         poi.setStatus(Status.PENDING);
+        notificationListener.handleValidationPOI(poi);
         poiRepository.save(poi);
     }
 
     public void approvePOI(int idPOI) {
-        PointOfInterest poi = poiRepository.findById(idPOI).get();
-        poi.setStatus(Status.APPROVED);
-        System.out.println("Il Punto di Interesse e' stato accettato");
-        poiRepository.save(poi);
+        PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
+        if(poi != null) {
+            poi.setStatus(Status.APPROVED);
+            notificationListener.handleApprovePOI(poi);
+            poiRepository.save(poi);
+        }
     }
 
     public void rejectPOI(int idPOI, String reason) {
-        PointOfInterest poi = poiRepository.findById(idPOI).get();
-        poi.setStatus(Status.REJECTED);
-        System.out.println("Il Punto di Interesse e' stato rifiutato, " + reason);
-        deletionService.deletePOI(idPOI);
+        PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
+        if(poi != null) {
+            poi.setStatus(Status.REJECTED);
+            notificationListener.handleRejectPOI(poi, reason);
+            deletionService.deletePOI(idPOI);
+        }
     }
 
     public void sendTourForValidation(Tour tour) {
         tour.setStatus(Status.PENDING);
+        notificationListener.handleValidationTour(tour);
         tourRepository.save(tour);
     }
 
     public void approveTour(int idTour) {
-        Tour tour = tourRepository.findById(idTour).get();
-        tour.setStatus(Status.APPROVED);
-        System.out.println("L'Itinerario e' stato accettato");
-        tourRepository.save(tour);
+        Tour tour = tourRepository.findById(idTour).orElse(null);
+        if(tour != null) {
+            tour.setStatus(Status.APPROVED);
+            notificationListener.handleApproveTour(tour);
+            tourRepository.save(tour);
+        }
     }
 
     public void rejectTour(int idTour, String reason) {
-        Tour tour = tourRepository.findById(idTour).get();
-        tour.setStatus(Status.REJECTED);
-        System.out.println("L'Itinerario e' stato rifiutato, " + reason);
-        deletionService.deleteTour(idTour);
+        Tour tour = tourRepository.findById(idTour).orElse(null);
+        if(tour != null) {
+            tour.setStatus(Status.REJECTED);
+            notificationListener.handleRejectTour(tour, reason);
+            deletionService.deleteTour(idTour);
+        }
     }
 
     public void sendMultimediaContentForValidation(MultimediaContent multimediaContent) {
         multimediaContent.setStatus(Status.PENDING);
+        notificationListener.handleValidationMultimediaContent(multimediaContent);
         multimediaContentRepository.save(multimediaContent);
     }
 
@@ -144,7 +174,7 @@ public class ValidationService {
                 updateMultimediaContent(idMC, multimediaContent);
             }
             multimediaContent.setStatus(Status.APPROVED);
-            System.out.println("Il Contenuto Multimediale e' stato accettato");
+            notificationListener.handleApproveMultimediaContent(multimediaContent);
             multimediaContentRepository.save(multimediaContent);
         }
     }
@@ -153,7 +183,7 @@ public class ValidationService {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
         if(multimediaContent != null) {
             multimediaContent.setStatus(Status.REJECTED);
-            System.out.println("Il Contenuto Multimediale e' stato rifiutato, " + reason);
+            notificationListener.handleRejectMultimediaContent(multimediaContent, reason);
             deletionService.deleteContest(idMC);
         }
     }
@@ -171,17 +201,20 @@ public class ValidationService {
         }
     }
 
-    public void handleReportMultimediaContent(MediaReport report, Status status, String message) {
-        MultimediaContent multimediaContentReported = report.getMultimediaContent();
-        if(multimediaContentReported != null) {
-            if(status.equals(Status.UPDATED)) {
-                multimediaContentReported.setStatus(Status.UPDATED);
-                updateMultimediaContent(multimediaContentReported.getId(), multimediaContentReported);
-            } else if(status.equals(Status.REJECTED)){
-                rejectMultimediaContent(multimediaContentReported.getId(), message);
+    public void handleReportMultimediaContent(Status status, String message) {
+        List<MediaReport> reportList = reportService.getMediaReportList();
+        for(MediaReport report: reportList) {
+            MultimediaContent multimediaContentReported = report.getMultimediaContent();
+            if(multimediaContentReported != null) {
+                if(status.equals(Status.UPDATED)) {
+                    multimediaContentReported.setStatus(Status.UPDATED);
+                    updateMultimediaContent(multimediaContentReported.getId(), multimediaContentReported);
+                } else if(status.equals(Status.REJECTED)){
+                    rejectMultimediaContent(multimediaContentReported.getId(), message);
+                }
             }
+            reportService.deleteReport(report);
         }
-        reportService.deleteReport(report);
     }
 
     public List<PointOfInterest> getAllPendingPOI() {

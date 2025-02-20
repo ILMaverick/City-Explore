@@ -1,5 +1,13 @@
 package com.unicam.City_Explore.segnalazione;
 
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/segnalazione/MediaReportService.java
+=======
+import contenuti.MultimediaContent;
+import element.Status;
+import notifica.NotificationListener;
+import user.User;
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/segnalazione/MediaReportService.java
 import org.springframework.stereotype.Service;
 
 import com.unicam.City_Explore.contenuti.MultimediaContent;
@@ -13,9 +21,12 @@ import java.util.List;
 public class MediaReportService {
 
     private final List<MediaReport> mediaReportList;
+    @Autowired
+    private NotificationListener notificationListener;
 
-    public MediaReportService(List<MediaReport> mediaReportList) {
+    public MediaReportService(List<MediaReport> mediaReportList, NotificationListener notificationListener) {
         this.mediaReportList = mediaReportList;
+        this.notificationListener = notificationListener;
     }
 
     public void createReport(String reason, User reporter, MultimediaContent multimediaContent) {
@@ -30,9 +41,7 @@ public class MediaReportService {
     }
 
     private void sendReportNotification(MediaReport report) {
-        //TODO: Logica per inviare la notifica della segnalazione
-        System.out.println("Segnalazione per il Contenuto " + report.getMultimediaContent() + "\nda parte di " + report.getReporter()
-                + ": " + report.getReason());
+        notificationListener.handleReportedMultimediaContent(report);
     }
 
     public List<MediaReport> getMediaReportList() {

@@ -1,7 +1,13 @@
 package com.unicam.City_Explore.user;
 
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/user/User.java
+=======
+import contest.ContestParticipation;
+import evento.Event;
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/user/User.java
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.unicam.City_Explore.evento.Event;
@@ -20,9 +26,19 @@ public class User {
 	public String password;
 	public Role role;
 	@OneToMany
-	private List<Notification> notificationList;
+	private final List<Notification> notificationList;
 	@OneToMany
-	private List<Event> eventList;
+	private final List<Event> eventList;
+	@OneToMany
+	private final List<ContestParticipation> participationContestList;
+
+	public User() {
+
+		this.role = Role.TOURIST;
+		this.notificationList = new ArrayList<>();
+		this.eventList = new ArrayList<>();
+		this.participationContestList = new ArrayList<>();
+	}
 
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
@@ -65,6 +81,9 @@ public class User {
 
 	public List<Event> getEventList() {
 		return eventList;
+	}
+	public List<ContestParticipation> getParticipationContestList() {
+		return participationContestList;
 	}
 
 	@Override

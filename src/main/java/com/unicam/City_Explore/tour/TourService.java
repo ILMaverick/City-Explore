@@ -5,6 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/tour/TourService.java
+=======
+import notifica.NotificationListener;
+import poi.POIRepository;
+import poi.PointOfInterest;
+import user.User;
+
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/tour/TourService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +24,16 @@ import com.unicam.City_Explore.user.User;
 public class TourService {
     private Scanner scanner;
     @Autowired
-	 private TourRepository tourRepository;
+    private TourRepository tourRepository;
     @Autowired
-     private POIRepository poiRepository;
+    private POIRepository poiRepository;
+    @Autowired
+    private NotificationListener notificationListener;
 
-     public TourService() {
-            scanner = new Scanner(System.in);
+    public TourService() {
+
+        scanner = new Scanner(System.in);
      }
-
 
     /**
      * Crea un Tour a partire da una lista di POI.
@@ -76,7 +86,7 @@ public class TourService {
 
         // Salva il Tour
         save(tour);
-
+        notificationListener.handleCreateTour(tour);
         System.out.println("\nTour creato e salvato con successo:");
         System.out.println(tour);
     }
@@ -194,6 +204,7 @@ public class TourService {
             tourSelected.setName(tour.getName());
             tourSelected.setDescription(tour.getDescription());
             tourSelected.setWayList(tour.getWayList());
+            notificationListener.handleUpdateTour(tour);
             tourRepository.save(tourSelected);
         }
         return tourSelected;
@@ -216,7 +227,7 @@ public class TourService {
     }
 
     public Tour getTourById(int id) {
-        return tourRepository.findById(id).get();
+        return tourRepository.findById(id).orElse(null);
     }
 
     // Metodo dummy per ottenere l'utente attuale (da sostituire con logica reale)

@@ -23,7 +23,7 @@ public class Contest extends AbstractElement {
 
     private LocalDate deadline;
     @OneToMany
-    private List<ContestParticipation> participationContestList = new ArrayList<>();
+    private final List<ContestParticipation> participationContestList;
     @ManyToMany
     public final List<Event> eventList;
 
@@ -31,6 +31,7 @@ public class Contest extends AbstractElement {
         super(name, description, author);
         super.setStatus(Status.APPROVED);
         this.eventList = new ArrayList<>();
+        this.participationContestList = new ArrayList<>();
     }
 
     public String getRules() {

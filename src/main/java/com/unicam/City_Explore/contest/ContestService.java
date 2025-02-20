@@ -1,14 +1,22 @@
 package com.unicam.City_Explore.contest;
 
+import contenuti.MultimediaContent;
+import notifica.NotificationListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/contest/ContestService.java
 import com.unicam.City_Explore.user.User;
+=======
+import user.User;
+import user.UserRepository;
+>>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/contest/ContestService.java
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
@@ -16,6 +24,12 @@ public class ContestService {
     private Scanner scanner;
     @Autowired
     private ContestRepository contestRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ContestParticipationRepository contestParticipationRepository;
+    @Autowired
+    private NotificationListener notificationListener;
 
     public ContestService() {
         scanner = new Scanner(System.in);
@@ -28,16 +42,6 @@ public class ContestService {
         LocalDate deadline = LocalDate.of(2025, 2,17);
 
         createContest("nome", "descrizione", user, "non fare il birbante", "foto piu' bella", "gita in barca", deadline);
-    }
-
-    public Contest createContest(String name, String description, User author, String rules, String goal, String prize, LocalDate deadline) {
-        Contest contest = new Contest(name, description, author);
-        contest.setRules(rules);
-        contest.setGoal(goal);
-        contest.setPrize(prize);
-        contest.setDeadline(deadline);
-        contestRepository.save(contest);
-        return contest;
     }
 
     public void createContest() {
@@ -110,6 +114,17 @@ public class ContestService {
         }
     }
 
+    public Contest createContest(String name, String description, User author, String rules, String goal, String prize, LocalDate deadline) {
+        Contest contest = new Contest(name, description, author);
+        contest.setRules(rules);
+        contest.setGoal(goal);
+        contest.setPrize(prize);
+        contest.setDeadline(deadline);
+        notificationListener.handleNewContest(contest);
+        contestRepository.save(contest);
+        return contest;
+    }
+
     public Contest updateContest(int idContest, Contest contest) {
         Contest contestSelected = getContestById(idContest);
         if(contestSelected != null) {
@@ -119,6 +134,7 @@ public class ContestService {
             contestSelected.setGoal(contest.getGoal());
             contestSelected.setPrize(contest.getPrize());
             contestSelected.setDeadline(contest.getDeadline());
+            notificationListener.handleUpdateContest(contest);
             contestRepository.save(contestSelected);
         }
         return contestSelected;
@@ -142,6 +158,66 @@ public class ContestService {
 
     public List<Contest> searchContestByDescription(String description) {
         return contestRepository.searchByDescription(description);
+    }
+
+    public void participateContest(int idContest, int idUser, List<MultimediaContent> multimediaContentList) {
+        Optional<Contest> optionalContest = contestRepository.findById(idContest);
+        Optional<User> optionalUser = userRepository.findById(idContest);
+
+        if(optionalContest.isPresent() && optionalUser.isPresent()) {
+            Contest contest = optionalContest.get();
+            User user = optionalUser.get();
+            ContestParticipation participation = new ContestParticipation();
+            participation.setContest(contest);
+            participation.setUser(user);
+            participation.getMultimediaContentList().addAll(multimediaContentList);
+            notificationListener.handleParticipationContest(participation);
+            contestParticipationRepository.save(participation);
+
+        } else {
+            throw new RuntimeException("Contest o Utente non trovato.");
+        }
+    }
+
+    public void deleteParticipationContest(ContestParticipation participation, String reason) {
+        notificationListener.handleDeleteParticipationContest(participation, reason);
+        contestParticipationRepository.delete(participation);
+    }
+
+    public void evaluateParticipant(int idParticipant, int vote, String description) {
+        Optional<ContestParticipation> optionalContestParticipation = contestParticipationRepository.findById(idParticipant);
+
+        if(optionalContestParticipation.isPresent()) {
+            ContestParticipation participation = optionalContestParticipation.get();
+            if(!participation.getQuoteCriterion().getQuote()) {
+                QuoteCriterion quoteCriterion = new QuoteCriterion();
+                quoteCriterion.setVote(vote);
+                quoteCriterion.setDescription(description);
+                quoteCriterion.setQuote(true);
+                participation.setQuoteCriterion(quoteCriterion);
+                notificationListener.handleEvaluateParticipantContest(participation, quoteCriterion);
+                contestParticipationRepository.save(participation);
+            } else {
+                notificationListener.handleAlreadyQuote(participation);
+            }
+
+        } else {
+            throw new RuntimeException("Partecipante non trovato.");
+        }
+    }
+
+    public List<User> declareWinners(int idContest) {
+        Contest contest = contestRepository.findById(idContest).orElseThrow(() -> new RuntimeException("Contest non trovato."));
+        int maxScore = contest.getParticipationContestList().stream()
+                .mapToInt(p -> p.getQuoteCriterion().getVote())
+                .max()
+                .orElse(0);
+        List<User> winners = contest.getParticipationContestList().stream()
+                .filter(p -> p.getQuoteCriterion().getVote() == maxScore)
+                .map(ContestParticipation::getUser)
+                .toList();
+        notificationListener.handleWinnersParticipantContest(winners, contest);
+        return winners;
     }
 
     private User getCurrentUser() {
