@@ -6,21 +6,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-import notifica.NotificationListener;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/evento/EventService.java
 
+import com.unicam.City_Explore.notifica.NotificationListener;
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
-=======
-import poi.POIRepository;
-import poi.PointOfInterest;
-import user.User;
-import user.UserRepository;
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/evento/EventService.java
+import com.unicam.City_Explore.user.UserRepository;
 
 @Service
 public class EventService {

@@ -13,12 +13,6 @@ public class GestioneTOURPage extends MenuPage {
 		chapters.add("Ricerca Itinerario tramite nome");
 		chapters.add("Ricerca Itinerario tramite descrizione");
 		this.setChapters(chapters);
-		ArrayList<Page> pages = new ArrayList<Page>();
-//		pages.add(new GestionePOIPage());
-//		pages.add(new GestioneTOURPage());
-//		pages.add(new GestioneContestPage());
-//		pages.add(new GestioneEventoPage());
-		this.setPages(pages);
 		this.setPrevious(new MainPage());
 	}
 

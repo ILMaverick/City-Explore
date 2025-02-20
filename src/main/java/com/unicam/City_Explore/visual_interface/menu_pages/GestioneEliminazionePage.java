@@ -15,13 +15,6 @@ public class GestioneEliminazionePage extends MenuPage{
 		chapters.add("Elimina Evento");
 		chapters.add("Elimina Contenuto");
 		this.setChapters(chapters);
-		ArrayList<Page> pages = new ArrayList<Page>();
-		pages.add(new GestionePOIPage());
-		pages.add(new GestioneTOURPage());
-		pages.add(new GestioneContestPage());
-		pages.add(new GestioneEventoPage());
-		pages.add(new GestioneContenutiPage());
-		this.setPages(pages);
 		this.setPrevious(new MainPage());
 	}
 

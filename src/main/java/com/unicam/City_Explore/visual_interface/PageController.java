@@ -3,7 +3,13 @@ package com.unicam.City_Explore.visual_interface;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.unicam.City_Explore.contenuti.MultimediaContentController;
 import com.unicam.City_Explore.contest.ContestController;
@@ -17,12 +23,10 @@ import com.unicam.City_Explore.visual_interface.menu_pages.MainPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
-public class PageController {
-
-	private Scanner scanner = new Scanner(System.in);
+public class PageController implements CommandLineRunner{
 	
 	@Autowired
-	private PageDisplay viewer = new PageDisplay();
+	private PageExecutioner executioner = new PageExecutioner();
 	@Autowired
 	private POIController poiController = new POIController();
 	@Autowired
@@ -38,49 +42,39 @@ public class PageController {
 	@Autowired
 	private DeletionController deletionController;
 	
-	private Page pointerPage = new MainPage();
+	private Page pointerPage;
 	
 	public PageController() {
-		
+//		poiController.initializer();
+//		multimediaContentController.initializer();
+//		contestController.initializer();
+//		eventController.initializer();
+//		System.out.println("Inizializzazione avvenuta con successo.");
 	}
-
-	public void start() {
+	@Override
+	public void run(String... args) throws Exception {
+		this.pointerPage = new MainPage();
 		while (this.pointerPage != null) {
-			if (this.pointerPage instanceof MenuPage) {
-				MenuPage toShow = (MenuPage) this.pointerPage;
-				this.showMenu(toShow);
-				int idChapter = this.scanner.nextInt();
-				if (idChapter == 0) {
-					this.next(toShow.getPrevious());
-				} else {
-					this.next(toShow.getNext(idChapter - 1));
-				}
-			} else {
-				
-			}
+			this.execute();
 		}
 		this.close();
 	}
 	
-	private void showMenu(MenuPage toShow) {
-		this.viewer.showMenu(toShow);
+	private void execute() {
+		if (this.pointerPage instanceof MenuPage) {
+			MenuPage toExecute = (MenuPage) this.pointerPage;
+			this.next(this.executioner.executeMenu(toExecute));
+		} else {
+			
+		}
 	}
 	
-	private void next(Page toShow) {
-		this.pointerPage = toShow;
-	}
-	
-	public void initializer() {
-		poiController.initializer();
-		multimediaContentController.initializer();
-		contestController.initializer();
-		eventController.initializer();
-		System.out.println("Inizializzazione avvenuta con successo.");
+	private void next(Page nextPage) {
+		this.pointerPage = nextPage;
 	}
 	
 	private void close() {
-		System.out.println("Arrivederci!");
-		scanner.close();
-	}
-	
+		this.executioner.close();
+		System.out.println("Programma terminato. Arrivederci!");
+	}	
 }

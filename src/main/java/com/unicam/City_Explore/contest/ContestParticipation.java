@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.user.User;
+
 @Entity
 public class ContestParticipation {
     @Id
@@ -19,6 +20,7 @@ public class ContestParticipation {
     private User user;
     @OneToMany
     private final List<MultimediaContent> multimediaContentList;
+    @OneToOne
     private QuoteCriterion quoteCriterion;
 
     public ContestParticipation() {

@@ -23,17 +23,7 @@ public class MainPage extends MenuPage{
 		chapters.add("Gestione Contenuti Multimediali");
 		chapters.add("Validazione Elementi e Contenuti Pendenti");
 		chapters.add("Eliminazione Elementi e Contenuti");
-		chapters.add("Inizializza Punti di Interesse, Contenuti, Contest ed Evento (Avviene solo una volta)");
 		this.setChapters(chapters);
-		ArrayList<Page> pages = new ArrayList<Page>();
-  		pages.add(new GestionePOIPage());
-//		pages.add(new GestioneTOURPage());
-//		pages.add(new GestioneContestPage());
-//		pages.add(new GestioneEventoPage());
-//		pages.add(new GestioneContenutiPage());
-//		pages.add(new ValidazionePage());
-//		pages.add(new EliminazionePage());
-		this.setPages(pages);
 		this.setPrevious(null);
 	}
 

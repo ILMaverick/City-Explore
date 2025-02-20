@@ -13,12 +13,6 @@ public class GestioneValidazionePage extends MenuPage {
 		chapters.add("Mostra Itinerari Pendenti");
 		chapters.add("Mostra Contenuti Multimediali Pendenti");
 		this.setChapters(chapters);
-		ArrayList<Page> pages = new ArrayList<Page>();
-		pages.add(new GestionePOIPage());
-		pages.add(new GestioneTOURPage());
-		pages.add(new GestioneContestPage());
-		pages.add(new GestioneEventoPage());
-		this.setPages(pages);
 		this.setPrevious(new MainPage());
 	}
 

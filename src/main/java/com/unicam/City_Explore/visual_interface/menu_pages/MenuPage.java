@@ -11,7 +11,6 @@ import com.unicam.City_Explore.visual_interface.Page;
 public abstract class MenuPage extends Page {
 	
 	private ArrayList<String> chapters;
-	private ArrayList<Page> pages;
 	
 	public MenuPage() {
 		super();
@@ -19,13 +18,6 @@ public abstract class MenuPage extends Page {
 	
 	public MenuPage(String title) {
 		super(title);
-	}
-	
-	public Page nextPage(int idChapther) {
-		if (idChapther == 0) {
-			return this.getPrevious();
-		}
-		return pages.get(idChapther - 1);
 	}
 
 	/**
@@ -40,13 +32,6 @@ public abstract class MenuPage extends Page {
 	 */
 	public void setChapters(ArrayList<String> chapters) {
 		this.chapters = chapters;
-	}
-
-	/**
-	 * @param pages the pages to set
-	 */
-	public void setPages(ArrayList<Page> pages) {
-		this.pages = pages;
 	}
 
 	public abstract Page getNext(int idChapter);

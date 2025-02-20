@@ -1,5 +1,6 @@
 package com.unicam.City_Explore.visual_interface.form_pages;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import com.unicam.City_Explore.visual_interface.Page;
 @Component
 public abstract class FormPage extends Page {
 	
-	public LinkedList<String> form;
+	public ArrayList<String> form;
 
 	public FormPage() {
 		super();
@@ -22,14 +23,14 @@ public abstract class FormPage extends Page {
 	/**
 	 * @return the form
 	 */
-	public LinkedList<String> getForm() {
+	public ArrayList<String> getForm() {
 		return form;
 	}
 
 	/**
 	 * @param form the form to set
 	 */
-	public void setForm(LinkedList<String> form) {
+	public void setForm(ArrayList<String> form) {
 		this.form = form;
-	}	
+	}
 }

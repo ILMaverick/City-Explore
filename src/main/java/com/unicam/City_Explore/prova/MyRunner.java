@@ -18,7 +18,6 @@ public class MyRunner implements CommandLineRunner {
 
     private void myMethod() {
         System.out.println("Eseguendo il metodo specifico...");
-        controller.start();
         
     }
 }
