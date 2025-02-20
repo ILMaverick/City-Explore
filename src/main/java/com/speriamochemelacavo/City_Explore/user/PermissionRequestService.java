@@ -26,18 +26,12 @@ public class PermissionRequestService {
         return null;
     }
 
-    public PermissionRequest approveRequest(int requestId, boolean isApproved) {
-        PermissionRequest request = permissionRequestRepository.findById(requestId).orElse(null);
-        if (request != null) {
-            request.setApproved(isApproved);
-            permissionRequestRepository.delete(request);
-            return permissionRequestRepository.save(request);
-        }
-        return null;
-    }
-
     public List<PermissionRequest> getAllRequests() {
         return permissionRequestRepository.findAll();
+    }
+
+    public void deleteRequest(int idRequest) {
+        permissionRequestRepository.findById(idRequest).ifPresent(request -> permissionRequestRepository.delete(request));
     }
 
 }

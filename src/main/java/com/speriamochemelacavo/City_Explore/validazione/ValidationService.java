@@ -4,9 +4,10 @@ import contenuti.MultimediaContent;
 import contenuti.MultimediaContentRepository;
 import element.Status;
 import eliminazione.DeletionService;
-import notifica.NotificationListener;
 import poi.POIRepository;
 import poi.PointOfInterest;
+import segnalazione.MediaReport;
+import segnalazione.MediaReportService;
 import tour.Tour;
 import tour.TourRepository;
 import user.User;
@@ -14,6 +15,7 @@ import user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 @Service
@@ -28,6 +30,8 @@ public class ValidationService {
     private MultimediaContentRepository multimediaContentRepository;
     @Autowired
     private DeletionService deletionService;
+    @Autowired
+    private MediaReportService reportService;
 
 
     public ValidationService() {
@@ -134,17 +138,50 @@ public class ValidationService {
     }
 
     public void approveMultimediaContent(int idMC) {
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
-        multimediaContent.setStatus(Status.APPROVED);
-        System.out.println("Il Contenuto Multimediale e' stato accettato");
-        multimediaContentRepository.save(multimediaContent);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        if(multimediaContent != null) {
+            if(multimediaContent.getStatus().equals(Status.UPDATED)) {
+                updateMultimediaContent(idMC, multimediaContent);
+            }
+            multimediaContent.setStatus(Status.APPROVED);
+            System.out.println("Il Contenuto Multimediale e' stato accettato");
+            multimediaContentRepository.save(multimediaContent);
+        }
     }
 
     public void rejectMultimediaContent(int idMC, String reason) {
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
-        multimediaContent.setStatus(Status.REJECTED);
-        System.out.println("Il Contenuto Multimediale e' stato rifiutato, " + reason);
-        deletionService.deleteContest(idMC);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        if(multimediaContent != null) {
+            multimediaContent.setStatus(Status.REJECTED);
+            System.out.println("Il Contenuto Multimediale e' stato rifiutato, " + reason);
+            deletionService.deleteContest(idMC);
+        }
+    }
+
+    public void updateMultimediaContent(int idMC, MultimediaContent multimediaContent) {
+        MultimediaContent multimediaContentSelected = multimediaContentRepository.findById(idMC).orElse(null);
+        if(multimediaContentSelected != null) {
+            multimediaContentSelected.setName(multimediaContent.getName());
+            multimediaContentSelected.setDescription(multimediaContent.getDescription());
+            multimediaContentSelected.setFormatFileEnum(multimediaContent.getFormatFileEnum());
+            multimediaContentSelected.setDuration(multimediaContent.getDimension());
+            multimediaContentSelected.setResolution(multimediaContent.getResolution());
+            multimediaContentSelected.setDataCreation(LocalDateTime.now());
+            multimediaContentRepository.save(multimediaContentSelected);
+        }
+    }
+
+    public void handleReportMultimediaContent(MediaReport report, Status status, String message) {
+        MultimediaContent multimediaContentReported = report.getMultimediaContent();
+        if(multimediaContentReported != null) {
+            if(status.equals(Status.UPDATED)) {
+                multimediaContentReported.setStatus(Status.UPDATED);
+                updateMultimediaContent(multimediaContentReported.getId(), multimediaContentReported);
+            } else if(status.equals(Status.REJECTED)){
+                rejectMultimediaContent(multimediaContentReported.getId(), message);
+            }
+        }
+        reportService.deleteReport(report);
     }
 
     public List<PointOfInterest> getAllPendingPOI() {

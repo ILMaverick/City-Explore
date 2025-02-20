@@ -23,7 +23,7 @@ public class PermissionRequest {
     public void setId(int id) {
         this.id = id;
     }
-    public User getUser() {
+    public User getAuthor() {
         return user;
     }
 

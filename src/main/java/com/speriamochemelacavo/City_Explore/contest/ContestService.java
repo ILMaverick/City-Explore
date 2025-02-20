@@ -25,7 +25,7 @@ public class ContestService {
         User user = new User();
         user.setUsername("SilverSimon");
 
-        LocalDate deadline = LocalDate.of(2025,02,17);
+        LocalDate deadline = LocalDate.of(2025, 2,17);
 
         createContest("nome", "descrizione", user, "non fare il birbante", "foto piu' bella", "gita in barca", deadline);
     }

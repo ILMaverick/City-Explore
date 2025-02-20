@@ -1,10 +1,12 @@
 package segnalazione;
 
 import contenuti.MultimediaContent;
+import element.Status;
 import user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,9 +20,14 @@ public class MediaReportService {
     }
 
     public void createReport(String reason, User reporter, MultimediaContent multimediaContent) {
-        MediaReport report = new MediaReport(reason, reporter, multimediaContent);
+        MediaReport report = new MediaReport();
+        report.setReason(reason);
+        report.setReporter(reporter);
+        report.setMultimediaContent(multimediaContent);
+        report.setLocalDateTime(LocalDateTime.now());
         mediaReportList.add(report);
         sendReportNotification(report);
+        multimediaContent.setStatus(Status.REPORTED);
     }
 
     private void sendReportNotification(MediaReport report) {

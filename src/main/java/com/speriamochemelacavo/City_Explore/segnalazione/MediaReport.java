@@ -16,13 +16,6 @@ public class MediaReport {
 
     private LocalDateTime localDateTime;
 
-    public MediaReport(String reason, User reporter, MultimediaContent multimediaContent) {
-        this.reason = reason;
-        this.reporter = reporter;
-        this.multimediaContent = multimediaContent;
-        this.localDateTime = LocalDateTime.now();
-    }
-
     public String getReason() {
         return reason;
     }

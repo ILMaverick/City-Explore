@@ -130,21 +130,6 @@ public class POIService {
         System.out.println(newPoi);
     }
 
-    public PointOfInterest updatePOI(int idPOI, PointOfInterest pointOfInterest) {
-        PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
-        if(pointOfInterestSelected != null) {
-            pointOfInterestSelected.setName(pointOfInterest.getName());
-            pointOfInterestSelected.setDescription(pointOfInterest.getDescription());
-            pointOfInterestSelected.setLatitude(pointOfInterest.getLatitude());
-            pointOfInterestSelected.setLongitude(pointOfInterest.getLongitude());
-            pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
-            pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
-            pointOfInterestSelected.setType(pointOfInterest.getType());
-            poiRepository.save(pointOfInterest);
-        }
-        return pointOfInterestSelected;
-    }
-
     public void searchPOIByName() {
         System.out.println("=== Ricerca Punti di Interesse tramite nome ===");
         System.out.print("Inserisci il nome: ");
@@ -179,14 +164,27 @@ public class POIService {
 
     public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
-        poiRepository.save(poi);
-        return poi;
+        return poiRepository.save(poi);
     }
 
     public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
-        poiRepository.save(poi);
-        return poi;
+        return poiRepository.save(poi);
+    }
+
+    public PointOfInterest updatePOI(int idPOI, PointOfInterest pointOfInterest) {
+        PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
+        if(pointOfInterestSelected != null) {
+            pointOfInterestSelected.setName(pointOfInterest.getName());
+            pointOfInterestSelected.setDescription(pointOfInterest.getDescription());
+            pointOfInterestSelected.setLatitude(pointOfInterest.getLatitude());
+            pointOfInterestSelected.setLongitude(pointOfInterest.getLongitude());
+            pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
+            pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
+            pointOfInterestSelected.setType(pointOfInterest.getType());
+            poiRepository.save(pointOfInterest);
+        }
+        return pointOfInterestSelected;
     }
 
     public List<PointOfInterest> searchPOIByName(String name) {
@@ -197,12 +195,16 @@ public class POIService {
         return poiRepository.searchByDescription(description);
     }
 
+    public List<PointOfInterest> searchPOIByType(POIType type) {
+        return poiRepository.searchByType(type);
+    }
+
     public List<PointOfInterest> getAllPOIs() {
         return poiRepository.findAll();
     }
 
     public PointOfInterest getPOIById(int id) {
-        return poiRepository.findById(id).get();
+        return poiRepository.findById(id).orElse(null);
     }
 
     public void save(PointOfInterest pointOfInterest) {

@@ -6,6 +6,7 @@ import evento.Event;
 import poi.PointOfInterest;
 import segnalazione.MediaReport;
 import tour.Tour;
+import user.PermissionRequest;
 import user.Role;
 import user.User;
 import user.UserRepository;
@@ -203,5 +204,15 @@ public class NotificationListener {
             Notification notification = notificationService.createNotification("Contenuto segnalato " + mediaReport, NotificationType.ALERT);
             notificationService.sendNotification(notification, curator);
         }
+    }
+
+    public void handleApprovedRequest(PermissionRequest request) {
+        Notification notification = notificationService.createNotification("La sua richiesta: " + request.getRequestMessage() + " e' stata concessa.", NotificationType.ALERT);
+        notificationService.sendNotification(notification, request.getAuthor());
+    }
+
+    public void handleRejectRequest(PermissionRequest request) {
+        Notification notification = notificationService.createNotification("La sua richiesta: " + request.getRequestMessage() + " e' stata negata.", NotificationType.ALERT);
+        notificationService.sendNotification(notification, request.getAuthor());
     }
 }

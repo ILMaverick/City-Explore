@@ -12,4 +12,5 @@ public interface POIRepository extends ElementRepository<PointOfInterest> {
 	List<PointOfInterest> searchByDescription(String description);
 	
 	List<PointOfInterest> searchByStatus(Status status);
+	List<PointOfInterest> searchByType(POIType type);
 }
