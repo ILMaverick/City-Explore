@@ -1,18 +1,11 @@
 package com.unicam.City_Explore.segnalazione;
-
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/segnalazione/MediaReportService.java
-=======
-import contenuti.MultimediaContent;
-import element.Status;
-import notifica.NotificationListener;
-import user.User;
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/segnalazione/MediaReportService.java
 import org.springframework.stereotype.Service;
 
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.notifica.NotificationListener;
 
 import java.time.LocalDateTime;
 import java.util.List;

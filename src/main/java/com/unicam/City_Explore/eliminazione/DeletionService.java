@@ -1,21 +1,4 @@
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/eliminazione/DeletionService.java
 package com.unicam.City_Explore.eliminazione;
-=======
-package eliminazione;
-
-import contenuti.MultimediaContent;
-import contenuti.MultimediaContentRepository;
-import contest.Contest;
-import contest.ContestRepository;
-import evento.Event;
-import evento.EventRepository;
-import notifica.NotificationListener;
-import poi.POIRepository;
-import poi.PointOfInterest;
-import tour.Tour;
-import tour.TourRepository;
-import user.User;
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/eliminazione/DeletionService.java
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +14,7 @@ import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.tour.TourRepository;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.notifica.NotificationListener;
 
 import java.util.List;
 import java.util.Scanner;

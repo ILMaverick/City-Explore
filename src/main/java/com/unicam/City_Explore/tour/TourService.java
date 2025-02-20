@@ -5,20 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/tour/TourService.java
-=======
-import notifica.NotificationListener;
-import poi.POIRepository;
-import poi.PointOfInterest;
-import user.User;
-
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/tour/TourService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.notifica.NotificationListener;
 
 @Service
 public class TourService {

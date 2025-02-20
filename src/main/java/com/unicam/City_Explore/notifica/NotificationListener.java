@@ -1,22 +1,7 @@
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/notifica/NotificationListener.java
 package com.unicam.City_Explore.notifica;
-=======
-package notifica;
 
-import contenuti.MultimediaContent;
-import contest.Contest;
-import contest.ContestParticipation;
-import contest.QuoteCriterion;
-import evento.Event;
-import poi.PointOfInterest;
-import segnalazione.MediaReport;
-import tour.Tour;
-import user.PermissionRequest;
-import user.Role;
-import user.User;
-import user.UserRepository;
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/notifica/NotificationListener.java
-
+import com.unicam.City_Explore.contest.ContestParticipation;
+import com.unicam.City_Explore.contest.QuoteCriterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

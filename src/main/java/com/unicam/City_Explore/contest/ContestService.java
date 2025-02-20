@@ -1,16 +1,11 @@
 package com.unicam.City_Explore.contest;
 
-import contenuti.MultimediaContent;
-import notifica.NotificationListener;
+import com.unicam.City_Explore.contenuti.MultimediaContent;
+import com.unicam.City_Explore.user.UserRepository;
+import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.notifica.NotificationListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/contest/ContestService.java
-import com.unicam.City_Explore.user.User;
-=======
-import user.User;
-import user.UserRepository;
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/contest/ContestService.java
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -149,7 +144,7 @@ public class ContestService {
     }
 
     public Contest getContestById(int id) {
-        return contestRepository.findById(id).get();
+        return contestRepository.findById(id).orElse(null);
     }
 
     public List<Contest> searchContestByName(String name) {
@@ -162,7 +157,7 @@ public class ContestService {
 
     public void participateContest(int idContest, int idUser, List<MultimediaContent> multimediaContentList) {
         Optional<Contest> optionalContest = contestRepository.findById(idContest);
-        Optional<User> optionalUser = userRepository.findById(idContest);
+        Optional<User> optionalUser = userRepository.findById(idUser);
 
         if(optionalContest.isPresent() && optionalUser.isPresent()) {
             Contest contest = optionalContest.get();

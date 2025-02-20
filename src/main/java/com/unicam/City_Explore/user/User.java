@@ -1,10 +1,6 @@
 package com.unicam.City_Explore.user;
 
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/user/User.java
-=======
-import contest.ContestParticipation;
-import evento.Event;
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/user/User.java
+import com.unicam.City_Explore.contest.ContestParticipation;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

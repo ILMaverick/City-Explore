@@ -1,21 +1,4 @@
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/validazione/ValidationService.java
 package com.unicam.City_Explore.validazione;
-=======
-package validazione;
-
-import contenuti.MultimediaContent;
-import contenuti.MultimediaContentRepository;
-import element.Status;
-import eliminazione.DeletionService;
-import notifica.NotificationListener;
-import poi.POIRepository;
-import poi.PointOfInterest;
-import segnalazione.MediaReport;
-import segnalazione.MediaReportService;
-import tour.Tour;
-import tour.TourRepository;
-import user.User;
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/validazione/ValidationService.java
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +14,7 @@ import com.unicam.City_Explore.segnalazione.MediaReportService;
 import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.tour.TourRepository;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.notifica.NotificationListener;
 
 import java.time.LocalDateTime;
 import java.util.List;

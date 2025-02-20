@@ -1,4 +1,4 @@
-package contest;
+package com.unicam.City_Explore.contest;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

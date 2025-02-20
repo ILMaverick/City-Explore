@@ -4,20 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/contenuti/MultimediaContentService.java
-=======
-import notifica.NotificationListener;
-import poi.POIRepository;
-import poi.PointOfInterest;
-import user.User;
-
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/contenuti/MultimediaContentService.java
+import com.unicam.City_Explore.poi.POIRepository;
+import com.unicam.City_Explore.poi.PointOfInterest;
+import com.unicam.City_Explore.notifica.NotificationListener;
+import com.unicam.City_Explore.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.unicam.City_Explore.poi.POIRepository;
-import com.unicam.City_Explore.poi.PointOfInterest;
-import com.unicam.City_Explore.user.User;
 
 @Service
 public class MultimediaContentService {
@@ -198,6 +191,7 @@ public class MultimediaContentService {
     public MultimediaContent getMultimediaContentById(int id) {
         return multimediaContentRepository.findById(id).get();
     }
+
 
     public List<MultimediaContent> searchMultimediaContentByName(String name) {
         return multimediaContentRepository.searchByName(name);

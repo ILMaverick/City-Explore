@@ -3,20 +3,13 @@ package com.unicam.City_Explore.poi;
 import java.util.List;
 import java.util.Scanner;
 
-<<<<<<< Updated upstream:src/main/java/com/unicam/City_Explore/poi/POIService.java
-=======
-import notifica.NotificationListener;
-import osm.OSMSearchService;
-import osm.OverpassElement;
-import user.User;
-
->>>>>>> Stashed changes:src/main/java/com/speriamochemelacavo/City_Explore/poi/POIService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unicam.City_Explore.osm.OSMSearchService;
 import com.unicam.City_Explore.osm.OverpassElement;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.notifica.NotificationListener;
 
 @Service
 public class POIService {
