@@ -1,0 +1,11 @@
+package com.unicam.City_Explore.user;
+
+public enum Role {
+	TOURIST,
+	AUTHENTICATED_TOURIST,
+	CONTRIBUTOR,
+	AUTHENTICATED_CONTRIBUTOR,
+	CURATOR,
+	ANIMATOR,
+	ADMINISTRATOR;
+}
