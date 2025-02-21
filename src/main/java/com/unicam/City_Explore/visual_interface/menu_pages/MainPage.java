@@ -1,18 +1,32 @@
 package com.unicam.City_Explore.visual_interface.menu_pages;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminazionePage;
-import com.unicam.City_Explore.visual_interface.form_pages.InizializzazionePage;
 import com.unicam.City_Explore.visual_interface.form_pages.ValidazionePage;
 
 @Component
 public class MainPage extends MenuPage{
 
+	@Autowired
+	private GestionePOIPage gestionePOIPage;
+	@Autowired
+	private GestioneTOURPage gestioneTOURPage;
+	@Autowired
+	private GestioneContestPage gestioneContestPage;
+	@Autowired
+	private GestioneEventoPage gestioneEventoPage;
+	@Autowired
+	private GestioneContenutiPage gestioneContenutiPage;
+	@Autowired
+	private ValidazionePage validazionePage;
+	@Autowired
+	private EliminazionePage eliminazionePage;
+	
 	public MainPage() {
 		super ("Menu Principale");
 		ArrayList<String> chapters = new ArrayList<String>();
@@ -24,38 +38,39 @@ public class MainPage extends MenuPage{
 		chapters.add("Validazione Elementi e Contenuti Pendenti");
 		chapters.add("Eliminazione Elementi e Contenuti");
 		this.setChapters(chapters);
-		this.setPrevious(null);
 	}
 
 	@Override
-	public Page getNext(int idChapter) {
+	public Page getNext(int idChapter) throws IllegalArgumentException {
 		switch (idChapter) {
 		case 1: {
-			return new GestionePOIPage();
+			return this.gestionePOIPage;
 		}
 		case 2: {
-			return new GestioneTOURPage();
+			return this.gestioneTOURPage;
 		}
 		case 3: {
-			return new GestioneContestPage();
+			return this.gestioneContestPage;
 		}
 		case 4: {
-			return new GestioneEventoPage();
+			return this.gestioneEventoPage;
 		}
 		case 5: {
-			return new GestioneContenutiPage();
+			return this.gestioneContenutiPage;
 		}		
 		case 6: {
-			return new ValidazionePage();
+			return this.validazionePage;
 		}
 		case 7: {
-			return new EliminazionePage();
-		}
-		case 8: {
-			return new InizializzazionePage();
+			return this.eliminazionePage;
 		}
 		default:
 			throw new IllegalArgumentException("Scelta non valida: " + idChapter);
 		}
+	}
+
+	@Override
+	public void setPrevious(MenuPage previous) {
+		this.previous = null;
 	}
 }

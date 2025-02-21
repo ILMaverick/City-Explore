@@ -107,5 +107,10 @@ public class UserService {
         }
     }
 
+	public User getCurrentUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

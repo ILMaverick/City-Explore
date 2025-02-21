@@ -3,6 +3,10 @@ package com.unicam.City_Explore.visual_interface.menu_pages;
 import java.util.ArrayList;
 import com.unicam.City_Explore.visual_interface.Page;
 
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class GestioneEventoPage extends MenuPage {
 
 	public GestioneEventoPage() {
@@ -16,7 +20,6 @@ public class GestioneEventoPage extends MenuPage {
 		chapters.add("Ricerca Evento tramite nome");
 		chapters.add("Ricerca Evento tramite descrizione");
 		this.setChapters(chapters);
-		this.setPrevious(new MainPage());
 	}
 
 	@Override
@@ -24,5 +27,4 @@ public class GestioneEventoPage extends MenuPage {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

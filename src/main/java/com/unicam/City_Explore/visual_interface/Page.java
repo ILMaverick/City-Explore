@@ -8,8 +8,7 @@ import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 public abstract class Page {
 
 	private String title;
-	
-	private MenuPage previous;
+	protected MenuPage previous;
 	
 	public Page() {
 		
@@ -34,16 +33,17 @@ public abstract class Page {
 	}
 
 	/**
-	 * @return the previous
-	 */
-	public Page getPrevious() {
-		return previous;
-	}
-
-	/**
+	 * @param <T>
 	 * @param previous the previous to set
 	 */
 	public void setPrevious(MenuPage previous) {
 		this.previous = previous;
 	}
+
+	/**
+	 * @return the previous
+	 */
+	public MenuPage getPrevious() {
+		return this.previous;
+	};
 }

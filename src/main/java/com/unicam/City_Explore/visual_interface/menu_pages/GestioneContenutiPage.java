@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.unicam.City_Explore.visual_interface.Page;
 
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class GestioneContenutiPage extends MenuPage {
 
 	public GestioneContenutiPage() {
@@ -15,7 +19,6 @@ public class GestioneContenutiPage extends MenuPage {
 		chapters.add("Ricerca Contenuto tramite nome");
 		chapters.add("Ricerca Contenuto tramite descrizione");
 		this.setChapters(chapters);
-		this.setPrevious(new MainPage());
 	}
 
 	@Override

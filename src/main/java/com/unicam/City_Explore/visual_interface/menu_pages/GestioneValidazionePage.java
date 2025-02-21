@@ -1,8 +1,12 @@
 package com.unicam.City_Explore.visual_interface.menu_pages;
 
 import java.util.ArrayList;
+
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.visual_interface.Page;
 
+@Component
 public class GestioneValidazionePage extends MenuPage {
 
 	public GestioneValidazionePage() {
@@ -13,7 +17,6 @@ public class GestioneValidazionePage extends MenuPage {
 		chapters.add("Mostra Itinerari Pendenti");
 		chapters.add("Mostra Contenuti Multimediali Pendenti");
 		this.setChapters(chapters);
-		this.setPrevious(new MainPage());
 	}
 
 	@Override

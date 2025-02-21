@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.unicam.City_Explore.visual_interface.Page;
 
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class GestioneEliminazionePage extends MenuPage{
 
 	public GestioneEliminazionePage() {
@@ -15,7 +19,6 @@ public class GestioneEliminazionePage extends MenuPage{
 		chapters.add("Elimina Evento");
 		chapters.add("Elimina Contenuto");
 		this.setChapters(chapters);
-		this.setPrevious(new MainPage());
 	}
 
 	@Override

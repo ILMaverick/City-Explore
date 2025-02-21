@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import com.unicam.City_Explore.visual_interface.Page;
 
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class GestioneContestPage extends MenuPage {
 
 	public GestioneContestPage() {
@@ -15,7 +18,6 @@ public class GestioneContestPage extends MenuPage {
 		chapters.add("Ricerca Contest tramite nome");
 		chapters.add("Ricerca Contest tramite descrizione");
 		this.setChapters(chapters);
-		this.setPrevious(new MainPage());
 	}
 
 	@Override

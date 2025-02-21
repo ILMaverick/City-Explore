@@ -19,6 +19,7 @@ import com.unicam.City_Explore.notifica.NotificationListener;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
+
 @Service
 public class ValidationService {
     // Scanner condiviso per l'input da riga di comando.

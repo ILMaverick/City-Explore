@@ -1,8 +1,12 @@
 package com.unicam.City_Explore.visual_interface.menu_pages;
 
 import java.util.ArrayList;
+
 import com.unicam.City_Explore.visual_interface.Page;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class GestioneTOURPage extends MenuPage {
 
 	public GestioneTOURPage() {
@@ -13,7 +17,6 @@ public class GestioneTOURPage extends MenuPage {
 		chapters.add("Ricerca Itinerario tramite nome");
 		chapters.add("Ricerca Itinerario tramite descrizione");
 		this.setChapters(chapters);
-		this.setPrevious(new MainPage());
 	}
 
 	@Override

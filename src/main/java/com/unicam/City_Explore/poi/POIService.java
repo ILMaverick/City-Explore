@@ -31,9 +31,9 @@ public class POIService {
         User user = new User();
         user.setUsername("SilverSimon");
 
-        createPOIFromScratch("primo", "primo", 1, 1, user, POIType.Turismo);
-        createPOIFromScratch("secondo", "secondo", 2, 2, user, POIType.Alloggio);
-        createPOIFromScratch("terzo", "terzo", 3, 3, user, POIType.Natura);
+        createPOIFromUser("primo", "primo", 1, 1, user, POIType.Turismo);
+        createPOIFromUser("secondo", "secondo", 2, 2, user, POIType.Alloggio);
+        createPOIFromUser("terzo", "terzo", 3, 3, user, POIType.Natura);
     }
 
     /**
@@ -70,7 +70,7 @@ public class POIService {
         User currentUser = getCurrentUser();
 
         // Crea il PointOfInterest utilizzando la factory
-        PointOfInterest newPoi = createPOIFromScratch(name, description, lat, lon, currentUser, poiType );
+        PointOfInterest newPoi = createPOIFromUser(name, description, lat, lon, currentUser, poiType );
 
 
         System.out.println("\nPointOfInterest creato da zero:");
@@ -165,7 +165,7 @@ public class POIService {
         }
     }
 
-    public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
+    public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author, POIType type) {
         PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
         notificationListener.handleCreatePOI(poi);
         return poiRepository.save(poi);

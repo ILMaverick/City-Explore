@@ -1,15 +1,8 @@
 package com.unicam.City_Explore.visual_interface;
 
-import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.unicam.City_Explore.contenuti.MultimediaContentController;
 import com.unicam.City_Explore.contest.ContestController;
@@ -18,7 +11,6 @@ import com.unicam.City_Explore.evento.EventController;
 import com.unicam.City_Explore.poi.POIController;
 import com.unicam.City_Explore.tour.TourController;
 import com.unicam.City_Explore.validazione.ValidationController;
-import com.unicam.City_Explore.visual_interface.menu_pages.GestionePOIPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MainPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
@@ -26,17 +18,19 @@ import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 public class PageController implements CommandLineRunner{
 	
 	@Autowired
-	private PageExecutioner executioner = new PageExecutioner();
+	private MainPage mainPage;
 	@Autowired
-	private POIController poiController = new POIController();
+	private PageExecutioner executioner;
+	@Autowired
+	private POIController poiController;
 	@Autowired
 	private TourController tourController;
 	@Autowired
-	private ContestController contestController = new ContestController();
+	private ContestController contestController;
 	@Autowired
-	private EventController eventController = new EventController();
+	private EventController eventController;
 	@Autowired
-	private MultimediaContentController multimediaContentController = new MultimediaContentController();
+	private MultimediaContentController multimediaContentController;
 	@Autowired
 	private ValidationController validationController;
 	@Autowired
@@ -45,15 +39,18 @@ public class PageController implements CommandLineRunner{
 	private Page pointerPage;
 	
 	public PageController() {
-//		poiController.initializer();
-//		multimediaContentController.initializer();
-//		contestController.initializer();
-//		eventController.initializer();
-//		System.out.println("Inizializzazione avvenuta con successo.");
+		
 	}
+	
 	@Override
-	public void run(String... args) throws Exception {
-		this.pointerPage = new MainPage();
+	public void run(String... args) {
+//		this.pointerPage = new MainPage();
+//		this.poiController.initializer();
+//		this.multimediaContentController.initializer();
+//		this.contestController.initializer();
+//		this.eventController.initializer();
+//		System.out.println("Inizializzazione avvenuta con successo.");
+		this.pointerPage = this.mainPage;
 		while (this.pointerPage != null) {
 			this.execute();
 		}
