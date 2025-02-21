@@ -1,12 +1,13 @@
 package com.unicam.City_Explore.poi;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.evento.Event;
+import com.unicam.City_Explore.tour.Tappa;
 import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.user.User;
 
@@ -18,26 +19,26 @@ import jakarta.persistence.OneToMany;
 public class PointOfInterest extends AbstractElement{
 	private double latitude;
 	private double longitude;
-	private LocalDate open_time;
-	private LocalDate close_time;
+	private LocalTime open_time;
+	private LocalTime close_time;
 	private POIType type;
 	@OneToMany
 	private final List<MultimediaContent> multimediaContentList;
 	@ManyToMany
 	public final List<Event> eventList;
-	@ManyToMany
-	public final List<Tour> tourList;
+	@OneToMany
+	private List<Tappa> tappe;
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
 		super(name, description, author);
 		this.latitude = lat;
 		this.longitude = lon;
-		this.open_time = null;  
-		this.close_time = null; 
+		this.open_time = null;
+		this.close_time = null;
 		this.type = type;
 		this.multimediaContentList = new ArrayList<>();
 		this.eventList = new ArrayList<>();
-		this.tourList = new ArrayList<>();
+		this.tappe = new ArrayList<>();
 	}
 	
 	@Override
@@ -73,19 +74,19 @@ public class PointOfInterest extends AbstractElement{
 	        this.longitude = longitude;
 	    }
 
-	public LocalDate getOpen_time() {
+	public LocalTime getOpen_time() {
 	        return open_time;
 	    }
 
-	public void setOpen_time(LocalDate open_time) {
+	public void setOpen_time(LocalTime open_time) {
 	        this.open_time = open_time;
 	    }
 
-	public LocalDate getClose_time() {
+	public LocalTime getClose_time() {
 	        return close_time;
 	    }
 
-	public void setClose_time(LocalDate close_time) {
+	public void setClose_time(LocalTime close_time) {
 	        this.close_time = close_time;
 	    }
 
@@ -103,5 +104,5 @@ public class PointOfInterest extends AbstractElement{
 		return this.eventList;
 	}
 
-	public List<Tour> getTourList() { return tourList; }
+	public List<Tappa> getTappe() { return tappe; }
 }

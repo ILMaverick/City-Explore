@@ -3,6 +3,8 @@ package com.unicam.City_Explore.poi;
 import com.unicam.City_Explore.osm.OverpassElement;
 import com.unicam.City_Explore.user.User;
 
+import java.time.LocalTime;
+
 public class PointOfInterestFactory {
     public static PointOfInterest createFromOverpassElement(OverpassElement element, User author, POIType type) {
         if (element == null) {

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.elementi.AbstractElement;
+import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.Entity;
@@ -14,7 +15,6 @@ import jakarta.persistence.OneToMany;
 public class Tour extends AbstractElement {
 	@OneToMany
 	private List<Way> wayList;
-	
 	@OneToMany
 	private final List<MultimediaContent> multimediaContentList;
 

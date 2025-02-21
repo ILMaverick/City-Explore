@@ -1,8 +1,10 @@
 package com.unicam.City_Explore.poi;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.validazione.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,8 +175,13 @@ public class POIService {
         }
     }
 
+<<<<<<< Updated upstream
     public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author, POIType type) {
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
+=======
+    public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author,POIType type) {
+        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR) {
+>>>>>>> Stashed changes
             PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
             notificationListener.handleCreatePOI(poi);
             if(author.getRole() == Role.CONTRIBUTOR) {
@@ -209,7 +216,7 @@ public class POIService {
         User newPoiAuthor = pointOfInterest.getAuthor();
         if(newPoiAuthor.getRole() == Role.CURATOR) {
             PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
-            if (pointOfInterestSelected != null) {
+            if (pointOfInterestSelected != null && pointOfInterestSelected.getStatus()== Status.UPDATED) {
                 pointOfInterestSelected.setName(pointOfInterest.getName());
                 pointOfInterestSelected.setDescription(pointOfInterest.getDescription());
                 pointOfInterestSelected.setLatitude(pointOfInterest.getLatitude());
@@ -217,6 +224,7 @@ public class POIService {
                 pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
                 pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
                 pointOfInterestSelected.setType(pointOfInterest.getType());
+                pointOfInterestSelected.setStatus(Status.APPROVED);
                 notificationListener.handleUpdatePOI(pointOfInterestSelected);
                 poiRepository.save(pointOfInterest);
             }

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.user.User;
 
-
 public class MediaReport {
 
     private String reason;

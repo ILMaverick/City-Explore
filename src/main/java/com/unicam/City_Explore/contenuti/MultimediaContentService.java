@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.notifica.NotificationListener;
@@ -216,10 +217,14 @@ public class MultimediaContentService {
 
     public MultimediaContent updateMultimediaContent(int idMC, MultimediaContent multimediaContent) {
         MultimediaContent multimediaContentSelected = getMultimediaContentById(idMC);
-        if(multimediaContentSelected != null) {
+        if(multimediaContentSelected != null && multimediaContentSelected.getStatus()== Status.UPDATED) {
             User author = multimediaContent.getAuthor();
+<<<<<<< Updated upstream
             if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
                     author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
+=======
+            if(author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
+>>>>>>> Stashed changes
                 multimediaContentSelected.setName(multimediaContent.getName());
                 multimediaContentSelected.setDescription(multimediaContent.getDescription());
                 multimediaContentSelected.setFormatFileEnum(multimediaContent.getFormatFileEnum());
@@ -227,6 +232,7 @@ public class MultimediaContentService {
                 multimediaContentSelected.setResolution(multimediaContent.getResolution());
                 multimediaContentSelected.setDataCreation(LocalDateTime.now());
                 notificationListener.handleUpdateMultimediaContent(multimediaContent);
+                multimediaContentSelected.setStatus(Status.APPROVED);
                 multimediaContentRepository.save(multimediaContentSelected);
                 return multimediaContentSelected;
             } else{

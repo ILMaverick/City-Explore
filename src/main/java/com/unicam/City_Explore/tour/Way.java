@@ -2,11 +2,7 @@ package com.unicam.City_Explore.tour;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 @Entity
 public class Way {
@@ -16,6 +12,8 @@ public class Way {
 	private double length;
 	private double duration;
 	private WayDifficultyType type;
+	@ManyToOne
+	private Tour tour;
 	@OneToMany
 	private List<Tappa> tappe;
 	
@@ -52,6 +50,7 @@ public class Way {
 	public void setType(WayDifficultyType type) {
 		this.type = type;
 	}
+	public Tour getTour() { return tour; }
 	public List<Tappa> getTappe() {
 		return tappe;
 	}

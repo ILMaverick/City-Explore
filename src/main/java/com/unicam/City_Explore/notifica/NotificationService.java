@@ -1,20 +1,21 @@
 package com.unicam.City_Explore.notifica;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.unicam.City_Explore.user.User;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class NotificationService {
-	
-    private final List<Notification> notificationList;
 
-    public NotificationService(List<Notification> notificationList) {
-        this.notificationList = notificationList;
+    @Autowired
+    private final NotificationRepository notificationRepository;
+
+    public NotificationService(NotificationRepository notificationRepository) {
+        this.notificationRepository = notificationRepository;
     }
 
     public Notification createNotification(String message, NotificationType notificationType) {
@@ -22,13 +23,13 @@ public class NotificationService {
         notification.setMessage(message);
         notification.setNotificationType(notificationType);
         notification.setLocalDateTime(LocalDateTime.now());
-        notificationList.add(notification);
+        notificationRepository.save(notification);
         return notification;
     }
 
     public List<Notification> getNotificationsForUser(User user) {
-        List<Notification> userNotifications = new ArrayList<>();
-        for (Notification notification : notificationList) {
+        List<Notification> userNotifications = user.getNotificationList();
+        for (Notification notification : getAllNotifications()) {
             if (notification.getUser().equals(user)) {
                 userNotifications.add(notification);
             }
@@ -52,10 +53,10 @@ public class NotificationService {
     }
 
     public List<Notification> getAllNotifications() {
-        return notificationList;
+        return notificationRepository.findAll();
     }
 
     public void deleteNotification(Notification notification) {
-        notificationList.remove(notification);
+        notificationRepository.delete(notification);
     }
 }

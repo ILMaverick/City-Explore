@@ -110,19 +110,45 @@ public class ValidationService {
 
     public void approvePOI(int idPOI) {
         PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
-        if(poi != null) {
-            poi.setStatus(Status.APPROVED);
-            notificationListener.handleApprovePOI(poi);
-            poiRepository.save(poi);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (poi != null && poi.getStatus()==Status.PENDING) {
+                poi.setStatus(Status.APPROVED);
+                notificationListener.handleApprovePOI(poi);
+                poiRepository.save(poi);
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
+        }
+    }
+
+    public void updatePOI(int idPOI) {
+        PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (poi != null && poi.getStatus()==Status.PENDING) {
+                poi.setStatus(Status.UPDATED);
+                notificationListener.handleUpdatePOIStatus(poi);
+                poiRepository.save(poi);
+            } else {
+                throw new RuntimeException("Contenuto non in stato PENDENTE per modifica");
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void rejectPOI(int idPOI, String reason) {
         PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
-        if(poi != null) {
-            poi.setStatus(Status.REJECTED);
-            notificationListener.handleRejectPOI(poi, reason);
-            deletionService.deletePOI(idPOI);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (poi != null && poi.getStatus()==Status.PENDING) {
+                poi.setStatus(Status.REJECTED);
+                notificationListener.handleRejectPOI(poi, reason);
+                deletionService.deletePOI(idPOI);
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
@@ -134,19 +160,45 @@ public class ValidationService {
 
     public void approveTour(int idTour) {
         Tour tour = tourRepository.findById(idTour).orElse(null);
-        if(tour != null) {
-            tour.setStatus(Status.APPROVED);
-            notificationListener.handleApproveTour(tour);
-            tourRepository.save(tour);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (tour != null && tour.getStatus()==Status.PENDING) {
+                tour.setStatus(Status.APPROVED);
+                notificationListener.handleApproveTour(tour);
+                tourRepository.save(tour);
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
+        }
+    }
+
+    public void updateTour(int idTour) {
+        Tour tour = tourRepository.findById(idTour).orElse(null);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (tour != null && tour.getStatus()==Status.PENDING) {
+                tour.setStatus(Status.UPDATED);
+                notificationListener.handleUpdateTourStatus(tour);
+                tourRepository.save(tour);
+            } else {
+                throw new RuntimeException("Contenuto non in stato PENDENTE per modifica");
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void rejectTour(int idTour, String reason) {
         Tour tour = tourRepository.findById(idTour).orElse(null);
-        if(tour != null) {
-            tour.setStatus(Status.REJECTED);
-            notificationListener.handleRejectTour(tour, reason);
-            deletionService.deleteTour(idTour);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (tour != null && tour.getStatus()==Status.PENDING) {
+                tour.setStatus(Status.REJECTED);
+                notificationListener.handleRejectTour(tour, reason);
+                deletionService.deleteTour(idTour);
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
@@ -158,51 +210,69 @@ public class ValidationService {
 
     public void approveMultimediaContent(int idMC) {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
-        if(multimediaContent != null) {
-            if(multimediaContent.getStatus().equals(Status.UPDATED)) {
-                updateMultimediaContent(idMC, multimediaContent);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
+                multimediaContent.setStatus(Status.APPROVED);
+                notificationListener.handleApproveMultimediaContent(multimediaContent);
+                multimediaContentRepository.save(multimediaContent);
+            } else {
+                throw new RuntimeException("Contenuto non in stato PENDENTE per approvazione");
             }
-            multimediaContent.setStatus(Status.APPROVED);
-            notificationListener.handleApproveMultimediaContent(multimediaContent);
-            multimediaContentRepository.save(multimediaContent);
+        } else {
+            notificationListener.handleDenialPermission(curator);
+        }
+    }
+
+    public void updateMultimediaContent(int idMC) {
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
+                multimediaContent.setStatus(Status.UPDATED);
+                notificationListener.handleUpdateMultimediaContentStatus(multimediaContent);
+                multimediaContentRepository.save(multimediaContent);
+            } else {
+                throw new RuntimeException("Contenuto non in stato PENDENTE per modifica");
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void rejectMultimediaContent(int idMC, String reason) {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
-        if(multimediaContent != null) {
-            multimediaContent.setStatus(Status.REJECTED);
-            notificationListener.handleRejectMultimediaContent(multimediaContent, reason);
-            deletionService.deleteContest(idMC);
-        }
-    }
-
-    public void updateMultimediaContent(int idMC, MultimediaContent multimediaContent) {
-        MultimediaContent multimediaContentSelected = multimediaContentRepository.findById(idMC).orElse(null);
-        if(multimediaContentSelected != null) {
-            multimediaContentSelected.setName(multimediaContent.getName());
-            multimediaContentSelected.setDescription(multimediaContent.getDescription());
-            multimediaContentSelected.setFormatFileEnum(multimediaContent.getFormatFileEnum());
-            multimediaContentSelected.setDuration(multimediaContent.getDimension());
-            multimediaContentSelected.setResolution(multimediaContent.getResolution());
-            multimediaContentSelected.setDataCreation(LocalDateTime.now());
-            multimediaContentRepository.save(multimediaContentSelected);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
+                multimediaContent.setStatus(Status.REJECTED);
+                notificationListener.handleRejectMultimediaContent(multimediaContent, reason);
+                deletionService.deleteContest(idMC);
+            } else {
+                throw new RuntimeException("Contenuto non in stato PENDENTE per rifiuto");
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void handleReportMultimediaContent(Status status, String message) {
-        List<MediaReport> reportList = reportService.getMediaReportList();
-        for(MediaReport report: reportList) {
-            MultimediaContent multimediaContentReported = report.getMultimediaContent();
-            if(multimediaContentReported != null) {
-                if(status.equals(Status.UPDATED)) {
-                    multimediaContentReported.setStatus(Status.UPDATED);
-                    updateMultimediaContent(multimediaContentReported.getId(), multimediaContentReported);
-                } else if(status.equals(Status.REJECTED)){
-                    rejectMultimediaContent(multimediaContentReported.getId(), message);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
+        if(checkCurator(curator)) {
+            List<MediaReport> reportList = reportService.getMediaReportList();
+            for(MediaReport report: reportList) {
+                MultimediaContent multimediaContentReported = report.getMultimediaContent();
+                if(multimediaContentReported != null && multimediaContentReported.getStatus()==Status.REPORTED) {
+                    if(status == Status.UPDATED) {
+                        updateMultimediaContent(multimediaContentReported.getId());
+                    } else if(status == Status.REJECTED){
+                        rejectMultimediaContent(multimediaContentReported.getId(), message);
+                    }
                 }
+                reportService.deleteReport(report);
             }
-            reportService.deleteReport(report);
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
@@ -219,7 +289,7 @@ public class ValidationService {
     }
 
     private boolean checkCurator(User user) {
-        return user.getRole()== Role.CURATOR;
+        return user != null && user.getRole()== Role.CURATOR;
     }
 
     private User getCurrentUser() {

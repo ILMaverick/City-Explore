@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.validazione.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,10 +212,11 @@ public class TourService {
         User newTourAuthor = tour.getAuthor();
         if(newTourAuthor.getRole() == Role.CURATOR) {
             Tour tourSelected = getTourById(idTour);
-            if (tourSelected != null) {
+            if (tourSelected != null && tourSelected.getStatus()== Status.UPDATED) {
                 tourSelected.setName(tour.getName());
                 tourSelected.setDescription(tour.getDescription());
                 tourSelected.setWayList(tour.getWayList());
+                tourSelected.setStatus(Status.APPROVED);
                 notificationListener.handleUpdateTour(tour);
                 tourRepository.save(tourSelected);
             }
