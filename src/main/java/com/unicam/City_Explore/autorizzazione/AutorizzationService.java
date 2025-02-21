@@ -17,7 +17,7 @@ public class AutorizzationService {
 	}
 
 	private void addAutorization(String page, Role role) {
-		this.autorization.put(page, null)
+		this.autorization.put(page, null);
 	}
 	
 }

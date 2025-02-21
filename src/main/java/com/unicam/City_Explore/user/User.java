@@ -1,6 +1,7 @@
 package com.unicam.City_Explore.user;
 
 import com.unicam.City_Explore.contest.ContestParticipation;
+import com.unicam.City_Explore.listapreferiti.PreferList;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class User {
 	private final List<Event> eventList;
 	@OneToMany
 	private final List<ContestParticipation> participationContestList;
+	@OneToOne
+	private PreferList preferList;
 
 	public User() {
 
@@ -70,17 +73,17 @@ public class User {
 	}
 	public Role getRole() { return role; }
 	public void setRole(Role role) {this.role = role;}
-
 	public List<Notification> getNotificationList() {
 		return notificationList;
 	}
-
 	public List<Event> getEventList() {
 		return eventList;
 	}
 	public List<ContestParticipation> getParticipationContestList() {
 		return participationContestList;
 	}
+	public PreferList getPreferList() { return preferList; }
+	public void setPreferList(PreferList preferList) { this.preferList = preferList; }
 
 	@Override
 	public String toString() {

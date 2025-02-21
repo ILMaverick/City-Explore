@@ -210,7 +210,7 @@ public class TourService {
 
     public Tour updateTour(int idTour, Tour tour) {
         User newTourAuthor = tour.getAuthor();
-        if(newTourAuthor.getRole() == Role.CURATOR) {
+        if(newTourAuthor.getRole() == Role.CURATOR || newTourAuthor.getRole() == Role.ADMINISTRATOR) {
             Tour tourSelected = getTourById(idTour);
             if (tourSelected != null && tourSelected.getStatus()== Status.UPDATED) {
                 tourSelected.setName(tour.getName());

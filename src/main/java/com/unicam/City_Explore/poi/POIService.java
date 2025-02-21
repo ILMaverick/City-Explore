@@ -175,13 +175,8 @@ public class POIService {
         }
     }
 
-<<<<<<< Updated upstream
     public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author, POIType type) {
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
-=======
-    public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author,POIType type) {
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR) {
->>>>>>> Stashed changes
             PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
             notificationListener.handleCreatePOI(poi);
             if(author.getRole() == Role.CONTRIBUTOR) {
@@ -214,7 +209,7 @@ public class POIService {
 
     public PointOfInterest updatePOI(int idPOI, PointOfInterest pointOfInterest) {
         User newPoiAuthor = pointOfInterest.getAuthor();
-        if(newPoiAuthor.getRole() == Role.CURATOR) {
+        if(newPoiAuthor.getRole() == Role.CURATOR || newPoiAuthor.getRole() == Role.ADMINISTRATOR) {
             PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
             if (pointOfInterestSelected != null && pointOfInterestSelected.getStatus()== Status.UPDATED) {
                 pointOfInterestSelected.setName(pointOfInterest.getName());

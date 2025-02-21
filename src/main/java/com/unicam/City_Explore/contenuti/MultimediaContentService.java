@@ -219,12 +219,7 @@ public class MultimediaContentService {
         MultimediaContent multimediaContentSelected = getMultimediaContentById(idMC);
         if(multimediaContentSelected != null && multimediaContentSelected.getStatus()== Status.UPDATED) {
             User author = multimediaContent.getAuthor();
-<<<<<<< Updated upstream
-            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
-                    author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
-=======
             if(author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
->>>>>>> Stashed changes
                 multimediaContentSelected.setName(multimediaContent.getName());
                 multimediaContentSelected.setDescription(multimediaContent.getDescription());
                 multimediaContentSelected.setFormatFileEnum(multimediaContent.getFormatFileEnum());
