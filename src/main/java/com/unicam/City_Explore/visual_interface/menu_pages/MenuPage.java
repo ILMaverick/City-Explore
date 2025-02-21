@@ -1,16 +1,23 @@
 package com.unicam.City_Explore.visual_interface.menu_pages;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.unicam.City_Explore.autorizzazione.AuthorizationService;
 import com.unicam.City_Explore.visual_interface.Page;
 
 
 @Component
 public abstract class MenuPage extends Page {
 	
+	@Autowired
+	protected AuthorizationService authService;
+	
 	private ArrayList<String> chapters;
+	private HashMap<String, Page> linksTable;
 	
 	public MenuPage() {
 		super();
@@ -30,9 +37,21 @@ public abstract class MenuPage extends Page {
 	/**
 	 * @param chapters the chapters to set
 	 */
-	public void setChapters(ArrayList<String> chapters) {
+	protected void setChapters(ArrayList<String> chapters) {
 		this.chapters = chapters;
 	}
 
-	public abstract Page getNext (String nameChapter);
+	/**
+	 * @return the linksTable
+	 */
+	public HashMap<String, Page> getLinksTable() {
+		return linksTable;
+	}
+
+	/**
+	 * @param linksTable the linksTable to set
+	 */
+	protected void setLinksTable(HashMap<String, Page> linksTable) {
+		this.linksTable = linksTable;
+	}
 }

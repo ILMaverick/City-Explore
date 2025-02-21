@@ -1,5 +1,6 @@
 package com.unicam.City_Explore.listapreferiti;
 
+import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.elementi.Element;
 import com.unicam.City_Explore.user.User;
 import jakarta.persistence.*;
@@ -21,7 +22,7 @@ public class PreferList {
             name = "lista_preferiti_elementi",
             joinColumns = @JoinColumn(name = "lista_preferiti_id"),
             inverseJoinColumns = @JoinColumn(name = "elemento_id"))
-    private List<Element> elementList;
+    private List<AbstractElement> elementList;
 
     public int getId() {
         return id;
@@ -39,11 +40,11 @@ public class PreferList {
         this.user = user;
     }
 
-    public List<Element> getElementList() {
+    public List<AbstractElement> getElementList() {
         return elementList;
     }
 
-    public void setElementList(List<Element> elementList) {
+    public void setElementList(List<AbstractElement> elementList) {
         this.elementList = elementList;
     }
 

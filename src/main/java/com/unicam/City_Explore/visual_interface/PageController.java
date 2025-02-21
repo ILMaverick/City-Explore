@@ -63,7 +63,7 @@ public class PageController implements CommandLineRunner{
 		Page nextPage;
 		if (toExecute instanceof MenuPage) {
 			MenuPage menuToExecute = (MenuPage) toExecute;
-			nextPage = this.executioner.executeMenu(menuToExecute);
+			nextPage = menuToExecute.getLinksTable().get(this.executioner.executeMenu(menuToExecute));
 		} else {
 			FormPage formToExecute = (FormPage) this.pointerPage;
 			nextPage = this.executioner.executeForm(formToExecute);

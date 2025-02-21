@@ -9,14 +9,14 @@ import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidazionePage extends FormPage {
+public class ValidationPage extends FormPage {
 	
-	public ValidazionePage() {
+	public ValidationPage() {
 		super();
 	}
 
 	@Override
-	public void startForm(User user, Scanner scanner) {
+	public void startForm(Scanner scanner) {
 		// TODO Auto-generated method stub
 	}
 }

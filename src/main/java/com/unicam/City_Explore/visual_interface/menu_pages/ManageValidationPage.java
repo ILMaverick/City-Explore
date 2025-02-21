@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.visual_interface.Page;
 
 @Component
-public class GestioneValidazionePage extends MenuPage {
+public class ManageValidationPage extends MenuPage {
 
-	public GestioneValidazionePage() {
+	public ManageValidationPage() {
 		super ("Gestione Validazione");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Validazione");
@@ -17,11 +17,5 @@ public class GestioneValidazionePage extends MenuPage {
 		chapters.add("Mostra Itinerari Pendenti");
 		chapters.add("Mostra Contenuti Multimediali Pendenti");
 		this.setChapters(chapters);
-	}
-
-	@Override
-	public Page getNext(int idChapter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -8,9 +8,9 @@ import com.unicam.City_Explore.visual_interface.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GestioneEliminazionePage extends MenuPage{
+public class ManageEliminationPage extends MenuPage{
 
-	public GestioneEliminazionePage() {
+	public ManageEliminationPage() {
 		super ("Gestione Eliminazione");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Elimina POI");
@@ -19,11 +19,5 @@ public class GestioneEliminazionePage extends MenuPage{
 		chapters.add("Elimina Evento");
 		chapters.add("Elimina Contenuto");
 		this.setChapters(chapters);
-	}
-
-	@Override
-	public Page getNext(int idChapter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

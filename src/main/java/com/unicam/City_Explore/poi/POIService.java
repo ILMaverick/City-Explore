@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.unicam.City_Explore.osm.OSMSearchService;
 import com.unicam.City_Explore.osm.OverpassElement;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.notifica.NotificationListener;
 
 @Service
@@ -25,6 +26,8 @@ public class POIService {
     private NotificationListener notificationListener;
     @Autowired
     private ValidationService validationService;
+    @Autowired
+    private UserService userService;
 
     public POIService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
@@ -34,16 +37,9 @@ public class POIService {
 
     //Inizializza dei Punti di Interesse
     public void initializer() {
-        User user = new User();
-        user.setName("Simone");
-        user.setSurname("Stacchiotti");
-        user.setUsername("SilverSimon");
-        user.setEmail("simone.stacchiotti.email@gmail.com");
-        user.setRole(Role.ADMINISTRATOR);
-
-        createPOIFromUser("primo", "primo", 1, 1, user, POIType.Turismo);
-        createPOIFromUser("secondo", "secondo", 2, 2, user, POIType.Alloggio);
-        createPOIFromUser("terzo", "terzo", 3, 3, user, POIType.Natura);
+        createPOIFromUser("primo", "primo", 1, 1, POIType.Turismo);
+        createPOIFromUser("secondo", "secondo", 2, 2, POIType.Alloggio);
+        createPOIFromUser("terzo", "terzo", 3, 3, POIType.Natura);
     }
 
     /**
@@ -76,11 +72,8 @@ public class POIService {
             poiType = POIType.Altro;
         }
 
-        // Ottieni l'utente corrente (dummy)
-        User currentUser = getCurrentUser();
-
         // Crea il PointOfInterest utilizzando la factory
-        PointOfInterest newPoi = createPOIFromUser(name, description, lat, lon, currentUser, poiType );
+        PointOfInterest newPoi = createPOIFromUser(name, description, lat, lon, poiType );
 
 
         System.out.println("\nPointOfInterest creato da zero:");
@@ -133,11 +126,8 @@ public class POIService {
         OverpassElement selectedElement = results.get(selection - 1);
         POIType poiType = POIType.fromOSMTag(poi);
 
-        // Ottieni l'utente corrente (dummy)
-        User currentUser = getCurrentUser();
-
         // Crea il PointOfInterest utilizzando la factory
-        PointOfInterest newPoi = createPOIFromOSM(selectedElement, currentUser, poiType);
+        PointOfInterest newPoi = createPOIFromOSM(selectedElement, poiType);
 
         System.out.println("\nPointOfInterest creato dalla ricerca OSM:");
         System.out.println(newPoi);
@@ -175,7 +165,8 @@ public class POIService {
         }
     }
 
-    public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author, POIType type) {
+    public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, POIType type) {
+    	User author = this.userService.getCurrentUser();
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
             PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
             notificationListener.handleCreatePOI(poi);
@@ -191,7 +182,8 @@ public class POIService {
         return null;
     }
 
-    public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
+    public PointOfInterest createPOIFromOSM(OverpassElement element, POIType type) {
+    	User author = this.userService.getCurrentUser();
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
             PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
             notificationListener.handleCreatePOI(poi);

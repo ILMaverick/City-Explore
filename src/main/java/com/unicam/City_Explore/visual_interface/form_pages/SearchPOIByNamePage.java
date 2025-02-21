@@ -9,29 +9,28 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
-import com.unicam.City_Explore.visual_interface.menu_pages.GestionePOIPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.ManagePOIPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
-public class RicercaPOIDescrizione extends FormPage {
+public class SearchPOIByNamePage extends FormPage {
 
 	@Autowired
 	private POIService poiService;
 	
-	public RicercaPOIDescrizione() {
-		super("Ricerca Punti di Interesse tramite descrizione");
+	public SearchPOIByNamePage() {
+		super("Ricerca Punti di Interesse tramite nome");
 	}
 
 	@Override
-	public void startForm(User user, Scanner scanner) {
-        System.out.print("Inserisci la descrizione: ");
-
-        String description = scanner.nextLine();
-        List<PointOfInterest> pointOfInterestList = poiService.searchPOIByDescription(description);
+	public void startForm(Scanner scanner) {
+        System.out.print("Inserisci il nome: ");
+        String name = scanner.nextLine();
+        List<PointOfInterest> pointOfInterestList = poiService.searchPOIByName(name);
         if(pointOfInterestList.isEmpty()) {
-            System.out.println("Non e' presente un Punto di Interesse con questa descrizione.");
+            System.out.println("Non e' presente un Punto di Interesse con questo nome.");
         } else {
-            System.out.println("Elenco Punti di Interesse con la descrizione cercata:");
+            System.out.println("Elenco Punti di Interesse con il nome cercato:");
             for(PointOfInterest pointOfInterest: pointOfInterestList) {
                 System.out.println(pointOfInterest);
             }

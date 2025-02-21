@@ -12,23 +12,23 @@ import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
-import com.unicam.City_Explore.visual_interface.menu_pages.GestionePOIPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.ManagePOIPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
-public class CreazionePOIOSMPage extends FormPage {
+public class CreationPOIOSMPage extends FormPage {
 	
 	@Autowired
 	private POIService poiService;
 	@Autowired
 	private OSMSearchService osmSearchService;
 	
-	public CreazionePOIOSMPage() {
+	public CreationPOIOSMPage() {
 		super("Creazione di un PointOfInterest a partire da OSM");
 	}
 
 	@Override
-	public void startForm(User user, Scanner scanner) {
+	public void startForm(Scanner scanner) {
 		// Esegui la ricerca tramite il servizio
         System.out.println("Inserisci il nome della città: ");
         String city = scanner.nextLine();
@@ -65,7 +65,7 @@ public class CreazionePOIOSMPage extends FormPage {
         POIType poiType = POIType.fromOSMTag(poi);
 
         // Crea il PointOfInterest utilizzando la factory
-        PointOfInterest newPoi = poiService.createPOIFromOSM(selectedElement, user, poiType);
+        PointOfInterest newPoi = poiService.createPOIFromOSM(selectedElement, poiType);
 
         System.out.println("\nPointOfInterest creato dalla ricerca OSM:");
         System.out.println(newPoi);		

@@ -9,21 +9,21 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
-import com.unicam.City_Explore.visual_interface.menu_pages.GestionePOIPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.ManagePOIPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
-public class VisualizzazionePOISalvatiPage extends FormPage {
+public class ShowPOISavedPage extends FormPage {
 
 	@Autowired
 	private POIService poiService;
 	
-	public VisualizzazionePOISalvatiPage() {
+	public ShowPOISavedPage() {
 		super("Elenco di tutti i POI salvati");
 	}
 
 	@Override
-	public void startForm(User user, Scanner scanner) {
+	public void startForm(Scanner scanner) {
 		List<PointOfInterest> poiList = poiService.getAllPOIs();
         if (poiList.isEmpty()) {
             System.out.println("Nessun POI salvato!");

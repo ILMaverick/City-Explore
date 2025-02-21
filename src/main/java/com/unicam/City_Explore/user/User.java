@@ -7,9 +7,12 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.notifica.Notification;
 
+@Component
 @Entity
 @Table(name = "users")
 public class User {

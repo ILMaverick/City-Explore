@@ -16,8 +16,22 @@ public class UserService {
     private PermissionRequestService permissionRequestService;
     @Autowired
     private NotificationListener notificationListener;
+    
+    private User currentUser;
+    
+    
 
-    public User createUser(String name, String surname, String username, String email, String password, Role role) {
+    public UserService(User currentUser) {
+		super();
+		this.currentUser = new User();
+		this.currentUser.setName("Simone");
+		this.currentUser.setSurname("Stacchiotti");
+		this.currentUser.setUsername("SilverSimon");
+		this.currentUser.setEmail("simone.stacchiotti.email@gmail.com");
+		this.currentUser.setRole(Role.ADMINISTRATOR);
+	}
+
+	public User createUser(String name, String surname, String username, String email, String password, Role role) {
         User user = new User();
         user.setName(name);
         user.setSurname(surname);
@@ -26,7 +40,7 @@ public class UserService {
         user.setPassword(password);
         user.setRole(role);
         notificationListener.handleCreateUser(user);
-        userRepository.save(user);
+        this.saveUser(user);
         return user;
     }
 
@@ -146,10 +160,17 @@ public class UserService {
         return administrator != null && administrator.getRole() == Role.ADMINISTRATOR;
     }
 
+	/**
+	 * @return the currentUser
+	 */
 	public User getCurrentUser() {
-		// TODO Auto-generated method stub
-		return null;
+		return currentUser;
 	}
 
-
+	/**
+	 * @param currentUser the currentUser to set
+	 */
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
 }

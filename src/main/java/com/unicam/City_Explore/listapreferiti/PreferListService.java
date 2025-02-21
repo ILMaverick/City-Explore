@@ -2,6 +2,7 @@ package com.unicam.City_Explore.listapreferiti;
 
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.contest.ContestRepository;
+import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.elementi.Element;
 import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.evento.EventRepository;
@@ -121,7 +122,7 @@ public class PreferListService {
         }
     }
 
-    public List<Element> visualizePreferList(int idUser) {
+    public List<AbstractElement> visualizePreferList(int idUser) {
         User user = userRepository.findById(idUser).orElse(null);
 
         if(user != null && user.getRole() == Role.AUTHENTICATED_TOURIST) {

@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.visual_interface.Page;
-import com.unicam.City_Explore.visual_interface.form_pages.EliminazionePage;
-import com.unicam.City_Explore.visual_interface.form_pages.ValidazionePage;
+import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
+import com.unicam.City_Explore.visual_interface.form_pages.ValidationPage;
 
 @Component
 public class HomePage extends MenuPage{
 
 	@Autowired
-	private GestionePOIPage gestionePOIPage;
+	private ManagePOIPage gestionePOIPage;
 	@Autowired
-	private GestioneTOURPage gestioneTOURPage;
+	private ManageTOURPage gestioneTOURPage;
 	@Autowired
-	private GestioneContestPage gestioneContestPage;
+	private ManageContestPage gestioneContestPage;
 	@Autowired
-	private GestioneEventoPage gestioneEventoPage;
+	private ManageEventPage gestioneEventoPage;
 	@Autowired
-	private GestioneContenutiPage gestioneContenutiPage;
+	private ManageContentPage gestioneContenutiPage;
 	@Autowired
-	private ValidazionePage validazionePage;
+	private ValidationPage validazionePage;
 	@Autowired
-	private EliminazionePage eliminazionePage;
+	private EliminationPage eliminazionePage;
 	
 	public HomePage() {
 		super ("Menu Principale");
@@ -38,34 +38,5 @@ public class HomePage extends MenuPage{
 		chapters.add("Validazione Elementi e Contenuti Pendenti");
 		chapters.add("Eliminazione Elementi e Contenuti");
 		this.setChapters(chapters);
-	}
-
-	@Override
-	public Page getNext(int idChapter) throws IllegalArgumentException {
-		switch (idChapter) {
-		case 1: {
-			return this.gestionePOIPage;
-		}
-		case 2: {
-			return this.gestioneTOURPage;
-		}
-		case 3: {
-			return this.gestioneContestPage;
-		}
-		case 4: {
-			return this.gestioneEventoPage;
-		}
-		case 5: {
-			return this.gestioneContenutiPage;
-		}		
-		case 6: {
-			return this.validazionePage;
-		}
-		case 7: {
-			return this.eliminazionePage;
-		}
-		default:
-			throw new IllegalArgumentException("Scelta non valida: " + idChapter);
-		}
 	}
 }

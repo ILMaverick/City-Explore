@@ -7,9 +7,9 @@ import com.unicam.City_Explore.visual_interface.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GestioneTOURPage extends MenuPage {
+public class ManageTOURPage extends MenuPage {
 
-	public GestioneTOURPage() {
+	public ManageTOURPage() {
 		super ("Gestione TOUR");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea Itinerario da POI");
@@ -17,11 +17,5 @@ public class GestioneTOURPage extends MenuPage {
 		chapters.add("Ricerca Itinerario tramite nome");
 		chapters.add("Ricerca Itinerario tramite descrizione");
 		this.setChapters(chapters);
-	}
-
-	@Override
-	public Page getNext(int idChapter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

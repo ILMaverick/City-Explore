@@ -9,21 +9,21 @@ import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
-import com.unicam.City_Explore.visual_interface.menu_pages.GestionePOIPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.ManagePOIPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
-public class CreazionePOIUtentePage extends FormPage {
+public class CreationPOIUserPage extends FormPage {
 	
 	@Autowired
 	private POIService poiService;
 	
-	public CreazionePOIUtentePage() {
+	public CreationPOIUserPage() {
 		super("Creazione di un nuovo PointOfInterest da zero");
 	}
 
 	@Override
-	public void startForm(User user, Scanner scanner) {
+	public void startForm(Scanner scanner) {
 		System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
 

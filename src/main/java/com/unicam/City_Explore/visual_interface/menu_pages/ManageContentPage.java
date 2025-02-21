@@ -8,9 +8,9 @@ import com.unicam.City_Explore.visual_interface.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GestioneContenutiPage extends MenuPage {
+public class ManageContentPage extends MenuPage {
 
-	public GestioneContenutiPage() {
+	public ManageContentPage() {
 		super ("Gestione Contenuti Multimediali");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea Contenuto");
@@ -19,11 +19,5 @@ public class GestioneContenutiPage extends MenuPage {
 		chapters.add("Ricerca Contenuto tramite nome");
 		chapters.add("Ricerca Contenuto tramite descrizione");
 		this.setChapters(chapters);
-	}
-
-	@Override
-	public Page getNext(int idChapter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

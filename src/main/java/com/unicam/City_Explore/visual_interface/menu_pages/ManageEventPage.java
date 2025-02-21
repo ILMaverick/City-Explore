@@ -7,9 +7,9 @@ import com.unicam.City_Explore.visual_interface.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GestioneEventoPage extends MenuPage {
+public class ManageEventPage extends MenuPage {
 
-	public GestioneEventoPage() {
+	public ManageEventPage() {
 		super ("Gestione Evento");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea Evento");
@@ -20,11 +20,5 @@ public class GestioneEventoPage extends MenuPage {
 		chapters.add("Ricerca Evento tramite nome");
 		chapters.add("Ricerca Evento tramite descrizione");
 		this.setChapters(chapters);
-	}
-
-	@Override
-	public Page getNext(int idChapter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
