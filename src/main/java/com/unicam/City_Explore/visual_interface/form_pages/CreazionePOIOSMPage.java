@@ -55,6 +55,7 @@ public class CreazionePOIOSMPage extends FormPage {
         // Chiedi all'utente di selezionare un elemento dalla lista
         System.out.println("Seleziona l'elemento da utilizzare (inserisci il numero): ");
         int selection = scanner.nextInt();
+        scanner.nextLine();
         if (selection < 1 || selection > results.size()) {
             System.out.println("Selezione non valida.");
             return;

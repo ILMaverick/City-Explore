@@ -68,9 +68,4 @@ public class MainPage extends MenuPage{
 			throw new IllegalArgumentException("Scelta non valida: " + idChapter);
 		}
 	}
-
-	@Override
-	public void setPrevious(MenuPage previous) {
-		this.previous = null;
-	}
 }

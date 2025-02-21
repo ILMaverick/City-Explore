@@ -8,7 +8,7 @@ import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 public abstract class Page {
 
 	private String title;
-	protected MenuPage previous;
+	private MenuPage previous;
 	
 	public Page() {
 		

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.MainPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
@@ -23,18 +24,26 @@ public class PageExecutioner {
 		}
 		System.out.print("0. Esci\n\nSeleziona un'opzione:");
 		int idChapter = this.scanner.nextInt();
+		scanner.nextLine();
 		if (idChapter == 0) {
-			return toExecute.getPrevious();
+			if (toExecute instanceof MainPage) {
+				return null;
+			} else {
+				return toExecute.getPrevious();
+			}
 		} else {
 			Page toReturn = toExecute.getNext(idChapter);
-			toReturn.setPrevious(toExecute);
+			if (toReturn.getPrevious() == null) {
+				toReturn.setPrevious(toExecute);
+			}
 			return toReturn;
 		}
 	}
 	
-	public void executeForm(FormPage toExecute) {
+	public MenuPage executeForm(FormPage toExecute) {
 		System.out.println("=== " + toExecute.getTitle() + " ===");
 		toExecute.startForm(userService.getCurrentUser(), scanner);
+		return toExecute.getPrevious();
 	}
 
 	public void close() {
