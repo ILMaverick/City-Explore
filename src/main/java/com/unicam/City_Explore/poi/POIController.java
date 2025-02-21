@@ -14,7 +14,7 @@ public class POIController {
     }
 
     public void createPOIFromScratch() {
-        poiService.createPOIFromScratch();
+        poiService.createPOIFromUser();
     }
 
     public void createPOIFromOSM() {

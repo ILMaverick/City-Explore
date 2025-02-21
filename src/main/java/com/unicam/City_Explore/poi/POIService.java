@@ -47,7 +47,7 @@ public class POIService {
     /**
      * Crea un PointOfInterest partendo da zero, con input forniti dall'utente.
      */
-    public void createPOIFromScratch() {
+    public void createPOIFromUser() {
         System.out.println("=== Creazione di un nuovo PointOfInterest da zero ===");
 
         System.out.print("Inserisci il nome: ");
@@ -173,13 +173,7 @@ public class POIService {
         }
     }
 
-<<<<<<< Updated upstream
     public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author, POIType type) {
-        PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
-        notificationListener.handleCreatePOI(poi);
-        return poiRepository.save(poi);
-=======
-    public PointOfInterest createPOIFromScratch(String name, String description, double lat, double lon, User author, POIType type) {
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR) {
             PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
             notificationListener.handleCreatePOI(poi);
@@ -193,7 +187,6 @@ public class POIService {
             notificationListener.handleDenialPermission(author);
         }
         return null;
->>>>>>> Stashed changes
     }
 
     public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
