@@ -18,7 +18,6 @@ import com.unicam.City_Explore.tour.TourRepository;
 import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.notifica.NotificationListener;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
