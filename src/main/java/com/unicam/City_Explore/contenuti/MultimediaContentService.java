@@ -7,6 +7,8 @@ import java.util.Scanner;
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.notifica.NotificationListener;
+import com.unicam.City_Explore.tour.Tour;
+import com.unicam.City_Explore.tour.TourRepository;
 import com.unicam.City_Explore.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class MultimediaContentService {
     private MultimediaContentRepository multimediaContentRepository;
     @Autowired
     private POIRepository poiRepository;
+    @Autowired
+    private TourRepository tourRepository;
     @Autowired
     private NotificationListener notificationListener;
     private Scanner scanner;
@@ -159,6 +163,21 @@ public class MultimediaContentService {
             notificationListener.handleLoadMultimediaContentToPOI(poi, multimediaContent);
             poiRepository.save(poi);
             return poi;
+        }
+
+        return null;
+    }
+
+    public Tour loadMultimediaContentToTour(int idTour, int idMC) {
+        Tour tour = tourRepository.findById(idTour).orElse(null);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        if(tour != null & multimediaContent != null) {
+            multimediaContent.setTour(tour);
+            save(multimediaContent);
+            tour.getMultimediaContentList().add(multimediaContent);
+            notificationListener.handleLoadMultimediaContentToTour(tour, multimediaContent);
+            tourRepository.save(tour);
+            return tour;
         }
 
         return null;

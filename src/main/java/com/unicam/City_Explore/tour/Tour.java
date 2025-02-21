@@ -57,4 +57,7 @@ public class Tour extends AbstractElement {
 	    return sb.toString();
 	}
 
+    public List<MultimediaContent> getMultimediaContentList() {
+        return multimediaContentList;
+    }
 }

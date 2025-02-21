@@ -1,6 +1,8 @@
 package com.unicam.City_Explore.contenuti;
 
 import java.time.LocalDateTime;
+
+import com.unicam.City_Explore.tour.Tour;
 import jakarta.persistence.*;
 
 import com.unicam.City_Explore.elementi.Status;
@@ -26,6 +28,8 @@ public class MultimediaContent {
     private Status status;
     @ManyToOne
     private PointOfInterest pointOfInterest;
+    @ManyToOne
+    private Tour tour;
 
     public MultimediaContent(String name, String description, User author) {
         this.name = (name != null ) ? name : "Senza nome";
@@ -97,5 +101,6 @@ public class MultimediaContent {
     public void setPointOfInterest(PointOfInterest pointOfInterest) {
         this.pointOfInterest = pointOfInterest;
     }
-
+    public Tour getTour() { return tour;}
+    public void setTour(Tour tour) { this.tour = tour; }
 }

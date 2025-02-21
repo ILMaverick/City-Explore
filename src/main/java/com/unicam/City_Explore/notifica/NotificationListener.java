@@ -193,6 +193,17 @@ public class NotificationListener {
         }
     }
 
+    public void handleLoadMultimediaContentToTour(Tour tour, MultimediaContent multimediaContent) {
+        Notification notification = notificationService.createNotification("Un Contenuto e' stato aggiunto ad un Punto di Interesse "
+                + tour.getName() + ", " + multimediaContent, NotificationType.UPDATE);
+        if(tour.getAuthor().equals(multimediaContent.getAuthor())) {
+            notificationService.sendNotification(notification, tour.getAuthor());
+        } else {
+            notificationService.sendNotification(notification, tour.getAuthor());
+            notificationService.sendNotification(notification, multimediaContent.getAuthor());
+        }
+    }
+
     public void handleUpdateMultimediaContent(MultimediaContent multimediaContent) {
         Notification notification = notificationService.createNotification("E' stato aggiornato un Contenuto esistente " + multimediaContent, NotificationType.UPDATE);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
@@ -294,7 +305,5 @@ public class NotificationListener {
         Notification notification = notificationService.createNotification("L'Utente " + user.getUsername() + " e' stato eliminato. \nPerche': " + reason, NotificationType.UPDATE);
         notificationService.sendNotification(notification, user);
     }
-
-
 
 }
