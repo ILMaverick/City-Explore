@@ -48,6 +48,10 @@ public class PageExecutioner {
 		toExecute.startForm(userService.getCurrentUser(), scanner);
 		return toExecute.getPrevious();
 	}
+	
+	private void showPage() {
+		
+	}
 
 	public void close() {
 		this.scanner.close();

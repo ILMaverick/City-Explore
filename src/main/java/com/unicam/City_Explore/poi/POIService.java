@@ -174,7 +174,7 @@ public class POIService {
     }
 
     public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, User author, POIType type) {
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR) {
+        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
             PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
             notificationListener.handleCreatePOI(poi);
             if(author.getRole() == Role.CONTRIBUTOR) {
@@ -190,7 +190,7 @@ public class POIService {
     }
 
     public PointOfInterest createPOIFromOSM(OverpassElement element, User author, POIType type) {
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR) {
+        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
             PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
             notificationListener.handleCreatePOI(poi);
             if(author.getRole() == Role.CONTRIBUTOR) {

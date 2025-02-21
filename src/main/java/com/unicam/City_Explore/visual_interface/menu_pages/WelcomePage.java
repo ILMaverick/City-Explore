@@ -29,12 +29,12 @@ public class WelcomePage extends MenuPage{
 	}
 
 	@Override
-	public Page getNext(int idChapter) throws IllegalArgumentException {
-		switch (idChapter) {
-		case 1: {
+	public Page getNext(String nameChapter) throws IllegalArgumentException {
+		switch (nameChapter) {
+		case "Login": {
 			return this.loginPage;
 		}
-//		case 2: {
+//		case "Registrati": {
 //			return this.RegistrationPage;
 //		}
 		default:

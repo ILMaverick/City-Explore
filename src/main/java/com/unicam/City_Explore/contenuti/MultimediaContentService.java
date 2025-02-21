@@ -146,7 +146,7 @@ public class MultimediaContentService {
 
     public MultimediaContent createMultimediaContent(String name, String description, User author, FormatFileEnum format, float duration, float dimension, float resolution) {
         MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR || author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
+        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR || author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
             multimediaContent.setFormatFileEnum(format);
             multimediaContent.setDuration(duration);
             multimediaContent.setDimension(dimension);
@@ -167,7 +167,7 @@ public class MultimediaContentService {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
         if(poi != null & multimediaContent != null) {
             User author = multimediaContent.getAuthor();
-            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR ||
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
                     author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
                 multimediaContent.setPointOfInterest(poi);
                 multimediaContentRepository.save(multimediaContent);
@@ -193,7 +193,7 @@ public class MultimediaContentService {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
         if(tour != null & multimediaContent != null) {
             User author = multimediaContent.getAuthor();
-            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR ||
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
                     author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
                 multimediaContent.setTour(tour);
                 multimediaContentRepository.save(multimediaContent);
@@ -218,7 +218,7 @@ public class MultimediaContentService {
         MultimediaContent multimediaContentSelected = getMultimediaContentById(idMC);
         if(multimediaContentSelected != null) {
             User author = multimediaContent.getAuthor();
-            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR ||
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
                     author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
                 multimediaContentSelected.setName(multimediaContent.getName());
                 multimediaContentSelected.setDescription(multimediaContent.getDescription());

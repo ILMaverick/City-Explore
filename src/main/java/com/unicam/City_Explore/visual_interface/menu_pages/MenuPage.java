@@ -34,5 +34,5 @@ public abstract class MenuPage extends Page {
 		this.chapters = chapters;
 	}
 
-	public abstract Page getNext (int idChapter);
+	public abstract Page getNext (String nameChapter);
 }
