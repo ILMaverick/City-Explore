@@ -10,7 +10,7 @@ import com.unicam.City_Explore.visual_interface.form_pages.EliminazionePage;
 import com.unicam.City_Explore.visual_interface.form_pages.ValidazionePage;
 
 @Component
-public class MainPage extends MenuPage{
+public class HomePage extends MenuPage{
 
 	@Autowired
 	private GestionePOIPage gestionePOIPage;
@@ -27,7 +27,7 @@ public class MainPage extends MenuPage{
 	@Autowired
 	private EliminazionePage eliminazionePage;
 	
-	public MainPage() {
+	public HomePage() {
 		super ("Menu Principale");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Gestione POI");

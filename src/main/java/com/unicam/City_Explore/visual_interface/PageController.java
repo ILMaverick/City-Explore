@@ -12,14 +12,16 @@ import com.unicam.City_Explore.poi.POIController;
 import com.unicam.City_Explore.tour.TourController;
 import com.unicam.City_Explore.validazione.ValidationController;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
-import com.unicam.City_Explore.visual_interface.menu_pages.MainPage;
+import com.unicam.City_Explore.visual_interface.form_pages.LoginPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.HomePage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.WelcomePage;
 
 @Component
 public class PageController implements CommandLineRunner{
 	
 	@Autowired
-	private MainPage mainPage;
+	private WelcomePage welcomePage;
 	@Autowired
 	private PageExecutioner executioner;
 	@Autowired
@@ -37,8 +39,7 @@ public class PageController implements CommandLineRunner{
 	@Autowired
 	private DeletionController deletionController;
 	
-	private Page pointerPage = mainPage;
-	private MenuPage previousPage;
+	private Page pointerPage = welcomePage;
 	
 	public PageController() {
 		
@@ -46,13 +47,12 @@ public class PageController implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) {
-//		this.pointerPage = new MainPage();
 //		this.poiController.initializer();
 //		this.multimediaContentController.initializer();
 //		this.contestController.initializer();
 //		this.eventController.initializer();
 //		System.out.println("Inizializzazione avvenuta con successo.");
-		this.pointerPage = this.mainPage;
+		this.pointerPage = this.welcomePage;
 		while (this.pointerPage != null) {
 			this.execute(this.pointerPage);
 		}
@@ -69,9 +69,6 @@ public class PageController implements CommandLineRunner{
 			nextPage = this.executioner.executeForm(formToExecute);
 		}
 		this.next(nextPage);
-		if(nextPage != null && nextPage.getPrevious() != null) {
-			this.previousPage = nextPage.getPrevious();
-		}
 	}
 	
 	private void next(Page nextPage) {
