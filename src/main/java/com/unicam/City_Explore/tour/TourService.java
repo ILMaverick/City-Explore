@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.validazione.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class TourService {
     private POIRepository poiRepository;
     @Autowired
     private NotificationListener notificationListener;
+    @Autowired
+    private ValidationService validationService;
 
     public TourService() {
 
@@ -122,58 +126,70 @@ public class TourService {
      * Metodo interattivo per costruire un Tour a partire da una lista di PointOfInterest.
      */
     public Tour buildTourFromPOIs(List<PointOfInterest> poiList, User author) {
-        // 1. Crea le tappe a partire dai POI
-        List<Tappa> tappe = new ArrayList<>();
-        int count = 1;
-        for (PointOfInterest poi : poiList) {
-            Tappa tappa = new Tappa(poi.getName(), poi.getDescription(), poi.getLatitude(), poi.getLongitude(), poi.getAuthor(), poi.getType(), count++);
-            tappe.add(tappa);
-        }
-        
-        // 2. Raggruppa le tappe in gruppi per formare i percorsi
-        List<List<Tappa>> gruppiTappe = groupTappe(tappe);
-        
-        Scanner scanner = new Scanner(System.in);
-        List<Way> percorsi = new ArrayList<>();
-        
-        // 3. Per ogni gruppo, chiedi i dettagli e crea il Percorso
-        for (List<Tappa> gruppo : gruppiTappe) {
-            System.out.println("\nCreazione di un Percorso per le seguenti tappe:");
-            for (Tappa t : gruppo) {
-                System.out.println("Tappa " + t.getNumeroTappa() + ": " + t.getName());
+        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_CONTRIBUTOR) {
+            // 1. Crea le tappe a partire dai POI
+            List<Tappa> tappe = new ArrayList<>();
+            int count = 1;
+            for (PointOfInterest poi : poiList) {
+                Tappa tappa = new Tappa(poi.getName(), poi.getDescription(), poi.getLatitude(), poi.getLongitude(), poi.getAuthor(), poi.getType(), count++);
+                tappe.add(tappa);
             }
-            System.out.print("Inserisci la lunghezza del percorso (double): ");
-            double lunghezza = Double.parseDouble(scanner.nextLine());
-            System.out.print("Inserisci la durata del percorso (double): ");
-            double durata = Double.parseDouble(scanner.nextLine());
-            System.out.print("Inserisci la difficoltà del percorso (facile, medio, difficile): ");
-            String diff = scanner.nextLine().trim();
-            WayDifficultyType wayDifficultyType = WayDifficultyType.fromString(diff);
-            
-            Way way = new Way(lunghezza, durata, wayDifficultyType, gruppo);
-            percorsi.add(way);
+
+            // 2. Raggruppa le tappe in gruppi per formare i percorsi
+            List<List<Tappa>> gruppiTappe = groupTappe(tappe);
+
+            Scanner scanner = new Scanner(System.in);
+            List<Way> percorsi = new ArrayList<>();
+
+            // 3. Per ogni gruppo, chiedi i dettagli e crea il Percorso
+            for (List<Tappa> gruppo : gruppiTappe) {
+                System.out.println("\nCreazione di un Percorso per le seguenti tappe:");
+                for (Tappa t : gruppo) {
+                    System.out.println("Tappa " + t.getNumeroTappa() + ": " + t.getName());
+                }
+                System.out.print("Inserisci la lunghezza del percorso (double): ");
+                double lunghezza = Double.parseDouble(scanner.nextLine());
+                System.out.print("Inserisci la durata del percorso (double): ");
+                double durata = Double.parseDouble(scanner.nextLine());
+                System.out.print("Inserisci la difficoltà del percorso (facile, medio, difficile): ");
+                String diff = scanner.nextLine().trim();
+                WayDifficultyType wayDifficultyType = WayDifficultyType.fromString(diff);
+
+                Way way = new Way(lunghezza, durata, wayDifficultyType, gruppo);
+                percorsi.add(way);
+            }
+
+            // 4. Raccogli nome e descrizione del Tour
+            System.out.print("\nInserisci il nome del Tour: ");
+            String tourName = scanner.nextLine();
+            System.out.print("Inserisci la descrizione del Tour: ");
+            String tourDescription = scanner.nextLine();
+
+            // Usa il builder per costruire il Tour
+            Tour tour = new TourBuilder()
+                    .withName(tourName)
+                    .withDescription(tourDescription)
+                    .withAuthor(author)
+                    .build();
+            // Aggiungi i percorsi al Tour (puoi anche aggiungerli uno ad uno)
+            for (Way p : percorsi) {
+                // Supponendo che il builder non gestisca i percorsi, li settiamo direttamente sul tour
+                tour.getWayList().add(p);
+            }
+
+            if(author.getRole() == Role.CONTRIBUTOR) {
+                validationService.sendTourForValidation(tour);
+            } else {
+                validationService.approveTour(tour.getId());
+            }
+
+            save(tour);
+            // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
+            return tour;
+        } else {
+            notificationListener.handleDenialPermission(author);
         }
-        
-        // 4. Raccogli nome e descrizione del Tour
-        System.out.print("\nInserisci il nome del Tour: ");
-        String tourName = scanner.nextLine();
-        System.out.print("Inserisci la descrizione del Tour: ");
-        String tourDescription = scanner.nextLine();
-        
-        // Usa il builder per costruire il Tour
-        Tour tour = new TourBuilder()
-                        .withName(tourName)
-                        .withDescription(tourDescription)
-                        .withAuthor(author)
-                        .build();
-        // Aggiungi i percorsi al Tour (puoi anche aggiungerli uno ad uno)
-        for (Way p : percorsi) {
-            // Supponendo che il builder non gestisca i percorsi, li settiamo direttamente sul tour
-            tour.getWayList().add(p);
-        }
-        save(tour);
-        // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
-        return tour;
+        return null;
     }
     
     /**
@@ -192,15 +208,21 @@ public class TourService {
 
 
     public Tour updateTour(int idTour, Tour tour) {
-        Tour tourSelected = getTourById(idTour);
-        if(tourSelected != null) {
-            tourSelected.setName(tour.getName());
-            tourSelected.setDescription(tour.getDescription());
-            tourSelected.setWayList(tour.getWayList());
-            notificationListener.handleUpdateTour(tour);
-            tourRepository.save(tourSelected);
+        User newTourAuthor = tour.getAuthor();
+        if(newTourAuthor.getRole() == Role.CURATOR) {
+            Tour tourSelected = getTourById(idTour);
+            if (tourSelected != null) {
+                tourSelected.setName(tour.getName());
+                tourSelected.setDescription(tour.getDescription());
+                tourSelected.setWayList(tour.getWayList());
+                notificationListener.handleUpdateTour(tour);
+                tourRepository.save(tourSelected);
+            }
+            return tourSelected;
+        } else {
+            notificationListener.handleDenialPermission(newTourAuthor);
         }
-        return tourSelected;
+        return null;
     }
 
     public List<Tour> searchTourByName(String name) {

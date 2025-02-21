@@ -1,4 +1,5 @@
 package com.unicam.City_Explore.segnalazione;
+import com.unicam.City_Explore.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class MediaReportService {
 
     private final List<MediaReport> mediaReportList;
     @Autowired
-    private NotificationListener notificationListener;
+    private final NotificationListener notificationListener;
 
     public MediaReportService(List<MediaReport> mediaReportList, NotificationListener notificationListener) {
         this.mediaReportList = mediaReportList;
@@ -23,14 +24,18 @@ public class MediaReportService {
     }
 
     public void createReport(String reason, User reporter, MultimediaContent multimediaContent) {
-        MediaReport report = new MediaReport();
-        report.setReason(reason);
-        report.setReporter(reporter);
-        report.setMultimediaContent(multimediaContent);
-        report.setLocalDateTime(LocalDateTime.now());
-        mediaReportList.add(report);
-        sendReportNotification(report);
-        multimediaContent.setStatus(Status.REPORTED);
+        if(reporter.getRole() == Role.TOURIST || reporter.getRole() == Role.AUTHENTICATED_TOURIST) {
+            MediaReport report = new MediaReport();
+            report.setReason(reason);
+            report.setReporter(reporter);
+            report.setMultimediaContent(multimediaContent);
+            report.setLocalDateTime(LocalDateTime.now());
+            mediaReportList.add(report);
+            sendReportNotification(report);
+            multimediaContent.setStatus(Status.REPORTED);
+        } else {
+            notificationListener.handleDenialPermission(reporter);
+        }
     }
 
     private void sendReportNotification(MediaReport report) {

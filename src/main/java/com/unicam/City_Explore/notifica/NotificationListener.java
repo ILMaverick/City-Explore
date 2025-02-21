@@ -306,4 +306,13 @@ public class NotificationListener {
         notificationService.sendNotification(notification, user);
     }
 
+    public void handleDenialPermission(User author) {
+        Notification notification = notificationService.createNotification("Non hai i permessi per eseguire questa operazione.", NotificationType.ALERT);
+        notificationService.sendNotification(notification, author);
+    }
+
+    public void handleUpdateContributor(User contributor) {
+        Notification notification = notificationService.createNotification("Sei stato promosso a Contributor Autorizzato.", NotificationType.UPDATE);
+        notificationService.sendNotification(notification, contributor);
+    }
 }

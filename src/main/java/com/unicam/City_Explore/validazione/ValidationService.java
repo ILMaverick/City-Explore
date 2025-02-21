@@ -1,5 +1,7 @@
 package com.unicam.City_Explore.validazione;
 
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,8 @@ public class ValidationService {
     private MediaReportService reportService;
     @Autowired
     private NotificationListener notificationListener;
+    @Autowired
+    private UserRepository userRepository;
 
 
     public ValidationService() {
@@ -212,6 +216,10 @@ public class ValidationService {
 
     public List<MultimediaContent> getAllPendingMultimediaContent() {
         return multimediaContentRepository.findByStatus(Status.PENDING);
+    }
+
+    private boolean checkCurator(User user) {
+        return user.getRole()== Role.CURATOR;
     }
 
     private User getCurrentUser() {

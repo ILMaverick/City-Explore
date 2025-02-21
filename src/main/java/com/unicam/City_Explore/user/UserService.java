@@ -26,6 +26,7 @@ public class UserService {
         user.setPassword(password);
         user.setRole(role);
         notificationListener.handleCreateUser(user);
+        userRepository.save(user);
         return user;
     }
 
@@ -43,32 +44,61 @@ public class UserService {
 
     public User updateUser(int idUser, User user) {
         User userSelected = userRepository.findById(idUser).orElse(null);
-        if(userSelected != null) {
-            userSelected.setName(user.getName());
-            userSelected.setSurname(user.getSurname());
-            userSelected.setUsername(user.getUsername());
-            user.setEmail(user.getEmail());
-            notificationListener.handleUpdateUser(user);
-            userRepository.save(userSelected);
-            return userSelected;
+        User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
+        if(administrator.getRole()==Role.ADMINISTRATOR) {
+            if (userSelected != null) {
+                userSelected.setName(user.getName());
+                userSelected.setSurname(user.getSurname());
+                userSelected.setUsername(user.getUsername());
+                user.setEmail(user.getEmail());
+                notificationListener.handleUpdateUser(user);
+                userRepository.save(userSelected);
+                return userSelected;
+            }
+        } else {
+            notificationListener.handleDenialPermission(administrator);
         }
         return null;
     }
 
     public void deleteUser(int idUser, String reason) {
         User user = userRepository.findById(idUser).orElse(null);
-        if(user != null) {
-            notificationListener.handleDeleteUser(user, reason);
-            userRepository.delete(user);
+        User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
+        if(administrator.getRole()==Role.ADMINISTRATOR) {
+            if (user != null) {
+                notificationListener.handleDeleteUser(user, reason);
+                userRepository.delete(user);
+            }
+        } else {
+            notificationListener.handleDenialPermission(administrator);
         }
     }
 
     public void updateUserRole(int idUser, Role role) {
         User user = userRepository.findById(idUser).orElse(null);
-        if(user != null) {
-            user.setRole(role);
-            notificationListener.handleUpdateUserRole(user, role);
-            userRepository.save(user);
+        User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
+        if(administrator.getRole()==Role.ADMINISTRATOR) {
+            if(user != null) {
+                user.setRole(role);
+                notificationListener.handleUpdateUserRole(user, role);
+                userRepository.save(user);
+            }
+        } else {
+            notificationListener.handleDenialPermission(administrator);
+        }
+    }
+
+    public void updateContributor(int idUser) {
+        User user = userRepository.findById(idUser).orElse(null);
+        User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
+        if(administrator.getRole()==Role.ADMINISTRATOR) {
+            if (user != null && user.getRole() == Role.CONTRIBUTOR) {
+                user.setRole(Role.AUTHENTICATED_CONTRIBUTOR);
+                notificationListener.handleUpdateContributor(user);
+                userRepository.save(user);
+            }
+        } else {
+            notificationListener.handleDenialPermission(administrator);
         }
     }
 
@@ -93,17 +123,22 @@ public class UserService {
     }
 
     public void approveRequest(int requestId, boolean isApproved, Role newRole) {
-        List<PermissionRequest> requestList = permissionRequestService.getAllRequests();
-        for(PermissionRequest request: requestList) {
-            request.setApproved(isApproved);
-            User user = request.getAuthor();
-            if(request.isApproved()) {
-                notificationListener.handleApprovedRequest(request);
-                updateUserRole(user.getId(), newRole);
-            } else {
-                notificationListener.handleRejectRequest(request);
+        User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
+        if(administrator.getRole()==Role.ADMINISTRATOR) {
+            List<PermissionRequest> requestList = permissionRequestService.getAllRequests();
+            for (PermissionRequest request : requestList) {
+                request.setApproved(isApproved);
+                User user = request.getAuthor();
+                if (request.isApproved()) {
+                    notificationListener.handleApprovedRequest(request);
+                    updateUserRole(user.getId(), newRole);
+                } else {
+                    notificationListener.handleRejectRequest(request);
+                }
+                permissionRequestService.deleteRequest(requestId);
             }
-            permissionRequestService.deleteRequest(requestId);
+        } else {
+            notificationListener.handleDenialPermission(administrator);
         }
     }
 

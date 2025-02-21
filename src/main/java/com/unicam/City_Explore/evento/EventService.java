@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,11 @@ public class EventService {
 
     public void initializer() {
         User user = new User();
+        user.setName("Simone");
+        user.setSurname("Stacchiotti");
         user.setUsername("SilverSimon");
-
+        user.setEmail("simone.stacchiotti.email@gmail.com");
+        user.setRole(Role.ADMINISTRATOR);
         LocalDateTime time = LocalDateTime.of(2025,02,17, 15,48);
 
         createEvent("nome", "descrizione", user, "Raccolta fondi", "Gioco libero",
@@ -159,7 +163,6 @@ public class EventService {
             User currentUser = getCurrentUser();
 
             Event newEvent = new Event(name, description, currentUser, scope, activity, organization, theme, category, price, time);
-            //Event newEvent = new Event(name, "description", currentUser, "scope", "activity", "organization", "theme", "category", 0, LocalDateTime.of(2025,02,17, 15,48));
 
             selectedEvent = updateEvent(idEvent, newEvent);
 
@@ -210,11 +213,15 @@ public class EventService {
     public Event createEvent(String name, String description, User author, String scope,
                              String activity, String organization, String theme, String category,
                              double price, LocalDateTime time) {
-
-        Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time);
-        notificationListener.handleNewEvent(event);
-        eventRepository.save(event);
-        return event;
+        if(author.getRole() == Role.ANIMATOR) {
+            Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time);
+            notificationListener.handleNewEvent(event);
+            eventRepository.save(event);
+            return event;
+        } else {
+            notificationListener.handleDenialPermission(author);
+        }
+        return null;
     }
 
     /**
@@ -224,24 +231,22 @@ public class EventService {
     public PointOfInterest addEventToPOI(int idPOI, int idEvent) {
         PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
         Event event = getEventById(idEvent);
-        if (poi != null) {
-            System.out.println("Punto di interesse trovato: ");
-            event.getPointOfInterestList().add(poi);
-            eventRepository.save(event);
-            poi.getEvents().add(event);
-            notificationListener.handleAddEventToPOI(event, poi);
-            poiRepository.save(poi);
+        User animator = event.getAuthor();
+        if(animator.getRole() == Role.ANIMATOR) {
+            if (poi != null) {
+                event.getPointOfInterestList().add(poi);
+                eventRepository.save(event);
+                poi.getEvents().add(event);
+                notificationListener.handleAddEventToPOI(event, poi);
+                poiRepository.save(poi);
+            } else {
+                System.out.println("Punto di interesse non trovato.");
+            }
+            return poi;
         } else {
-            System.out.println("Punto di interesse non trovato.");
+            notificationListener.handleDenialPermission(animator);
         }
-        return poi;
-    }
-
-    /**
-     * Salva l'Evento nella repository.
-     */
-    public Event save(Event event) {
-        return eventRepository.save(event);
+        return null;
     }
     
     /**
@@ -255,25 +260,31 @@ public class EventService {
      * Restituisce un Evento dato il suo id.
      */
     public Event getEventById(int id) {
-        return eventRepository.findById(id).get();
+        return eventRepository.findById(id).orElse(null);
     }
 
     public Event updateEvent(int idEvent, Event event) {
-        Event eventSelected = eventRepository.findById(idEvent).orElse(null);
-        if(eventSelected != null) {
-            eventSelected.setName(event.getName());
-            eventSelected.setDescription(event.getDescription());
-            eventSelected.setScope(event.getScope());
-            eventSelected.setActivity(event.getActivity());
-            eventSelected.setOrganization(event.getOrganization());
-            eventSelected.setTheme(event.getTheme());
-            eventSelected.setCategory(event.getCategory());
-            eventSelected.setTime(event.getTime());
-            eventSelected.setPrice(event.getPrice());
-            notificationListener.handleUpdateEvent(event);
-            eventRepository.save(eventSelected);
+        User animator = event.getAuthor();
+        if(animator.getRole() == Role.ANIMATOR) {
+            Event eventSelected = eventRepository.findById(idEvent).orElse(null);
+            if (eventSelected != null) {
+                eventSelected.setName(event.getName());
+                eventSelected.setDescription(event.getDescription());
+                eventSelected.setScope(event.getScope());
+                eventSelected.setActivity(event.getActivity());
+                eventSelected.setOrganization(event.getOrganization());
+                eventSelected.setTheme(event.getTheme());
+                eventSelected.setCategory(event.getCategory());
+                eventSelected.setTime(event.getTime());
+                eventSelected.setPrice(event.getPrice());
+                notificationListener.handleUpdateEvent(event);
+                eventRepository.save(eventSelected);
+            }
+            return eventSelected;
+        } else {
+            notificationListener.handleDenialPermission(animator);
         }
-        return eventSelected;
+        return null;
     }
 
     public List<PointOfInterest> getAllPoiFromEventRepository() {
@@ -295,10 +306,14 @@ public class EventService {
         if(optionalEvent.isPresent() && optionalUser.isPresent()) {
             Event event = optionalEvent.get();
             User user = optionalUser.get();
-            user.getEventList().add(event);
-            event.getParticipants().add(user);
-            notificationListener.handleParticipationEvent(event, user);
-            eventRepository.save(event);
+            if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
+                user.getEventList().add(event);
+                event.getParticipants().add(user);
+                notificationListener.handleParticipationEvent(event, user);
+                eventRepository.save(event);
+            } else {
+                notificationListener.handleDenialPermission(user);
+            }
         } else {
             throw new RuntimeException("Evento o Utente non trovato.");
         }
@@ -311,10 +326,14 @@ public class EventService {
         if(optionalEvent.isPresent() && optionalUser.isPresent()) {
             Event event = optionalEvent.get();
             User user = optionalUser.get();
-            user.getEventList().remove(event);
-            event.getParticipants().remove(user);
-            notificationListener.handleDeleteParticipationEvent(event, user, reason);
-            eventRepository.save(event);
+            if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
+                user.getEventList().remove(event);
+                event.getParticipants().remove(user);
+                notificationListener.handleDeleteParticipationEvent(event, user, reason);
+                eventRepository.save(event);
+            } else {
+                notificationListener.handleDenialPermission(user);
+            }
         } else {
             throw new RuntimeException("Evento o Utente non trovato.");
         }

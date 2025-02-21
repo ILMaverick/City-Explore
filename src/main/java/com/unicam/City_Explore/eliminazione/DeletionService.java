@@ -1,5 +1,7 @@
 package com.unicam.City_Explore.eliminazione;
 
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,8 @@ public class DeletionService {
     private MultimediaContentRepository multimediaContentRepository;
     @Autowired
     private NotificationListener notificationListener;
+    @Autowired
+    private UserRepository userRepository;
 
     public DeletionService() {
         // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
@@ -165,74 +169,99 @@ public class DeletionService {
     }
 
     public void deletePOI(int idPOI) {
-        PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
-        if(poi != null) {
-            List<Event> eventList = poi.getEvents();
-            //List<Tour> tourList = poi.getTourList();
-            List<MultimediaContent> multimediaContentList = poi.getMultimediaContentList();
-            for (Event event : eventList) {
-                event.getPointOfInterestList().remove(poi);
-                eventRepository.save(event);
-            }
-            //TODO: Aggiungere Controllo per il Tour
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findFirst().orElse(null);
+        if(curator.getRole() == Role.CURATOR) {
+            PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
+            if (poi != null) {
+                List<Event> eventList = poi.getEvents();
+                //List<Tour> tourList = poi.getTourList();
+                List<MultimediaContent> multimediaContentList = poi.getMultimediaContentList();
+                for (Event event : eventList) {
+                    event.getPointOfInterestList().remove(poi);
+                    eventRepository.save(event);
+                }
+                //TODO: Aggiungere Controllo per il Tour
 
-            for (MultimediaContent multimediaContent : multimediaContentList) {
-                multimediaContent.setPointOfInterest(null);
-                multimediaContentRepository.save(multimediaContent);
+                for (MultimediaContent multimediaContent : multimediaContentList) {
+                    multimediaContent.setPointOfInterest(null);
+                    multimediaContentRepository.save(multimediaContent);
+                }
+                notificationListener.handleDeletePOI(poi);
+                poiRepository.deleteById(idPOI);
             }
-            notificationListener.handleDeletePOI(poi);
-            poiRepository.deleteById(idPOI);
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void deleteTour(int idTour) {
-        Tour tour = tourRepository.findById(idTour).orElse(null);
-        if(tour != null) {
-            //TODO: Aggiungere Controllo dei POI
-            notificationListener.handleDeleteTour(tour);
-            tourRepository.deleteById(tour.getId());
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findFirst().orElse(null);
+        if(curator.getRole() == Role.CURATOR) {
+            Tour tour = tourRepository.findById(idTour).orElse(null);
+            if (tour != null) {
+                //TODO: Aggiungere Controllo dei POI
+                notificationListener.handleDeleteTour(tour);
+                tourRepository.deleteById(tour.getId());
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void deleteContest(int idContest) {
-        Contest contest = contestRepository.findById(idContest).orElse(null);
-        if(contest != null) {
-            List<Event> eventList = contest.getEventList();
-            for(Event event : eventList) {
-                event.getContestList().remove(contest);
-                eventRepository.save(event);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findFirst().orElse(null);
+        if(curator.getRole() == Role.CURATOR) {
+            Contest contest = contestRepository.findById(idContest).orElse(null);
+            if (contest != null) {
+                List<Event> eventList = contest.getEventList();
+                for (Event event : eventList) {
+                    event.getContestList().remove(contest);
+                    eventRepository.save(event);
+                }
+                notificationListener.handleDeleteContest(contest);
+                contestRepository.deleteById(idContest);
             }
-            notificationListener.handleDeleteContest(contest);
-            contestRepository.deleteById(idContest);
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void deleteEvent(int idEvent) {
-        Event event = eventRepository.findById(idEvent).orElse(null);
-        if(event != null) {
-            List<PointOfInterest> pointOfInterestList = event.getPointOfInterestList();
-            List<Contest> contestList = event.getContestList();
-            for(PointOfInterest poi : pointOfInterestList) {
-                poi.getEvents().remove(event);
-                poiRepository.save(poi);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findFirst().orElse(null);
+        if(curator.getRole() == Role.CURATOR) {
+            Event event = eventRepository.findById(idEvent).orElse(null);
+            if (event != null) {
+                List<PointOfInterest> pointOfInterestList = event.getPointOfInterestList();
+                List<Contest> contestList = event.getContestList();
+                for (PointOfInterest poi : pointOfInterestList) {
+                    poi.getEvents().remove(event);
+                    poiRepository.save(poi);
+                }
+                for (Contest contest : contestList) {
+                    contest.getEventList().remove(event);
+                    contestRepository.save(contest);
+                }
+                notificationListener.handleDeleteEvent(event);
+                eventRepository.deleteById(idEvent);
             }
-            for (Contest contest : contestList) {
-                contest.getEventList().remove(event);
-                contestRepository.save(contest);
-            }
-            notificationListener.handleDeleteEvent(event);
-            eventRepository.deleteById(idEvent);
+        }  else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 
     public void deleteMultimediaContent(int idMC) {
-        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
-        if(multimediaContent != null) {
-            PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
-            pointOfInterest.getMultimediaContentList().remove(multimediaContent);
-            poiRepository.save(pointOfInterest);
-            notificationListener.handleDeleteMultimediaContent(multimediaContent);
-            multimediaContentRepository.deleteById(idMC);
+        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findFirst().orElse(null);
+        if(curator.getRole() == Role.CURATOR) {
+            MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+            if (multimediaContent != null) {
+                PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
+                pointOfInterest.getMultimediaContentList().remove(multimediaContent);
+                poiRepository.save(pointOfInterest);
+                notificationListener.handleDeleteMultimediaContent(multimediaContent);
+                multimediaContentRepository.deleteById(idMC);
+            }
+        } else {
+            notificationListener.handleDenialPermission(curator);
         }
     }
 

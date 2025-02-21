@@ -1,6 +1,7 @@
 package com.unicam.City_Explore.contest;
 
 import com.unicam.City_Explore.contenuti.MultimediaContent;
+import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.user.UserRepository;
 import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.notifica.NotificationListener;
@@ -32,7 +33,11 @@ public class ContestService {
 
     public void initializer() {
         User user = new User();
+        user.setName("Simone");
+        user.setSurname("Stacchiotti");
         user.setUsername("SilverSimon");
+        user.setEmail("simone.stacchiotti.email@gmail.com");
+        user.setRole(Role.ADMINISTRATOR);
 
         LocalDate deadline = LocalDate.of(2025, 2,17);
 
@@ -111,40 +116,42 @@ public class ContestService {
 
     public Contest createContest(String name, String description, User author, String rules, String goal, String prize, LocalDate deadline) {
         Contest contest = new Contest(name, description, author);
-        contest.setRules(rules);
-        contest.setGoal(goal);
-        contest.setPrize(prize);
-        contest.setDeadline(deadline);
-        notificationListener.handleNewContest(contest);
-        contestRepository.save(contest);
-        return contest;
+        if(author.getRole() == Role.ANIMATOR) {
+            contest.setRules(rules);
+            contest.setGoal(goal);
+            contest.setPrize(prize);
+            contest.setDeadline(deadline);
+            notificationListener.handleNewContest(contest);
+            contestRepository.save(contest);
+            return contest;
+        } else {
+            notificationListener.handleDenialPermission(author);
+        }
+        return null;
     }
 
     public Contest updateContest(int idContest, Contest contest) {
-        Contest contestSelected = getContestById(idContest);
+        Contest contestSelected = contestRepository.findById(idContest).orElse(null);
         if(contestSelected != null) {
-            contestSelected.setName(contest.getName());
-            contestSelected.setDescription(contest.getDescription());
-            contestSelected.setRules(contest.getRules());
-            contestSelected.setGoal(contest.getGoal());
-            contestSelected.setPrize(contest.getPrize());
-            contestSelected.setDeadline(contest.getDeadline());
-            notificationListener.handleUpdateContest(contest);
-            contestRepository.save(contestSelected);
+            if (contest.getAuthor().getRole() == Role.ANIMATOR) {
+                contestSelected.setName(contest.getName());
+                contestSelected.setDescription(contest.getDescription());
+                contestSelected.setRules(contest.getRules());
+                contestSelected.setGoal(contest.getGoal());
+                contestSelected.setPrize(contest.getPrize());
+                contestSelected.setDeadline(contest.getDeadline());
+                notificationListener.handleUpdateContest(contest);
+                contestRepository.save(contestSelected);
+            }
+            return contestSelected;
+        } else {
+            notificationListener.handleDenialPermission(contest.getAuthor());
         }
-        return contestSelected;
-    }
-
-    public void saveContest(Contest contest) {
-        contestRepository.save(contest);
+        return null;
     }
 
     public List<Contest> getAllContest() {
         return contestRepository.findAll();
-    }
-
-    public Contest getContestById(int id) {
-        return contestRepository.findById(id).orElse(null);
     }
 
     public List<Contest> searchContestByName(String name) {
@@ -162,40 +169,51 @@ public class ContestService {
         if(optionalContest.isPresent() && optionalUser.isPresent()) {
             Contest contest = optionalContest.get();
             User user = optionalUser.get();
-            ContestParticipation participation = new ContestParticipation();
-            participation.setContest(contest);
-            participation.setUser(user);
-            participation.getMultimediaContentList().addAll(multimediaContentList);
-            notificationListener.handleParticipationContest(participation);
-            contestParticipationRepository.save(participation);
-
+            if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
+                ContestParticipation participation = new ContestParticipation();
+                participation.setContest(contest);
+                participation.setUser(user);
+                participation.getMultimediaContentList().addAll(multimediaContentList);
+                notificationListener.handleParticipationContest(participation);
+                contestParticipationRepository.save(participation);
+            } else {
+                notificationListener.handleDenialPermission(user);
+            }
         } else {
             throw new RuntimeException("Contest o Utente non trovato.");
         }
     }
 
     public void deleteParticipationContest(ContestParticipation participation, String reason) {
-        notificationListener.handleDeleteParticipationContest(participation, reason);
-        contestParticipationRepository.delete(participation);
+        User user = participation.getUser();
+        if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
+            notificationListener.handleDeleteParticipationContest(participation, reason);
+            contestParticipationRepository.delete(participation);
+        }  else {
+            notificationListener.handleDenialPermission(user);
+        }
     }
 
     public void evaluateParticipant(int idParticipant, int vote, String description) {
         Optional<ContestParticipation> optionalContestParticipation = contestParticipationRepository.findById(idParticipant);
-
         if(optionalContestParticipation.isPresent()) {
             ContestParticipation participation = optionalContestParticipation.get();
-            if(!participation.getQuoteCriterion().getQuote()) {
-                QuoteCriterion quoteCriterion = new QuoteCriterion();
-                quoteCriterion.setVote(vote);
-                quoteCriterion.setDescription(description);
-                quoteCriterion.setQuote(true);
-                participation.setQuoteCriterion(quoteCriterion);
-                notificationListener.handleEvaluateParticipantContest(participation, quoteCriterion);
-                contestParticipationRepository.save(participation);
+            User animatorAuthor = participation.getContest().getAuthor();
+            if(animatorAuthor.getRole() == Role.ANIMATOR) {
+                if (!participation.getQuoteCriterion().getQuote()) {
+                    QuoteCriterion quoteCriterion = new QuoteCriterion();
+                    quoteCriterion.setVote(vote);
+                    quoteCriterion.setDescription(description);
+                    quoteCriterion.setQuote(true);
+                    participation.setQuoteCriterion(quoteCriterion);
+                    notificationListener.handleEvaluateParticipantContest(participation, quoteCriterion);
+                    contestParticipationRepository.save(participation);
+                } else {
+                    notificationListener.handleAlreadyQuote(participation);
+                }
             } else {
-                notificationListener.handleAlreadyQuote(participation);
+                notificationListener.handleDenialPermission(animatorAuthor);
             }
-
         } else {
             throw new RuntimeException("Partecipante non trovato.");
         }
@@ -203,16 +221,22 @@ public class ContestService {
 
     public List<User> declareWinners(int idContest) {
         Contest contest = contestRepository.findById(idContest).orElseThrow(() -> new RuntimeException("Contest non trovato."));
-        int maxScore = contest.getParticipationContestList().stream()
-                .mapToInt(p -> p.getQuoteCriterion().getVote())
-                .max()
-                .orElse(0);
-        List<User> winners = contest.getParticipationContestList().stream()
-                .filter(p -> p.getQuoteCriterion().getVote() == maxScore)
-                .map(ContestParticipation::getUser)
-                .toList();
-        notificationListener.handleWinnersParticipantContest(winners, contest);
-        return winners;
+        User animatorAuthor = contest.getAuthor();
+        if(animatorAuthor.getRole() == Role.ANIMATOR) {
+            int maxScore = contest.getParticipationContestList().stream()
+                    .mapToInt(p -> p.getQuoteCriterion().getVote())
+                    .max()
+                    .orElse(0);
+            List<User> winners = contest.getParticipationContestList().stream()
+                    .filter(p -> p.getQuoteCriterion().getVote() == maxScore)
+                    .map(ContestParticipation::getUser)
+                    .toList();
+            notificationListener.handleWinnersParticipantContest(winners, contest);
+            return winners;
+        } else {
+            notificationListener.handleDenialPermission(animatorAuthor);
+        }
+        return null;
     }
 
     private User getCurrentUser() {

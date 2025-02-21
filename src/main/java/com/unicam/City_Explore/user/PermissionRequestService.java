@@ -16,12 +16,14 @@ public class PermissionRequestService {
     public PermissionRequest createRequest(int userId, String requestMessage) {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            PermissionRequest request = new PermissionRequest();
-            request.setUser(user);
-            request.setRequestMessage(requestMessage);
-            request.setApproved(false);
-            permissionRequestRepository.save(request);
-            return request;
+            if(user.getRole() != Role.ADMINISTRATOR) {
+                PermissionRequest request = new PermissionRequest();
+                request.setUser(user);
+                request.setRequestMessage(requestMessage);
+                request.setApproved(false);
+                permissionRequestRepository.save(request);
+                return request;
+            }
         }
         return null;
     }
