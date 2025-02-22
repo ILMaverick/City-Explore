@@ -7,10 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
-import com.unicam.City_Explore.poi.PointOfInterest;
-import com.unicam.City_Explore.user.User;
-import com.unicam.City_Explore.visual_interface.menu_pages.ManagePOIPage;
-import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
 public class CreationPOIUserPage extends FormPage {
@@ -44,7 +40,7 @@ public class CreationPOIUserPage extends FormPage {
         try {
             poiType = POIType.valueOf(typeInput);
         } catch (IllegalArgumentException e) {
-            System.out.println("Tipo non valido. Verrà  usato 'Altro'.\n");
+            System.out.println("Tipo non valido. Verrï¿½ usato 'Altro'.\n");
             poiType = POIType.Altro;
         }
 

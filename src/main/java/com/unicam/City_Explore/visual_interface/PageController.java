@@ -100,7 +100,7 @@ public class PageController implements CommandLineRunner{
 			authorizedPages = menu.getChapters();
 		} else {
 			for (String chapter : menu.getChapters()) {
-				if (autService.checkAutorization(chapter)) {
+				if (autService.checkAuthorization(chapter)) {
 					authorizedPages.add(chapter);
 				}
 			}

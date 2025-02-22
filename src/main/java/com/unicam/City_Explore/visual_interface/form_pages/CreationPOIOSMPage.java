@@ -11,9 +11,6 @@ import com.unicam.City_Explore.osm.OverpassElement;
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
-import com.unicam.City_Explore.user.User;
-import com.unicam.City_Explore.visual_interface.menu_pages.ManagePOIPage;
-import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
 public class CreationPOIOSMPage extends FormPage {
@@ -30,7 +27,7 @@ public class CreationPOIOSMPage extends FormPage {
 	@Override
 	public void startForm(Scanner scanner) {
 		// Esegui la ricerca tramite il servizio
-        System.out.println("Inserisci il nome della città: ");
+        System.out.println("Inserisci il nome della cittï¿½: ");
         String city = scanner.nextLine();
         System.out.println("Inserisci il tipo di POI:\n"
                 + "-TURISMO: monumenti, musei, quartieri_storici, teatri, luoghi_culto, zone_pedonali, planetari\n"

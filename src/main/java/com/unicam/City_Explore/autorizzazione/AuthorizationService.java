@@ -16,15 +16,15 @@ public class AuthorizationService {
 	@Autowired
 	private UserService userService;
 	
-	private final HashMap<String, Set<Role>> autorization = new HashMap<String, Set<Role>>();
+	private final HashMap<String, Set<Role>> authorization = new HashMap<String, Set<Role>>();
 	
 	public AuthorizationService() {
 		super();
 	}
 
 	public void addAuthorization(String page, Role... roles) {
-		if (autorization.containsKey(page)) {
-			Set<Role> setRole = autorization.get(page);
+		if (authorization.containsKey(page)) {
+			Set<Role> setRole = authorization.get(page);
 			for (Role role : roles) {
 				setRole.add(role);
 			}
@@ -33,15 +33,15 @@ public class AuthorizationService {
 			for (Role role : roles) {
 				newSetRole.add(role);
 			}
-			autorization.put(page, newSetRole);
+			authorization.put(page, newSetRole);
 		}
 	}
 
 	/**
 	 * @return true if autorized
 	 */
-	public boolean checkAutorization(String page) {
-		return autorization.get(page).contains(userService.getCurrentUser().getRole());
+	public boolean checkAuthorization(String page) {
+		return authorization.get(page).contains(userService.getCurrentUser().getRole());
 	}
 	
 }

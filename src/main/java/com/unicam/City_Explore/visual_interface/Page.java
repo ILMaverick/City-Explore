@@ -33,7 +33,6 @@ public abstract class Page {
 	}
 
 	/**
-	 * @param <T>
 	 * @param previous the previous to set
 	 */
 	public void setPrevious(MenuPage previous) {
