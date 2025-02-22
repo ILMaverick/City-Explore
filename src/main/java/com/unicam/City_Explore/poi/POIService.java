@@ -208,8 +208,10 @@ public class POIService {
                 pointOfInterestSelected.setDescription(pointOfInterest.getDescription());
                 pointOfInterestSelected.setLatitude(pointOfInterest.getLatitude());
                 pointOfInterestSelected.setLongitude(pointOfInterest.getLongitude());
-                pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
-                pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
+				/*
+				 * pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
+				 * pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
+				 */
                 pointOfInterestSelected.setType(pointOfInterest.getType());
                 pointOfInterestSelected.setStatus(Status.APPROVED);
                 notificationListener.handleUpdatePOI(pointOfInterestSelected);
