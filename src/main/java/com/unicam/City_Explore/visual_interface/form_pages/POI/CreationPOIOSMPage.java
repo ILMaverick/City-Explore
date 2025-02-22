@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.form_pages;
+package com.unicam.City_Explore.visual_interface.form_pages.POI;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +11,7 @@ import com.unicam.City_Explore.osm.OverpassElement;
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
+import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
 public class CreationPOIOSMPage extends FormPage {

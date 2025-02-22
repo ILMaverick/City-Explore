@@ -2,13 +2,13 @@ package com.unicam.City_Explore.visual_interface.menu_pages;
 
 import java.util.ArrayList;
 import com.unicam.City_Explore.visual_interface.Page;
-import com.unicam.City_Explore.visual_interface.form_pages.CreationPOIOSMPage;
-import com.unicam.City_Explore.visual_interface.form_pages.CreationPOIUserPage;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
-import com.unicam.City_Explore.visual_interface.form_pages.SearchPOIByDescriptionPage;
-import com.unicam.City_Explore.visual_interface.form_pages.SearchPOIByNamePage;
 import com.unicam.City_Explore.visual_interface.form_pages.ValidationPage;
-import com.unicam.City_Explore.visual_interface.form_pages.ShowPOISavedPage;
+import com.unicam.City_Explore.visual_interface.form_pages.POI.CreationPOIOSMPage;
+import com.unicam.City_Explore.visual_interface.form_pages.POI.CreationPOIUserPage;
+import com.unicam.City_Explore.visual_interface.form_pages.POI.SearchPOIByDescriptionPage;
+import com.unicam.City_Explore.visual_interface.form_pages.POI.SearchPOIByNamePage;
+import com.unicam.City_Explore.visual_interface.form_pages.POI.ShowPOISavedPage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,5 +36,17 @@ public class ManagePOIPage extends MenuPage {
 		chapters.add("Ricerca Punto di Interesse tramite nome");
 		chapters.add("Ricerca Punto di Interesse tramite descrizione");
 		this.setChapters(chapters);
+	}
+
+	@Override
+	public void setAuthorization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		// TODO Auto-generated method stub
+		
 	}
 }

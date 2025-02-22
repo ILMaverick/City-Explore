@@ -19,31 +19,9 @@ public class LoginPage extends FormPage {
 	private UserService userService;
 	
 	public LoginPage() {
-		super("Login (Seleziona un accesso)");
+		super("Accedi come:");
 		
 	}
-	
-//	@Override
-//	public void setAuthorization() {
-//		this.authService.addAuthorization("Turista", Role.values());
-//		this.authService.addAuthorization("Turista Autenticato", Role.values());
-//		this.authService.addAuthorization("Contributore", Role.values());
-//		this.authService.addAuthorization("Contributore Autorizzato", Role.values());
-//		this.authService.addAuthorization("Curatore", Role.values());
-//		this.authService.addAuthorization("Animatore", Role.values());
-//		this.authService.addAuthorization("Amministratore", Role.values());
-//	}
-//
-//	@Override
-//	public void populateLinksTable() {
-//		this.getLinksTable().put("Turista", this.homePage);
-//		this.getLinksTable().put("Turista Autenticato", this.homePage);
-//		this.getLinksTable().put("Contributore", this.homePage);
-//		this.getLinksTable().put("Contributore Autorizzato", this.homePage);
-//		this.getLinksTable().put("Curatore", this.homePage);
-//		this.getLinksTable().put("Animatore", this.homePage);
-//		this.getLinksTable().put("Amministratore", this.homePage);
-//	}
 
 	@Override
 	public void startForm(Scanner scanner) {
@@ -54,6 +32,7 @@ public class LoginPage extends FormPage {
 		System.out.println("5. Curatore");
 		System.out.println("6. Animatore");
 		System.out.println("7. Amministratore");
+		System.out.print("\nSeleziona un Ruolo:");
 		switch (scanner.nextInt()) {
 		case 1:
 			userService.getCurrentUser().setRole(Role.TOURIST);
@@ -81,6 +60,7 @@ public class LoginPage extends FormPage {
 			this.startForm(scanner);
 			break;
 		}
+		scanner.nextLine();
 		this.setNext(homePage);
 	}
 }
