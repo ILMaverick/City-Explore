@@ -1,9 +1,12 @@
 package com.unicam.City_Explore.visual_interface;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.unicam.City_Explore.autorizzazione.AuthorizationService;
 import com.unicam.City_Explore.contenuti.MultimediaContentController;
 import com.unicam.City_Explore.contest.ContestController;
 import com.unicam.City_Explore.eliminazione.DeletionController;
@@ -22,6 +25,8 @@ public class PageController implements CommandLineRunner{
 	
 	@Autowired
 	private WelcomePage welcomePage;
+	@Autowired
+	private AuthorizationService autService;
 	@Autowired
 	private PageExecutioner executioner;
 	@Autowired
@@ -60,19 +65,47 @@ public class PageController implements CommandLineRunner{
 	}
 	
 	private void execute(Page toExecute) {
-		Page nextPage;
 		if (toExecute instanceof MenuPage) {
 			MenuPage menuToExecute = (MenuPage) toExecute;
-			nextPage = menuToExecute.getLinksTable().get(this.executioner.executeMenu(menuToExecute));
+			menuToExecute.setAuthorization();
+			menuToExecute.populateLinksTable();
+			ArrayList<String> authorizedPages = this.getAuthorizedPages(menuToExecute);
+			int idChapter = this.executioner.executeMenu(menuToExecute, authorizedPages);
+			if (idChapter == 0) {
+				if (toExecute instanceof WelcomePage) {
+					this.next(null);;
+				} else {
+					this.next(menuToExecute.getPrevious());
+				}
+			} else {
+				this.next(menuToExecute.getLinksTable().get(authorizedPages.get(idChapter - 1)));
+				if (this.pointerPage.getPrevious() == null) {
+					this.pointerPage.setPrevious(menuToExecute);
+				}
+			}
 		} else {
-			FormPage formToExecute = (FormPage) this.pointerPage;
-			nextPage = this.executioner.executeForm(formToExecute);
+			FormPage formToExecute = (FormPage) toExecute;
+			next(this.executioner.executeForm(formToExecute));
+			this.pointerPage.setPrevious(formToExecute.getPrevious());
 		}
-		this.next(nextPage);
 	}
 	
 	private void next(Page nextPage) {
 		this.pointerPage = nextPage;
+	}
+	
+	private ArrayList<String> getAuthorizedPages(MenuPage menu){
+		ArrayList<String> authorizedPages = new ArrayList<String>();
+		if (menu instanceof WelcomePage) {
+			authorizedPages = menu.getChapters();
+		} else {
+			for (String chapter : menu.getChapters()) {
+				if (autService.checkAutorization(chapter)) {
+					authorizedPages.add(chapter);
+				}
+			}
+		}
+		return authorizedPages;
 	}
 	
 	private void close() {

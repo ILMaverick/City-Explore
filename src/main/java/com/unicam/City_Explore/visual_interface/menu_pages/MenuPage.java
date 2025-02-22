@@ -16,8 +16,8 @@ public abstract class MenuPage extends Page {
 	@Autowired
 	protected AuthorizationService authService;
 	
-	private ArrayList<String> chapters;
-	private HashMap<String, Page> linksTable;
+	private ArrayList<String> chapters = new ArrayList<String>();
+	private HashMap<String, Page> linksTable = new HashMap<String, Page>();
 	
 	public MenuPage() {
 		super();
@@ -26,6 +26,10 @@ public abstract class MenuPage extends Page {
 	public MenuPage(String title) {
 		super(title);
 	}
+	
+	public abstract void setAuthorization();
+	
+	public abstract void populateLinksTable();
 
 	/**
 	 * @return the chapters

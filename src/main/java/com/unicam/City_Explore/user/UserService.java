@@ -18,8 +18,6 @@ public class UserService {
     private NotificationListener notificationListener;
     
     private User currentUser;
-    
-    
 
     public UserService(User currentUser) {
 		super();
@@ -28,7 +26,7 @@ public class UserService {
 		this.currentUser.setSurname("Stacchiotti");
 		this.currentUser.setUsername("SilverSimon");
 		this.currentUser.setEmail("simone.stacchiotti.email@gmail.com");
-		this.currentUser.setRole(Role.ADMINISTRATOR);
+		this.currentUser.setRole(Role.CURATOR);
 	}
 
 	public User createUser(String name, String surname, String username, String email, String password, Role role) {

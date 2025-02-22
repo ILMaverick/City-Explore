@@ -7,9 +7,9 @@ import com.unicam.City_Explore.visual_interface.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ManageTOURPage extends MenuPage {
+public class ManageTourPage extends MenuPage {
 
-	public ManageTOURPage() {
+	public ManageTourPage() {
 		super ("Gestione TOUR");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea Itinerario da POI");

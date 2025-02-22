@@ -18,32 +18,24 @@ import com.unicam.City_Explore.visual_interface.menu_pages.WelcomePage;
 @Component
 public class PageExecutioner {
 	
-	@Autowired
-	private AuthorizationService autService;
 	private Scanner scanner = new Scanner(System.in);
 	
-	public String executeMenu(MenuPage toExecute) {
-		ArrayList<String> authorizedPages = new ArrayList<String>();
-		for (String chapter : toExecute.getChapters()) {
-			if (autService.checkAutorization(chapter)) {
-				authorizedPages.add(chapter);
-			}
-		}
+	public int executeMenu(MenuPage toExecute, ArrayList<String> authorizedPages) {
 		this.showMenuPage(toExecute.getTitle(), authorizedPages);
-		
 		int idChapter = this.scanner.nextInt();
 		scanner.nextLine();
-		return authorizedPages.get(idChapter);		
+		return idChapter;		
 	}
 	
-	public MenuPage executeForm(FormPage toExecute) {
+	public Page executeForm(FormPage toExecute) {
+		System.out.println("=== CITY EXPLORE ===\n");
 		System.out.println("=== " + toExecute.getTitle() + " ===");
 		toExecute.startForm(scanner);
-		return toExecute.getPrevious();
+		return toExecute.getNext();
 	}
 	
 	private void showMenuPage(String title, ArrayList<String> chapters) {
-		System.out.println("=== CITY EXPLORE ===");
+		System.out.println("=== CITY EXPLORE ===\n");
 		System.out.println("=== " + title + " ===");
 		
 		for (int id = 0; id < chapters.size(); id++) {
