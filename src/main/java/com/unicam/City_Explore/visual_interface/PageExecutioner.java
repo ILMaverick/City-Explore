@@ -1,19 +1,12 @@
 package com.unicam.City_Explore.visual_interface;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.unicam.City_Explore.autorizzazione.AuthorizationService;
-import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
-import com.unicam.City_Explore.visual_interface.form_pages.LoginPage;
-import com.unicam.City_Explore.visual_interface.menu_pages.HomePage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
-import com.unicam.City_Explore.visual_interface.menu_pages.WelcomePage;
 
 @Component
 public class PageExecutioner {

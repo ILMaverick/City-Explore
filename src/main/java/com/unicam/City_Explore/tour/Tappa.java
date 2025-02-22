@@ -5,7 +5,6 @@ import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity

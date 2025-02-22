@@ -3,7 +3,6 @@ package com.unicam.City_Explore.listapreferiti;
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.contest.ContestRepository;
 import com.unicam.City_Explore.elementi.AbstractElement;
-import com.unicam.City_Explore.elementi.Element;
 import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.evento.EventRepository;
 import com.unicam.City_Explore.notifica.NotificationListener;

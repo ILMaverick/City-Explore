@@ -1,6 +1,5 @@
 package com.unicam.City_Explore.poi;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.tour.Tappa;
-import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.Entity;

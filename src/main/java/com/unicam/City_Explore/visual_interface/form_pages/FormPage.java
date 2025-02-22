@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import org.springframework.stereotype.Component;
 
-import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.visual_interface.Page;
 
 @Component

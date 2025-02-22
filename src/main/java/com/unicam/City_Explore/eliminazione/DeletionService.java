@@ -283,16 +283,6 @@ public class DeletionService {
         }
     }
 
-    private User getCurrentUser() {
-        User user = new User();
-        user.setName("utente");
-        user.setSurname("demo");
-        user.setUsername("utente_demo");
-        user.setEmail("utente_demo.mail@gmail.com");
-        user.setPassword("1234567890");
-        return user;
-    }
-
     // Se necessario, aggiungi un metodo per chiudere lo scanner quando il controller non serve più.
     public void close() {
         if (scanner != null) {

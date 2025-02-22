@@ -8,10 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.PointOfInterest;
-import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
-import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
-import com.unicam.City_Explore.visual_interface.menu_pages.poi.ManagePOIPage;
 
 @Component
 public class SearchPOIByDescriptionPage extends FormPage {

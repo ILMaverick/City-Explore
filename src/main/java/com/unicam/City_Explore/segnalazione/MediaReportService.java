@@ -1,5 +1,5 @@
 package com.unicam.City_Explore.segnalazione;
-import com.unicam.City_Explore.notifica.Notification;
+
 import com.unicam.City_Explore.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,6 @@ import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.notifica.NotificationListener;
 
-import javax.print.attribute.standard.Media;
 import java.time.LocalDateTime;
 import java.util.List;
 

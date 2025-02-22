@@ -44,11 +44,9 @@ public class CreationPOIUserPage extends FormPage {
             System.out.println("Tipo non valido. Verr� usato 'Altro'.\n");
             poiType = POIType.Altro;
         }
-
-        // Crea il PointOfInterest utilizzando la factory
-//        PointOfInterest newPoi = poiService.createPOIFromUser(name, description, lat, lon, user, poiType );
+        
+        poiService.createPOIFromUser(name, description, lat, lon, poiType);
         
         System.out.println("PointOfInterest creato da zero:\n");
-//        System.out.println(newPoi);
 	}
 }

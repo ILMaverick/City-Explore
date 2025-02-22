@@ -3,9 +3,6 @@ package com.unicam.City_Explore.visual_interface.menu_pages.poi;
 import java.util.ArrayList;
 
 import com.unicam.City_Explore.user.Role;
-import com.unicam.City_Explore.visual_interface.Page;
-import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
-import com.unicam.City_Explore.visual_interface.form_pages.ValidationPage;
 import com.unicam.City_Explore.visual_interface.form_pages.poi.CreationPOIOSMPage;
 import com.unicam.City_Explore.visual_interface.form_pages.poi.CreationPOIUserPage;
 import com.unicam.City_Explore.visual_interface.form_pages.poi.UpdatePOIPage;

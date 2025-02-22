@@ -1,7 +1,6 @@
 package com.unicam.City_Explore.listapreferiti;
 
 import com.unicam.City_Explore.elementi.AbstractElement;
-import com.unicam.City_Explore.elementi.Element;
 import com.unicam.City_Explore.user.User;
 import jakarta.persistence.*;
 

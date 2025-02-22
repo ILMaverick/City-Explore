@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.visual_interface.menu_pages.HomePage;
-import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
 public class LoginPage extends FormPage {

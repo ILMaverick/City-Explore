@@ -139,7 +139,6 @@ public class TourService {
             // 2. Raggruppa le tappe in gruppi per formare i percorsi
             List<List<Tappa>> gruppiTappe = groupTappe(tappe);
 
-            Scanner scanner = new Scanner(System.in);
             List<Way> percorsi = new ArrayList<>();
 
             // 3. Per ogni gruppo, chiedi i dettagli e crea il Percorso
