@@ -1,12 +1,9 @@
 package com.unicam.City_Explore.visual_interface.menu_pages;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.Role;
-import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
 import com.unicam.City_Explore.visual_interface.form_pages.ValidationPage;
 
@@ -27,9 +24,12 @@ public class HomePage extends MenuPage{
 	private ValidationPage validationPage;
 	@Autowired
 	private EliminationPage eliminationPage;
+	@Autowired
+	private SearchPage searchPage;
 	
 	public HomePage() {
 		super ("Menu Principale");
+		this.getChapters().add("Cerca POI, Tour, etc...");
 		this.getChapters().add("Gestione POI");
 		this.getChapters().add("Gestione Tour");
 		this.getChapters().add("Gestione Contest");
@@ -41,6 +41,7 @@ public class HomePage extends MenuPage{
 
 	@Override
 	public void setAuthorization() {
+		this.authService.addAuthorization("Cerca POI, Tour, etc...", Role.values());
 		this.authService.addAuthorization("Gestione POI", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Gestione Tour", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Gestione Contest", Role.ANIMATOR, Role.ADMINISTRATOR);
@@ -52,6 +53,7 @@ public class HomePage extends MenuPage{
 
 	@Override
 	public void populateLinksTable() {
+		this.getLinksTable().put("Cerca POI, Tour, etc...", this.searchPage);
 		this.getLinksTable().put("Gestione POI", this.managePOIPage);
 		this.getLinksTable().put("Gestione Tour", this.manageTourPage);
 		this.getLinksTable().put("Gestione Contest", this.manageContestPage);

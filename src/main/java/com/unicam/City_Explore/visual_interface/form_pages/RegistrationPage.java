@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RegistrationPage extends FormPage {
+	
+	public RegistrationPage() {
+		super("Inserisci i dati");
+	}
 
 	@Override
 	public void startForm(Scanner scanner) {

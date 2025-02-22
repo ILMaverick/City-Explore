@@ -85,8 +85,10 @@ public class PageController implements CommandLineRunner{
 			}
 		} else {
 			FormPage formToExecute = (FormPage) toExecute;
-			next(this.executioner.executeForm(formToExecute));
-			this.pointerPage.setPrevious(formToExecute.getPrevious());
+			this.next(this.executioner.executeForm(formToExecute));
+			if (this.pointerPage.getPrevious() == null) {
+				this.pointerPage.setPrevious(formToExecute.getPrevious());
+			}
 		}
 	}
 	

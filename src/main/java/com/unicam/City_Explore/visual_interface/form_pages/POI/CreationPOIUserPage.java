@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.form_pages;
+package com.unicam.City_Explore.visual_interface.form_pages.POI;
 
 import java.util.Scanner;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
+import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
 public class CreationPOIUserPage extends FormPage {
