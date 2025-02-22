@@ -107,10 +107,10 @@ public class EventService {
         System.out.print("Inserisci l'ID dell'Evento: ");
         int idEvent = scanner.nextInt();
 
-        PointOfInterest poi = addEventToPOI(idPOI, idEvent);
+        Event event = addEventToPOI(idPOI, idEvent);
 
         System.out.println("Evento aggiunto al Punto di Interesse: ");
-        System.out.print(poi);
+        System.out.print(event);
     }
 
     public void updateEvent() {
@@ -228,7 +228,7 @@ public class EventService {
      * Aggiungi un Evento a un Punto di Interesse
      */
 
-    public PointOfInterest addEventToPOI(int idPOI, int idEvent) {
+    public Event addEventToPOI(int idPOI, int idEvent) {
         PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
         Event event = getEventById(idEvent);
         User animator = event.getAuthor();
@@ -242,7 +242,7 @@ public class EventService {
             } else {
                 System.out.println("Punto di interesse non trovato.");
             }
-            return poi;
+            return event;
         } else {
             notificationListener.handleDenialPermission(animator);
         }

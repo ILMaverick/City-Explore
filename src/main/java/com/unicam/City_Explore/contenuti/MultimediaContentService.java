@@ -113,38 +113,6 @@ public class MultimediaContentService {
 
     }
 
-    public void searchMultimediaContentByName() {
-        System.out.println("=== Ricerca Contenuti Multimediali tramite nome ===");
-        System.out.print("Inserisci il nome: ");
-
-        String name = scanner.nextLine();
-        List<MultimediaContent> multimediaContentList = searchMultimediaContentByName(name);
-        if(multimediaContentList.isEmpty()) {
-            System.out.println("Non e' presente un Contenuto Multimediale con questo nome.");
-        } else {
-            System.out.println("Elenco Contenuti Multimediali con il nome cercato:");
-            for(MultimediaContent multimediaContent: multimediaContentList) {
-                System.out.println(multimediaContent);
-            }
-        }
-    }
-
-    public void searchMultimediaContentByDescription() {
-        System.out.println("=== Ricerca Contenuti Multimediali tramite descrizione ===");
-        System.out.print("Inserisci la descrizione: ");
-
-        String description = scanner.nextLine();
-        List<MultimediaContent> multimediaContentList = searchMultimediaContentByDescription(description);
-        if(multimediaContentList.isEmpty()) {
-            System.out.println("Non e' presente un Contenuto Multimediale con questa descrizione.");
-        } else {
-            System.out.println("Elenco Contenuti Multimediali con la descrizione cercata:");
-            for(MultimediaContent multimediaContent: multimediaContentList) {
-                System.out.println(multimediaContent);
-            }
-        }
-    }
-
     public MultimediaContent createMultimediaContent(String name, String description, User author, FormatFileEnum format, float duration, float dimension, float resolution) {
         MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR || author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
@@ -243,14 +211,6 @@ public class MultimediaContentService {
 
     public MultimediaContent getMultimediaContentById(int id) {
         return multimediaContentRepository.findById(id).orElse(null);
-    }
-
-    public List<MultimediaContent> searchMultimediaContentByName(String name) {
-        return multimediaContentRepository.searchByName(name);
-    }
-
-    public List<MultimediaContent> searchMultimediaContentByDescription(String description) {
-        return multimediaContentRepository.searchByDescription(description);
     }
 
     private User getCurrentUser() {
