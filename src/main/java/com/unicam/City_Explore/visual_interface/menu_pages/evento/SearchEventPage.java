@@ -2,13 +2,14 @@ package com.unicam.City_Explore.visual_interface.menu_pages.evento;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
+@Component
 public class SearchEventPage extends MenuPage {
-
 	
-	
-	public SearchEventPage(String title) {
+	public SearchEventPage() {
 		super("Cerca un Evento");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Ricerca un Evento tramite nome");

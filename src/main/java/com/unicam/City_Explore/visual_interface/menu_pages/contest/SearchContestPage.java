@@ -2,11 +2,14 @@ package com.unicam.City_Explore.visual_interface.menu_pages.contest;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
+@Component
 public class SearchContestPage extends MenuPage {
 
-	public SearchContestPage(String title) {
+	public SearchContestPage() {
 		super("Cerca un Contest");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Ricerca un Contest tramite nome");

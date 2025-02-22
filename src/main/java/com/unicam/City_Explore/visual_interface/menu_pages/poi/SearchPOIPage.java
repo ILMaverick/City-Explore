@@ -2,11 +2,14 @@ package com.unicam.City_Explore.visual_interface.menu_pages.poi;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
+@Component
 public class SearchPOIPage extends MenuPage {
 
-	public SearchPOIPage(String title) {
+	public SearchPOIPage() {
 		super("Cerca un Punto di Interesse");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Ricerca Punto di Interesse tramite nome");
