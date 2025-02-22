@@ -32,15 +32,11 @@ public class MediaReportService {
             report.setMultimediaContent(multimediaContent);
             report.setLocalDateTime(LocalDateTime.now());
             mediaReportList.add(report);
-            sendReportNotification(report);
+            notificationListener.handleReportedMultimediaContent(report);
             multimediaContent.setStatus(Status.REPORTED);
         } else {
             notificationListener.handleDenialPermission(reporter);
         }
-    }
-
-    private void sendReportNotification(MediaReport report) {
-        notificationListener.handleReportedMultimediaContent(report);
     }
 
     public List<MediaReport> getMediaReportList() {

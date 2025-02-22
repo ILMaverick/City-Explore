@@ -6,5 +6,6 @@ public enum NotificationType {
     UPDATE,
     VALIDATION,
     ALERT,
-    PARTICIPATION;
+    PARTICIPATION,
+    DENIAL;
 }

@@ -370,7 +370,7 @@ public class NotificationListener {
     }
 
     public void handleDenialPermission(User author) {
-        Notification notification = notificationService.createNotification("Non hai i permessi per eseguire questa operazione.", NotificationType.ALERT);
+        Notification notification = notificationService.createNotification("Non hai i permessi per eseguire questa operazione.", NotificationType.DENIAL);
         notificationService.sendNotification(notification, author);
     }
 

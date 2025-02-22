@@ -82,9 +82,10 @@ public class TourService {
         // Il metodo buildTourFromPOIs chiederà all'utente informazioni aggiuntive per la creazione dei percorsi.
         Tour tour = buildTourFromPOIs(selectedPOIs, currentUser);
 
+        notificationListener.handleCreateTour(tour);
         // Salva il Tour
         save(tour);
-        notificationListener.handleCreateTour(tour);
+
         System.out.println("\nTour creato e salvato con successo:");
         System.out.println(tour);
     }
