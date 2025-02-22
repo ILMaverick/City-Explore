@@ -1,14 +1,14 @@
 package com.unicam.City_Explore.visual_interface.menu_pages.poi;
 
 import java.util.ArrayList;
+
+import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
 import com.unicam.City_Explore.visual_interface.form_pages.ValidationPage;
-import com.unicam.City_Explore.visual_interface.form_pages.POI.CreationPOIOSMPage;
-import com.unicam.City_Explore.visual_interface.form_pages.POI.CreationPOIUserPage;
-import com.unicam.City_Explore.visual_interface.form_pages.POI.SearchPOIByDescriptionPage;
-import com.unicam.City_Explore.visual_interface.form_pages.POI.SearchPOIByNamePage;
-import com.unicam.City_Explore.visual_interface.form_pages.POI.ShowPOISavedPage;
+import com.unicam.City_Explore.visual_interface.form_pages.poi.CreationPOIOSMPage;
+import com.unicam.City_Explore.visual_interface.form_pages.poi.CreationPOIUserPage;
+import com.unicam.City_Explore.visual_interface.form_pages.poi.UpdatePOIPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +18,34 @@ import org.springframework.stereotype.Component;
 public class ManagePOIPage extends MenuPage {
 
 	@Autowired
-	private CreationPOIUserPage creazionePOIUtentePage;
+	private CreationPOIUserPage creationPOIUserPage;
 	@Autowired
-	private CreationPOIOSMPage creazionePOIOSMPage;
+	private CreationPOIOSMPage creationPOIOSMPage;
 	@Autowired
-	private ShowPOISavedPage visualizzazionePOISalvatiPage;
-	@Autowired
-	private SearchPOIByNamePage ricercaPOINome;
-	@Autowired
-	private SearchPOIByDescriptionPage ricercaPOIDescrizione;
+	private UpdatePOIPage updatePOIPage;
 	
 	public ManagePOIPage() {
 		super ("Gestione POI");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea PointOfInterest da zero");
 		chapters.add("Crea PointOfInterest da OSM");
-		chapters.add("Visualizza tutti i PointOfInterest salvati");
-		chapters.add("Ricerca Punto di Interesse tramite nome");
-		chapters.add("Ricerca Punto di Interesse tramite descrizione");
+		chapters.add("Aggiorna POI");
 		this.setChapters(chapters);
+	}
+
+	@Override
+	public void setAuthorization() {
+		this.authService.addAuthorization("Crea PointOfInterest da zero", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
+		this.authService.addAuthorization("Crea PointOfInterest da OSM", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
+		this.authService.addAuthorization("Aggiorna POI", Role.CURATOR);
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		this.getLinksTable().put("Crea PointOfInterest da zero", this.creationPOIUserPage);
+		this.getLinksTable().put("Crea PointOfInterest da OSM", this.creationPOIOSMPage);
+		this.getLinksTable().put("Aggiorna POI", this.updatePOIPage);
+		
 	}
 }
