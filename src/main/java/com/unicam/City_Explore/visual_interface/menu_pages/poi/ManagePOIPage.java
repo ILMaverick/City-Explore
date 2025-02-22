@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.menu_pages;
+package com.unicam.City_Explore.visual_interface.menu_pages.poi;
 
 import java.util.ArrayList;
 import com.unicam.City_Explore.visual_interface.Page;
@@ -9,6 +9,7 @@ import com.unicam.City_Explore.visual_interface.form_pages.POI.CreationPOIUserPa
 import com.unicam.City_Explore.visual_interface.form_pages.POI.SearchPOIByDescriptionPage;
 import com.unicam.City_Explore.visual_interface.form_pages.POI.SearchPOIByNamePage;
 import com.unicam.City_Explore.visual_interface.form_pages.POI.ShowPOISavedPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,17 +37,5 @@ public class ManagePOIPage extends MenuPage {
 		chapters.add("Ricerca Punto di Interesse tramite nome");
 		chapters.add("Ricerca Punto di Interesse tramite descrizione");
 		this.setChapters(chapters);
-	}
-
-	@Override
-	public void setAuthorization() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void populateLinksTable() {
-		// TODO Auto-generated method stub
-		
 	}
 }

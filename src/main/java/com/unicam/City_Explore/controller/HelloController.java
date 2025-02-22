@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.Controller;
+package com.unicam.City_Explore.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

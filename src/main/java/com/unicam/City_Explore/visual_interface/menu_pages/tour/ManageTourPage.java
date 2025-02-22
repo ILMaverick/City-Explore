@@ -1,8 +1,9 @@
-package com.unicam.City_Explore.visual_interface.menu_pages;
+package com.unicam.City_Explore.visual_interface.menu_pages.tour;
 
 import java.util.ArrayList;
 
 import com.unicam.City_Explore.visual_interface.Page;
+import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 import org.springframework.stereotype.Component;
 

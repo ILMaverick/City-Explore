@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.form_pages.POI;
+package com.unicam.City_Explore.visual_interface.form_pages.poi;
 
 import java.util.Scanner;
 

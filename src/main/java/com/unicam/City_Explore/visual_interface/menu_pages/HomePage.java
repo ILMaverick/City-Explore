@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
 import com.unicam.City_Explore.visual_interface.form_pages.ValidationPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.content.ManageContentPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.contest.ManageContestPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.evento.ManageEventPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.poi.ManagePOIPage;
+import com.unicam.City_Explore.visual_interface.menu_pages.tour.ManageTourPage;
 
 @Component
 public class HomePage extends MenuPage{

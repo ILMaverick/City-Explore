@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegistrationPage extends FormPage {
 	
+	
+	
 	public RegistrationPage() {
-		super("Inserisci i dati");
+		super("Inserisci i tuoi dati");
 	}
 
 	@Override
