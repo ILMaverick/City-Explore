@@ -21,12 +21,6 @@ public class UserService {
 
     public UserService(User currentUser) {
 		super();
-		this.currentUser = new User();
-		this.currentUser.setName("Simone");
-		this.currentUser.setSurname("Stacchiotti");
-		this.currentUser.setUsername("SilverSimon");
-		this.currentUser.setEmail("simone.stacchiotti.email@gmail.com");
-		this.currentUser.setRole(Role.CURATOR);
 	}
 
 	public User createUser(String name, String surname, String username, String email, String password, Role role) {

@@ -41,12 +41,14 @@ public class CreationPOIUserPage extends FormPage {
         try {
             poiType = POIType.valueOf(typeInput);
         } catch (IllegalArgumentException e) {
-            System.out.println("Tipo non valido. Verr� usato 'Altro'.\n");
+            System.out.println("Tipo non valido. Verra' usato 'Altro'.\n");
             poiType = POIType.Altro;
         }
         
         poiService.createPOIFromUser(name, description, lat, lon, poiType);
         
         System.out.println("PointOfInterest creato da zero:\n");
+//        System.out.println(newPoi);
+        this.setNext(this.getPrevious());
 	}
 }

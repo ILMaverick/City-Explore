@@ -20,4 +20,16 @@ public class ManageEliminationPage extends MenuPage{
 		chapters.add("Elimina Contenuto");
 		this.setChapters(chapters);
 	}
+
+	@Override
+	public void setAuthorization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		// TODO Auto-generated method stub
+		
+	}
 }

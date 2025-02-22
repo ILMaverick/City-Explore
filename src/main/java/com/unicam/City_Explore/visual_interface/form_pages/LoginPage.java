@@ -19,7 +19,6 @@ public class LoginPage extends FormPage {
 	
 	public LoginPage() {
 		super("Accedi come:");
-		
 	}
 
 	@Override

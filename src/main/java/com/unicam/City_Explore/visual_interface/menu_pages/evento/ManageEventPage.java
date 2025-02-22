@@ -13,12 +13,20 @@ public class ManageEventPage extends MenuPage {
 		super ("Gestione Evento");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea Evento");
-		chapters.add("Aggiungi Evento a POI");
-		chapters.add("Aggiorna Evento");
-		chapters.add("Visualizza tutti gli Eventi salvati");
-		chapters.add("Visualizza tutti i POI salvati");
-		chapters.add("Ricerca Evento tramite nome");
-		chapters.add("Ricerca Evento tramite descrizione");
+		chapters.add("Aggiungi POI ad un Evento");
+		chapters.add("Aggiorna un Evento");
 		this.setChapters(chapters);
+	}
+
+	@Override
+	public void setAuthorization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		// TODO Auto-generated method stub
+		
 	}
 }

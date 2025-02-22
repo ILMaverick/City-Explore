@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.menu_pages.content;
+package com.unicam.City_Explore.visual_interface.menu_pages.contenuti;
 
 import java.util.ArrayList;
 
@@ -13,11 +13,22 @@ public class ManageContentPage extends MenuPage {
 	public ManageContentPage() {
 		super ("Gestione Contenuti Multimediali");
 		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Crea Contenuto");
 		chapters.add("Carica Contenuto ad un POI");
-		chapters.add("Visualizza tutti i Contenuti Multimediali salvati");
-		chapters.add("Ricerca Contenuto tramite nome");
-		chapters.add("Ricerca Contenuto tramite descrizione");
+		chapters.add("Carica Contenuto ad un Tour");
+		chapters.add("Carica Contenuto ad un Contest");
+		chapters.add("Carica Contenuto ad un Evento");
 		this.setChapters(chapters);
+	}
+
+	@Override
+	public void setAuthorization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		// TODO Auto-generated method stub
+		
 	}
 }

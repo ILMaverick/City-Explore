@@ -13,10 +13,20 @@ public class ManageTourPage extends MenuPage {
 	public ManageTourPage() {
 		super ("Gestione TOUR");
 		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Crea Itinerario da POI");
-		chapters.add("Visualizza tutti gli Itinerari salvati");
-		chapters.add("Ricerca Itinerario tramite nome");
-		chapters.add("Ricerca Itinerario tramite descrizione");
+		chapters.add("Crea Tour da POI");
+		chapters.add("Aggiorna un Tour");
 		this.setChapters(chapters);
+	}
+
+	@Override
+	public void setAuthorization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		// TODO Auto-generated method stub
+		
 	}
 }

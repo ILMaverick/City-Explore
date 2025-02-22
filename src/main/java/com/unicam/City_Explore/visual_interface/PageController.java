@@ -13,6 +13,9 @@ import com.unicam.City_Explore.eliminazione.DeletionController;
 import com.unicam.City_Explore.evento.EventController;
 import com.unicam.City_Explore.poi.POIController;
 import com.unicam.City_Explore.tour.TourController;
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.validazione.ValidationController;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 import com.unicam.City_Explore.visual_interface.form_pages.LoginPage;
@@ -28,21 +31,9 @@ public class PageController implements CommandLineRunner{
 	@Autowired
 	private AuthorizationService autService;
 	@Autowired
+	private UserService userService;
+	@Autowired
 	private PageExecutioner executioner;
-	@Autowired
-	private POIController poiController;
-	@Autowired
-	private TourController tourController;
-	@Autowired
-	private ContestController contestController;
-	@Autowired
-	private EventController eventController;
-	@Autowired
-	private MultimediaContentController multimediaContentController;
-	@Autowired
-	private ValidationController validationController;
-	@Autowired
-	private DeletionController deletionController;
 	
 	private Page pointerPage = welcomePage;
 	
@@ -52,11 +43,7 @@ public class PageController implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) {
-//		this.poiController.initializer();
-//		this.multimediaContentController.initializer();
-//		this.contestController.initializer();
-//		this.eventController.initializer();
-//		System.out.println("Inizializzazione avvenuta con successo.");
+		this.inizialize();
 		this.pointerPage = this.welcomePage;
 		while (this.pointerPage != null) {
 			this.execute(this.pointerPage);
@@ -64,6 +51,12 @@ public class PageController implements CommandLineRunner{
 		this.close();
 	}
 	
+	private void inizialize() {
+		this.userService.createUser("CURATOR", "CURATOR", "CURATOR", "CURATOR@gmail.com", "CURATOR", Role.CURATOR);		
+		this.userService.createUser("ADMINISTRATOR", "ADMINISTRATOR", "ADMINISTRATOR", "ADMINISTRATOR@gmail.com", "ADMINISTRATOR", Role.ADMINISTRATOR);		
+		this.userService.createUser("ANIMATOR", "ANIMATOR", "ANIMATOR", "ANIMATOR@gmail.com", "ANIMATOR", Role.ANIMATOR);
+	}
+
 	private void execute(Page toExecute) {
 		if (toExecute instanceof MenuPage) {
 			MenuPage menuToExecute = (MenuPage) toExecute;

@@ -26,7 +26,7 @@ public class ManagePOIPage extends MenuPage {
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea PointOfInterest da zero");
 		chapters.add("Crea PointOfInterest da OSM");
-		chapters.add("Aggiorna POI");
+		chapters.add("Aggiorna un POI");
 		this.setChapters(chapters);
 	}
 

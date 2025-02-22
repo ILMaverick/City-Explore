@@ -12,10 +12,21 @@ public class ManageValidationPage extends MenuPage {
 	public ManageValidationPage() {
 		super ("Gestione Validazione");
 		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Validazione");
 		chapters.add("Mostra POI Pendenti");
 		chapters.add("Mostra Itinerari Pendenti");
 		chapters.add("Mostra Contenuti Multimediali Pendenti");
 		this.setChapters(chapters);
+	}
+
+	@Override
+	public void setAuthorization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		// TODO Auto-generated method stub
+		
 	}
 }

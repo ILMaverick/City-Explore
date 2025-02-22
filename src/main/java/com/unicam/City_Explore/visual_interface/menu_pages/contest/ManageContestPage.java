@@ -14,9 +14,19 @@ public class ManageContestPage extends MenuPage {
 		super ("Gestione Contest");
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Crea Contest");
-		chapters.add("Visualizza tutti i Contest salvati");
-		chapters.add("Ricerca Contest tramite nome");
-		chapters.add("Ricerca Contest tramite descrizione");
+		chapters.add("Aggiorna un Contest");
 		this.setChapters(chapters);
+	}
+
+	@Override
+	public void setAuthorization() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void populateLinksTable() {
+		// TODO Auto-generated method stub
+		
 	}
 }
