@@ -21,7 +21,7 @@ public class PermissionRequestService {
                 request.setRequestMessage(requestMessage);
                 request.setApproved(false);
                 permissionRequestRepository.save(request);
-                notificationListener.handleRequestSent(user);
+                notificationListener.handleRequestSent(request);
                 return request;
             }
         }

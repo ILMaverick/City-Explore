@@ -387,6 +387,11 @@ public class NotificationListener {
         notificationService.sendNotification(notification, authenticatedTourist);
     }
 
-    public void handleRequestSent(User user) {
+    public void handleRequestSent(PermissionRequest request) {
+        Notification notification = notificationService.createNotification("La richiesta e' stata inviata con successo.", NotificationType.REQUEST);
+        notificationService.sendNotification(notification, request.getAuthor());
+        User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).getFirst();
+        Notification notificationAdm = notificationService.createNotification("Hai una nuova richiesta. " + request, NotificationType.REQUEST);
+        notificationService.sendNotification(notificationAdm, administrator);
     }
 }

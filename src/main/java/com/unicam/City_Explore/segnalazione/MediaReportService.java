@@ -25,6 +25,13 @@ public class MediaReportService {
     }
 
     public void createReport(String reason, User reporter, MultimediaContent multimediaContent) {
+        if(reason == null) {
+            try {
+                throw new IllegalAccessException("La motivazione e' obbligatoria");
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
         if(reporter.getRole() == Role.TOURIST || reporter.getRole() == Role.AUTHENTICATED_TOURIST) {
             MediaReport report = new MediaReport();
             report.setReason(reason);

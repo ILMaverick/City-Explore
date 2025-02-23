@@ -128,7 +128,7 @@ public class UserService {
         return userRepository.searchUsersByEmail(email);
     }
 
-    public void approveRequest(int requestId, boolean isApproved) {
+    public void approveRequest(boolean isApproved) {
         User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
         if(checkAdministrator(administrator)) {
             List<PermissionRequest> requestList = permissionRequestService.getAllRequests();

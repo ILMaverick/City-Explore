@@ -43,7 +43,7 @@ public class EventService {
         LocalDateTime time = LocalDateTime.of(2025,02,17, 15,48);
 
         createEvent("nome", "descrizione", user, "Raccolta fondi", "Gioco libero",
-                "SilverSimonCorp", "Fantasy", "Giochi in presenza", 0.0, time);
+                "SilverSimonCorp", "Fantasy", "Giochi in presenza", 0.0, time, true);
 
     }
 
@@ -87,11 +87,14 @@ public class EventService {
         // Converte la stringa in un oggetto LocalDateTime
         LocalDateTime time = LocalDateTime.parse(timeString, formatter);
 
+        System.out.print("Inserisci evento aperto o chiuso (true per aperto, false per chiuso): ");
+        boolean isOpen = scanner.hasNextBoolean();
+
         // Ottieni l'utente corrente (dummy, o da un servizio di autenticazione)
         User currentUser = getCurrentUser();
 
         // Crea l'evento tramite il service
-        Event event = createEvent(name, description, currentUser, scope, activity, organization, theme, category, price, time);
+        Event event = createEvent(name, description, currentUser, scope, activity, organization, theme, category, price, time, isOpen);
 
         System.out.println("\nEvento creato e salvato con successo:");
         System.out.println(event);
@@ -159,10 +162,13 @@ public class EventService {
             // Converte la stringa in un oggetto LocalDateTime
             LocalDateTime time = LocalDateTime.parse(timeString, formatter);
 
+            System.out.print("Inserisci evento aperto o chiuso (true per aperto, false per chiuso): ");
+            boolean isOpen = scanner.hasNextBoolean();
+
             // Ottieni l'utente corrente (dummy, o da un servizio di autenticazione)
             User currentUser = getCurrentUser();
 
-            Event newEvent = new Event(name, description, currentUser, scope, activity, organization, theme, category, price, time);
+            Event newEvent = new Event(name, description, currentUser, scope, activity, organization, theme, category, price, time, isOpen);
 
             selectedEvent = updateEvent(idEvent, newEvent);
 
@@ -212,9 +218,9 @@ public class EventService {
      */
     public Event createEvent(String name, String description, User author, String scope,
                              String activity, String organization, String theme, String category,
-                             double price, LocalDateTime time) {
+                             double price, LocalDateTime time, boolean isOpen) {
         if(author.getRole() == Role.ANIMATOR) {
-            Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time);
+            Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time, isOpen);
             eventRepository.save(event);
             notificationListener.handleNewEvent(event);
             return event;
@@ -277,6 +283,7 @@ public class EventService {
                 eventSelected.setCategory(event.getCategory());
                 eventSelected.setTime(event.getTime());
                 eventSelected.setPrice(event.getPrice());
+                eventSelected.setIsOpen(eventSelected.getIsOpen());
                 eventRepository.save(eventSelected);
                 notificationListener.handleUpdateEvent(event);
             }

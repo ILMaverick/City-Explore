@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.elementi.AbstractElement;
-import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
 
@@ -26,6 +25,7 @@ public class Event extends AbstractElement {
 	private String category;
 	private double price;
 	private LocalDateTime time;
+	private boolean isOpen;
 	@ManyToMany
 	private final List<PointOfInterest> pointOfInterestList = new ArrayList<>();
 	@ManyToMany
@@ -38,7 +38,7 @@ public class Event extends AbstractElement {
 
 	public Event(String name, String description, User author, String scope,
 				 String activity, String organization, String theme, String category,
-				 double price, LocalDateTime time) {
+				 double price, LocalDateTime time, boolean isOpen) {
 		super(name, description, author);
 		this.scope = scope;
 		this.activity = activity;
@@ -47,6 +47,7 @@ public class Event extends AbstractElement {
 		this.category = category;
 		this.price = price;
 		this.time = time;
+		this.isOpen = isOpen;
 	}
 	
 	@Override
@@ -129,6 +130,13 @@ public class Event extends AbstractElement {
 
 	public void setTime(LocalDateTime time) {
 		this.time = time;
+	}
+	public boolean getIsOpen() {
+		return isOpen;
+	}
+
+	public void setIsOpen(boolean isOpen) {
+		this.isOpen = isOpen;
 	}
 
 }

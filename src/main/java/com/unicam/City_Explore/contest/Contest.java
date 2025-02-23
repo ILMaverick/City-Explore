@@ -22,6 +22,7 @@ public class Contest extends AbstractElement {
     private String prize;
 
     private LocalDate deadline;
+    private boolean active;
     @OneToMany
     private final List<ContestParticipation> participationContestList;
     @ManyToMany
@@ -32,6 +33,7 @@ public class Contest extends AbstractElement {
         super.setStatus(Status.APPROVED);
         this.eventList = new ArrayList<>();
         this.participationContestList = new ArrayList<>();
+        this.active = true;
     }
 
     public String getRules() {
@@ -72,6 +74,13 @@ public class Contest extends AbstractElement {
 
     public List<Event> getEventList() {
         return eventList;
+    }
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

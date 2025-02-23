@@ -68,6 +68,7 @@ public class ContestService {
         String deadlineString = scanner.nextLine();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate deadline = null;
+
         try {
             deadline = LocalDate.parse(deadlineString, formatter);
             System.out.println("Data convertita: " + deadline);
@@ -140,6 +141,7 @@ public class ContestService {
                 contestSelected.setGoal(contest.getGoal());
                 contestSelected.setPrize(contest.getPrize());
                 contestSelected.setDeadline(contest.getDeadline());
+                contestSelected.setActive(contest.getActive());
                 contestRepository.save(contestSelected);
                 notificationListener.handleUpdateContest(contest);
             }
@@ -155,10 +157,12 @@ public class ContestService {
     }
 
     public List<Contest> searchContestByName(String name) {
+        if(name == null) return List.of();
         return contestRepository.searchByName(name);
     }
 
     public List<Contest> searchContestByDescription(String description) {
+        if(description == null) return List.of();
         return contestRepository.searchByDescription(description);
     }
 
@@ -169,7 +173,7 @@ public class ContestService {
         if(optionalContest.isPresent() && optionalUser.isPresent()) {
             Contest contest = optionalContest.get();
             User user = optionalUser.get();
-            if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
+            if(contest.getActive() && (user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST)) {
                 ContestParticipation participation = new ContestParticipation();
                 participation.setContest(contest);
                 participation.setUser(user);
@@ -232,6 +236,7 @@ public class ContestService {
                     .map(ContestParticipation::getUser)
                     .toList();
             notificationListener.handleWinnersParticipantContest(winners, contest);
+            contest.setActive(false);
             return winners;
         } else {
             notificationListener.handleDenialPermission(animatorAuthor);
