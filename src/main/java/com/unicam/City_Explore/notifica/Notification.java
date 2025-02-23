@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.user.User;
 
 @Entity
+@Component
 public class Notification {
 
     @Id

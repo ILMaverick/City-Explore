@@ -15,8 +15,8 @@ public class ManageContentPage extends MenuPage {
 		ArrayList<String> chapters = new ArrayList<String>();
 		chapters.add("Carica Contenuto ad un POI");
 		chapters.add("Carica Contenuto ad un Tour");
-		chapters.add("Carica Contenuto ad un Contest");
 		chapters.add("Carica Contenuto ad un Evento");
+		chapters.add("Carica Contenuto ad un Contest");
 		this.setChapters(chapters);
 	}
 

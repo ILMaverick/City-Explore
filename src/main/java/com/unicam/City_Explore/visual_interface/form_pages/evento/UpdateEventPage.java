@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.form_pages.poi;
+package com.unicam.City_Explore.visual_interface.form_pages.evento;
 
 import java.util.Scanner;
 
@@ -8,9 +8,9 @@ import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
-public class UpdatePOIPage extends FormPage {
+public class UpdateEventPage extends FormPage {
 
-	public UpdatePOIPage() {
+	public UpdateEventPage() {
 		super("Aggiorna POI");
 		// TODO Auto-generated constructor stub
 	}

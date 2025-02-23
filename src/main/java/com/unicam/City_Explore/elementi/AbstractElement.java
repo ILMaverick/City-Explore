@@ -1,6 +1,8 @@
 package com.unicam.City_Explore.elementi;
 
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.CascadeType;
@@ -12,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 
 
 @Entity
+@Component
 public abstract class AbstractElement implements Element {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +24,18 @@ public abstract class AbstractElement implements Element {
 	
 	private String description;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private User author;
 
-	private Status status;
+	private Status status = Status.PENDING;
 	
+	public AbstractElement() {
+	}
+
 	public AbstractElement(String name, String description, User author) {
 		this.name = (name != null ) ? name : "Senza nome";
 		this.description = description;
 		this.author = author;
-		this.status = Status.PENDING;
 	}
 	
 	public boolean isPublished() {

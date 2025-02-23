@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.form_pages.poi;
+package com.unicam.City_Explore.visual_interface.form_pages.tour;
 
 import java.util.List;
 import java.util.Scanner;
@@ -12,12 +12,12 @@ import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
-public class ShowPOISavedPage extends FormPage {
+public class ShowTourSavedPage extends FormPage {
 
 	@Autowired
 	private POIService poiService;
 	
-	public ShowPOISavedPage() {
+	public ShowTourSavedPage() {
 		super("Elenco di tutti i POI salvati");
 	}
 

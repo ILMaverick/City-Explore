@@ -5,10 +5,13 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.user.User;
 
 @Entity
+@Component
 public class ContestParticipation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -31,7 +31,6 @@ public class MultimediaContentService {
     private Scanner scanner;
 
     public MultimediaContentService() {
-        scanner = new Scanner(System.in);
     }
 
     public void initializer() {

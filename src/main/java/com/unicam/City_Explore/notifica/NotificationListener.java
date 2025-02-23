@@ -32,32 +32,32 @@ public class NotificationListener {
     }
 
     public void handleCreatePOI(PointOfInterest pointOfInterest) {
-        Notification notification = notificationService.createNotification("E' stato creato un Punto di Interesse" + pointOfInterest, NotificationType.CREATION);
+        Notification notification = notificationService.createNotification("E' stato creato un Punto di Interesse" + pointOfInterest.getName(), NotificationType.CREATION);
         notificationService.sendNotification(notification, pointOfInterest.getAuthor());
     }
 
     public void handleUpdatePOI(PointOfInterest pointOfInterest) {
-        Notification notification = notificationService.createNotification("E' stato aggiornato un Punto di Interesse" + pointOfInterest, NotificationType.UPDATE);
+        Notification notification = notificationService.createNotification("E' stato aggiornato un Punto di Interesse" + pointOfInterest.getName(), NotificationType.UPDATE);
         notificationService.sendNotification(notification, pointOfInterest.getAuthor());
     }
 
     public void handleDeletePOI(PointOfInterest pointOfInterest) {
-        Notification notification = notificationService.createNotification("E' stato eliminato un Punto di Interesse" + pointOfInterest, NotificationType.DELETION);
+        Notification notification = notificationService.createNotification("E' stato eliminato un Punto di Interesse" + pointOfInterest.getName(), NotificationType.DELETION);
         notificationService.sendNotification(notification, pointOfInterest.getAuthor());
     }
 
     public void handleCreateTour(Tour tour) {
-        Notification notification = notificationService.createNotification("E' stato creato un Itinerario" + tour, NotificationType.CREATION);
+        Notification notification = notificationService.createNotification("E' stato creato un Itinerario" + tour.getName(), NotificationType.CREATION);
         notificationService.sendNotification(notification, tour.getAuthor());
     }
 
     public void handleUpdateTour(Tour tour) {
-        Notification notification = notificationService.createNotification("E' stato aggiornato un Itinerario" + tour, NotificationType.UPDATE);
+        Notification notification = notificationService.createNotification("E' stato aggiornato un Itinerario" + tour.getName(), NotificationType.UPDATE);
         notificationService.sendNotification(notification, tour.getAuthor());
     }
 
     public void handleDeleteTour(Tour tour) {
-        Notification notification = notificationService.createNotification("E' stato eliminato un Itinerario" + tour, NotificationType.DELETION);
+        Notification notification = notificationService.createNotification("E' stato eliminato un Itinerario" + tour.getName(), NotificationType.DELETION);
         notificationService.sendNotification(notification, tour.getAuthor());
     }
 
@@ -180,13 +180,13 @@ public class NotificationListener {
     }
 
     public void handleCreateMultimediaContent(MultimediaContent multimediaContent) {
-        Notification notification = notificationService.createNotification("E' stato creato un Contenuto " + multimediaContent, NotificationType.CREATION);
+        Notification notification = notificationService.createNotification("E' stato creato un Contenuto " + multimediaContent.getName(), NotificationType.CREATION);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
     }
 
     public void handleLoadMultimediaContentToPOI(PointOfInterest pointOfInterest, MultimediaContent multimediaContent) {
         Notification notification = notificationService.createNotification("Un Contenuto e' stato aggiunto ad un Punto di Interesse "
-                + pointOfInterest.getName() + ", " + multimediaContent, NotificationType.UPDATE);
+                + pointOfInterest.getName() + ", " + multimediaContent.getName(), NotificationType.UPDATE);
         if(pointOfInterest.getAuthor().equals(multimediaContent.getAuthor())) {
             notificationService.sendNotification(notification, pointOfInterest.getAuthor());
         } else {
@@ -197,7 +197,7 @@ public class NotificationListener {
 
     public void handleLoadMultimediaContentToTour(Tour tour, MultimediaContent multimediaContent) {
         Notification notification = notificationService.createNotification("Un Contenuto e' stato aggiunto ad un Punto di Interesse "
-                + tour.getName() + ", " + multimediaContent, NotificationType.UPDATE);
+                + tour.getName() + ", " + multimediaContent.getName(), NotificationType.UPDATE);
         if(tour.getAuthor().equals(multimediaContent.getAuthor())) {
             notificationService.sendNotification(notification, tour.getAuthor());
         } else {
@@ -208,13 +208,13 @@ public class NotificationListener {
 
     public void handleUpdateMultimediaContent(MultimediaContent multimediaContent) {
         Notification notification = notificationService.createNotification("E' stato aggiornato un Contenuto esistente "
-                + multimediaContent, NotificationType.UPDATE);
+                + multimediaContent.getName(), NotificationType.UPDATE);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
     }
 
     public void handleDeleteMultimediaContent(MultimediaContent multimediaContent) {
         Notification notification = notificationService.createNotification("E' stato eliminato un Contenuto esistente "
-                + multimediaContent, NotificationType.DELETION);
+                + multimediaContent.getName(), NotificationType.DELETION);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
     }
 
@@ -291,14 +291,14 @@ public class NotificationListener {
 
     public void handleValidationMultimediaContent(MultimediaContent multimediaContent) {
         List<User> curators = userRepository.findAll().stream().filter(u -> u.getRole() == Role.CURATOR).toList();
-        Notification notification = notificationService.createNotification("Il Contenuto " + multimediaContent + " e' in attesa di essere validato.", NotificationType.VALIDATION);
+        Notification notification = notificationService.createNotification("Il Contenuto " + multimediaContent.getName() + " e' in attesa di essere validato.", NotificationType.VALIDATION);
         for(User curator: curators) {
             notificationService.sendNotification(notification, curator);
         }
     }
 
     public void handleApproveMultimediaContent(MultimediaContent multimediaContent) {
-        Notification notification = notificationService.createNotification("Il Contenuto e' stato approvato " + multimediaContent, NotificationType.UPDATE);
+        Notification notification = notificationService.createNotification("Il Contenuto e' stato approvato " + multimediaContent.getName(), NotificationType.UPDATE);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
         List<User> curators = userRepository.findAll().stream().filter(u -> u.getRole() == Role.CURATOR).toList();
         for(User curator: curators) {
@@ -307,7 +307,7 @@ public class NotificationListener {
     }
 
     public void handleRejectMultimediaContent(MultimediaContent multimediaContent, String reason) {
-        Notification notification = notificationService.createNotification("Il Contenuto " + multimediaContent + " e' stato rifiutato e sara' cancellato, perche' " + reason , NotificationType.DELETION);
+        Notification notification = notificationService.createNotification("Il Contenuto " + multimediaContent.getName() + " e' stato rifiutato e sara' cancellato, perche' " + reason , NotificationType.DELETION);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
         List<User> curators = userRepository.findAll().stream().filter(u -> u.getRole() == Role.CURATOR).toList();
         for(User curator: curators) {
@@ -316,7 +316,7 @@ public class NotificationListener {
     }
 
     public void handleUpdateMultimediaContentStatus(MultimediaContent multimediaContent) {
-        Notification notification = notificationService.createNotification("Il Contenuto " + multimediaContent + " e' stato marcato come aggiornato.", NotificationType.UPDATE);
+        Notification notification = notificationService.createNotification("Il Contenuto " + multimediaContent.getName() + " e' stato marcato come aggiornato.", NotificationType.UPDATE);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
         List<User> curators = userRepository.findAll().stream().filter(u -> u.getRole() == Role.CURATOR).toList();
         for(User curator: curators) {
@@ -326,8 +326,8 @@ public class NotificationListener {
 
     public void handleReportedMultimediaContent(MediaReport report) {
         List<User> curators = userRepository.findAll().stream().filter(u -> u.getRole() == Role.CURATOR).toList();
-        Notification notification = notificationService.createNotification("Segnalazione per il Contenuto " + report.getMultimediaContent()
-                + "\nda parte di " + report.getReporter()
+        Notification notification = notificationService.createNotification("Segnalazione per il Contenuto " + report.getMultimediaContent().getName()
+                + "\nda parte di " + report.getReporter().getName()
                 + ": " + report.getReason(), NotificationType.ALERT);
         for(User curator: curators) {
             notificationService.sendNotification(notification, curator);

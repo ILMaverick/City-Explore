@@ -166,20 +166,14 @@ public class POIService {
 
     public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, POIType type) {
     	User author = this.userService.getCurrentUser();
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
-            PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
-            poiRepository.save(poi);
-            notificationListener.handleCreatePOI(poi);
-            if(author.getRole() == Role.CONTRIBUTOR) {
-                validationService.sendPOIForValidation(poi);
-            } else {
-                validationService.approvePOI(poi.getId());
-            }
-            return poi;
+    	PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
+        notificationListener.handleCreatePOI(poi);
+        if(author.getRole() == Role.CONTRIBUTOR) {
+            validationService.sendPOIForValidation(poi);
         } else {
-            notificationListener.handleDenialPermission(author);
+            validationService.approvePOI(poi.getId());
         }
-        return null;
+        return poiRepository.save(poi);
     }
 
     public PointOfInterest createPOIFromOSM(OverpassElement element, POIType type) {

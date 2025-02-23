@@ -55,6 +55,10 @@ public class PageController implements CommandLineRunner{
 		this.userService.createUser("CURATOR", "CURATOR", "CURATOR", "CURATOR@gmail.com", "CURATOR", Role.CURATOR);		
 		this.userService.createUser("ADMINISTRATOR", "ADMINISTRATOR", "ADMINISTRATOR", "ADMINISTRATOR@gmail.com", "ADMINISTRATOR", Role.ADMINISTRATOR);		
 		this.userService.createUser("ANIMATOR", "ANIMATOR", "ANIMATOR", "ANIMATOR@gmail.com", "ANIMATOR", Role.ANIMATOR);
+		this.userService.createUser("CONTRIBUTOR", "CONTRIBUTOR", "CONTRIBUTOR", "CONTRIBUTOR@gmail.com", "CONTRIBUTOR", Role.CONTRIBUTOR);
+		this.userService.createUser("AUTORIZED_CONTRIBUTOR", "AUTORIZED_CONTRIBUTOR", "AUTORIZED_CONTRIBUTOR", "AUTORIZED_CONTRIBUTOR@gmail.com", "AUTORIZED_CONTRIBUTOR", Role.AUTORIZED_CONTRIBUTOR);
+		this.userService.createUser("TOURIST", "TOURIST", "TOURIST", "TOURIST@gmail.com", "TOURIST", Role.TOURIST);
+		this.userService.createUser("AUTHENTICATED_TOURIST", "AUTHENTICATED_TOURIST", "AUTHENTICATED_TOURIST", "AUTHENTICATED_TOURIST@gmail.com", "AUTHENTICATED_TOURIST", Role.AUTHENTICATED_TOURIST);
 	}
 
 	private void execute(Page toExecute) {
@@ -68,6 +72,9 @@ public class PageController implements CommandLineRunner{
 				if (toExecute instanceof WelcomePage) {
 					this.next(null);;
 				} else {
+					if(toExecute instanceof HomePage) {
+						this.userService.setCurrentUser(null);
+					}
 					this.next(menuToExecute.getPrevious());
 				}
 			} else {
@@ -78,7 +85,8 @@ public class PageController implements CommandLineRunner{
 			}
 		} else {
 			FormPage formToExecute = (FormPage) toExecute;
-			this.next(this.executioner.executeForm(formToExecute));
+			this.executioner.executeForm(formToExecute);
+			this.next(formToExecute.getNext());
 			if (this.pointerPage.getPrevious() == null) {
 				this.pointerPage.setPrevious(formToExecute.getPrevious());
 			}

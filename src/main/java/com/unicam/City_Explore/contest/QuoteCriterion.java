@@ -1,11 +1,14 @@
 package com.unicam.City_Explore.contest;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+@Component
 public class QuoteCriterion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

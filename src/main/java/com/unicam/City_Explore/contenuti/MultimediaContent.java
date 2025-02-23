@@ -2,6 +2,8 @@ package com.unicam.City_Explore.contenuti;
 
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.tour.Tour;
 import jakarta.persistence.*;
 
@@ -11,6 +13,7 @@ import com.unicam.City_Explore.user.User;
 
 
 @Entity
+@Component
 public class MultimediaContent {
 
     @Id
@@ -25,17 +28,20 @@ public class MultimediaContent {
     private LocalDateTime dataCreation;
     @ManyToOne(cascade = CascadeType.ALL)
     private User author;
-    private Status status;
+    private Status status = Status.PENDING;
     @ManyToOne
     private PointOfInterest pointOfInterest;
     @ManyToOne
     private Tour tour;
+    
+    public MultimediaContent() {
+		super();
+	}
 
-    public MultimediaContent(String name, String description, User author) {
+	public MultimediaContent(String name, String description, User author) {
         this.name = (name != null ) ? name : "Senza nome";
         this.description = description;
         this.author = author;
-        this.status = Status.PENDING;
     }
 
     @Override

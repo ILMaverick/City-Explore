@@ -12,6 +12,7 @@ public class WelcomePage extends MenuPage{
 
 	@Autowired
 	private LoginPage loginPage;
+	@Autowired
 	private RegistrationPage registrationPage;
 	
 	public WelcomePage() {

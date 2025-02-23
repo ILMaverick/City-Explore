@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.elementi.Status;
@@ -15,6 +17,7 @@ import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
 
 @Entity
+@Component
 public class Event extends AbstractElement {
 	private String scope;
 	private String activity;
@@ -24,12 +27,15 @@ public class Event extends AbstractElement {
 	private double price;
 	private LocalDateTime time;
 	@ManyToMany
-	private final List<PointOfInterest> pointOfInterestList;
+	private final List<PointOfInterest> pointOfInterestList = new ArrayList<>();
 	@ManyToMany
-	private final List<Contest> contestList;
+	private final List<Contest> contestList = new ArrayList<>();
 	@OneToMany
-	private final List<User> participants;
+	private final List<User> participants = new ArrayList<>();
 	
+	public Event() {
+	}
+
 	public Event(String name, String description, User author, String scope,
 				 String activity, String organization, String theme, String category,
 				 double price, LocalDateTime time) {
@@ -41,10 +47,6 @@ public class Event extends AbstractElement {
 		this.category = category;
 		this.price = price;
 		this.time = time;
-		super.setStatus(Status.APPROVED);
-		this.pointOfInterestList = new ArrayList<>();
-		this.contestList = new ArrayList<>();
-		this.participants = new ArrayList<>();
 	}
 	
 	@Override

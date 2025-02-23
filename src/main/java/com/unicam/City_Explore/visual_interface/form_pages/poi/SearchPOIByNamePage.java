@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.PointOfInterest;
+import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
@@ -33,5 +34,10 @@ public class SearchPOIByNamePage extends FormPage {
                 System.out.println(pointOfInterest);
             }
         }
+	}
+
+	@Override
+	public Page getNext() {
+		return this.getPrevious();
 	}
 }

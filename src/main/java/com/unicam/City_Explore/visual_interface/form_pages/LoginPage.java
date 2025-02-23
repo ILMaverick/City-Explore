@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.user.UserService;
+import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.menu_pages.HomePage;
 
 @Component
@@ -33,25 +34,25 @@ public class LoginPage extends FormPage {
 		System.out.print("\nSeleziona un Ruolo:");
 		switch (scanner.nextInt()) {
 		case 1:
-			userService.getCurrentUser().setRole(Role.TOURIST);
+			userService.setCurrentUser(userService.searchUsersByName("TOURIST").getFirst());;
 			break;
 		case 2:
-			userService.getCurrentUser().setRole(Role.AUTHENTICATED_TOURIST);
+			userService.setCurrentUser(userService.searchUsersByName("AUTHENTICATED_TOURIST").getFirst());;
 			break;
 		case 3:
-			userService.getCurrentUser().setRole(Role.CONTRIBUTOR);
+			userService.setCurrentUser(userService.searchUsersByName("CONTRIBUTOR").getFirst());;
 			break;
 		case 4:
-			userService.getCurrentUser().setRole(Role.AUTORIZED_CONTRIBUTOR);
+			userService.setCurrentUser(userService.searchUsersByName("AUTORIZED_CONTRIBUTOR").getFirst());;
 			break;
 		case 5:
-			userService.getCurrentUser().setRole(Role.CURATOR);
+			userService.setCurrentUser(userService.searchUsersByName("CURATOR").getFirst());;
 			break;
 		case 6:
-			userService.getCurrentUser().setRole(Role.ANIMATOR);
+			userService.setCurrentUser(userService.searchUsersByName("ANIMATOR").getFirst());;
 			break;
 		case 7:
-			userService.getCurrentUser().setRole(Role.ADMINISTRATOR);
+			userService.setCurrentUser(userService.searchUsersByName("ADMINISTRATOR").getFirst());;
 			break;
 
 		default:
@@ -59,6 +60,10 @@ public class LoginPage extends FormPage {
 			break;
 		}
 		scanner.nextLine();
-		this.setNext(homePage);
+	}
+
+	@Override
+	public Page getNext() {
+		return this.homePage;
 	}
 }

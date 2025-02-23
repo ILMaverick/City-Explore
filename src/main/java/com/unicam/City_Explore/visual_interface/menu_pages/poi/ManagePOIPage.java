@@ -34,7 +34,7 @@ public class ManagePOIPage extends MenuPage {
 	public void setAuthorization() {
 		this.authService.addAuthorization("Crea PointOfInterest da zero", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
 		this.authService.addAuthorization("Crea PointOfInterest da OSM", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
-		this.authService.addAuthorization("Aggiorna POI", Role.CURATOR);
+		this.authService.addAuthorization("Aggiorna un POI", Role.CURATOR);
 		
 	}
 
@@ -42,7 +42,7 @@ public class ManagePOIPage extends MenuPage {
 	public void populateLinksTable() {
 		this.getLinksTable().put("Crea PointOfInterest da zero", this.creationPOIUserPage);
 		this.getLinksTable().put("Crea PointOfInterest da OSM", this.creationPOIOSMPage);
-		this.getLinksTable().put("Aggiorna POI", this.updatePOIPage);
+		this.getLinksTable().put("Aggiorna un POI", this.updatePOIPage);
 		
 	}
 }

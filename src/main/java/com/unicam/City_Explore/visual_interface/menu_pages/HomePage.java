@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
-import com.unicam.City_Explore.visual_interface.form_pages.ValidationPage;
+import com.unicam.City_Explore.visual_interface.form_pages.validation.contenuti.ValidationContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contenuti.ManageContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contest.ManageContestPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.evento.ManageEventPage;
@@ -26,7 +26,7 @@ public class HomePage extends MenuPage{
 	@Autowired
 	private ManageContentPage manageContentPage;
 	@Autowired
-	private ValidationPage validationPage;
+	private ValidationContentPage validationPage;
 	@Autowired
 	private EliminationPage eliminationPage;
 	@Autowired

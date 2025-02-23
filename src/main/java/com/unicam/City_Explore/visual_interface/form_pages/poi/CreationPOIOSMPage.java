@@ -11,6 +11,7 @@ import com.unicam.City_Explore.osm.OverpassElement;
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
+import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
@@ -28,13 +29,14 @@ public class CreationPOIOSMPage extends FormPage {
 	@Override
 	public void startForm(Scanner scanner) {
 		// Esegui la ricerca tramite il servizio
-        System.out.println("Inserisci il nome della cittï¿½: ");
+        System.out.print("Inserisci il nome della citta': ");
         String city = scanner.nextLine();
-        System.out.println("Inserisci il tipo di POI:\n"
+        System.out.print("Tipi disponibili:\n"
                 + "-TURISMO: monumenti, musei, quartieri_storici, teatri, luoghi_culto, zone_pedonali, planetari\n"
                 + "-ALLOGGI: hotels, motels, ostelli, guest_house\n"
-                + "-SERVIZI: scuole, universitÃ , ospedali, farmacie, cinema, mercati, ristoranti\n"
-                + "-NATURA: parchi, foreste, vette, vigneti, spiagge");
+                + "-SERVIZI: scuole, universita' , ospedali, farmacie, cinema, mercati, ristoranti\n"
+                + "-NATURA: parchi, foreste, vette, vigneti, spiagge\n"
+                + "Inserisci il tipo di POI: ");
         String poi = scanner.nextLine();
 
         List<OverpassElement> results = osmSearchService.search(city, poi);
@@ -51,7 +53,7 @@ public class CreationPOIOSMPage extends FormPage {
         }
 
         // Chiedi all'utente di selezionare un elemento dalla lista
-        System.out.println("Seleziona l'elemento da utilizzare (inserisci il numero): ");
+        System.out.print("Seleziona l'elemento da utilizzare (inserisci il numero): ");
         int selection = scanner.nextInt();
         scanner.nextLine();
         if (selection < 1 || selection > results.size()) {
@@ -67,5 +69,10 @@ public class CreationPOIOSMPage extends FormPage {
 
         System.out.println("\nPointOfInterest creato dalla ricerca OSM:");
         System.out.println(newPoi);		
+	}
+
+	@Override
+	public Page getNext() {
+		return this.getPrevious();
 	}
 }

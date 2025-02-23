@@ -1,4 +1,4 @@
-package com.unicam.City_Explore.visual_interface.form_pages.poi;
+package com.unicam.City_Explore.visual_interface.form_pages.contenuti;
 
 import java.util.Scanner;
 
@@ -12,12 +12,12 @@ import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
-public class CreationPOIUserPage extends FormPage {
+public class LoadContentToTourPage extends FormPage {
 	
 	@Autowired
 	private POIService poiService;
 	
-	public CreationPOIUserPage() {
+	public LoadContentToTourPage() {
 		super("Creazione di un nuovo PointOfInterest da zero");
 	}
 
