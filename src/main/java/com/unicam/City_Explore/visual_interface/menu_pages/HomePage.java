@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
+import com.unicam.City_Explore.visual_interface.form_pages.InizializerPage;
 import com.unicam.City_Explore.visual_interface.form_pages.validation.contenuti.ValidationContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contenuti.ManageContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contest.ManageContestPage;
@@ -30,6 +32,8 @@ public class HomePage extends MenuPage{
 	@Autowired
 	private EliminationPage eliminationPage;
 	@Autowired
+	private InizializerPage inizializerPage;
+	@Autowired
 	private SearchPage searchPage;
 	
 	public HomePage() {
@@ -42,6 +46,8 @@ public class HomePage extends MenuPage{
 		this.getChapters().add("Gestione Contenuti Multimediali");
 		this.getChapters().add("Validazione Elementi e Contenuti Pendenti");
 		this.getChapters().add("Eliminazione Elementi e Contenuti");
+		this.getChapters().add("Inizializza Elementi");
+
 	}
 
 	@Override
@@ -54,6 +60,8 @@ public class HomePage extends MenuPage{
 		this.authService.addAuthorization("Gestione Contenuti Multimediali", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.AUTHENTICATED_TOURIST, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Validazione Elementi e Contenuti Pendenti", Role.CURATOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Eliminazione Elementi e Contenuti", Role.CURATOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Inizializza Elementi",Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
+
 	}
 
 	@Override
@@ -66,5 +74,6 @@ public class HomePage extends MenuPage{
 		this.getLinksTable().put("Gestione Contenuti Multimediali", this.manageContentPage);
 		this.getLinksTable().put("Validazione Elementi e Contenuti Pendenti", this.validationPage);
 		this.getLinksTable().put("Eliminazione Elementi e Contenuti", this.eliminationPage);
+		this.getLinksTable().put("Inizializza Elementi", this.inizializerPage);
 	}
 }

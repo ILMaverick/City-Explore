@@ -1,6 +1,5 @@
 package com.unicam.City_Explore.visual_interface;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;

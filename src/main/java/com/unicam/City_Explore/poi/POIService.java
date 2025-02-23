@@ -29,9 +29,6 @@ public class POIService {
     private UserService userService;
 
     public POIService() {
-        // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
-        scanner = new Scanner(System.in);
-        
     }
 
     //Inizializza dei Punti di Interesse
