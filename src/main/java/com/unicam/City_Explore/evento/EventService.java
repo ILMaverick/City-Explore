@@ -215,8 +215,8 @@ public class EventService {
                              double price, LocalDateTime time) {
         if(author.getRole() == Role.ANIMATOR) {
             Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time);
-            notificationListener.handleNewEvent(event);
             eventRepository.save(event);
+            notificationListener.handleNewEvent(event);
             return event;
         } else {
             notificationListener.handleDenialPermission(author);
@@ -237,8 +237,8 @@ public class EventService {
                 event.getPointOfInterestList().add(poi);
                 eventRepository.save(event);
                 poi.getEvents().add(event);
-                notificationListener.handleAddEventToPOI(event, poi);
                 poiRepository.save(poi);
+                notificationListener.handleAddEventToPOI(event, poi);
             } else {
                 System.out.println("Punto di interesse non trovato.");
             }
@@ -277,8 +277,8 @@ public class EventService {
                 eventSelected.setCategory(event.getCategory());
                 eventSelected.setTime(event.getTime());
                 eventSelected.setPrice(event.getPrice());
-                notificationListener.handleUpdateEvent(event);
                 eventRepository.save(eventSelected);
+                notificationListener.handleUpdateEvent(event);
             }
             return eventSelected;
         } else {
@@ -309,8 +309,8 @@ public class EventService {
             if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
                 user.getEventList().add(event);
                 event.getParticipants().add(user);
-                notificationListener.handleParticipationEvent(event, user);
                 eventRepository.save(event);
+                notificationListener.handleParticipationEvent(event, user);
             } else {
                 notificationListener.handleDenialPermission(user);
             }
@@ -329,8 +329,8 @@ public class EventService {
             if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
                 user.getEventList().remove(event);
                 event.getParticipants().remove(user);
-                notificationListener.handleDeleteParticipationEvent(event, user, reason);
                 eventRepository.save(event);
+                notificationListener.handleDeleteParticipationEvent(event, user, reason);
             } else {
                 notificationListener.handleDenialPermission(user);
             }

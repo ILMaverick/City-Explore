@@ -121,8 +121,8 @@ public class ContestService {
             contest.setGoal(goal);
             contest.setPrize(prize);
             contest.setDeadline(deadline);
-            notificationListener.handleNewContest(contest);
             contestRepository.save(contest);
+            notificationListener.handleNewContest(contest);
             return contest;
         } else {
             notificationListener.handleDenialPermission(author);
@@ -140,8 +140,8 @@ public class ContestService {
                 contestSelected.setGoal(contest.getGoal());
                 contestSelected.setPrize(contest.getPrize());
                 contestSelected.setDeadline(contest.getDeadline());
-                notificationListener.handleUpdateContest(contest);
                 contestRepository.save(contestSelected);
+                notificationListener.handleUpdateContest(contest);
             }
             return contestSelected;
         } else {
@@ -174,8 +174,8 @@ public class ContestService {
                 participation.setContest(contest);
                 participation.setUser(user);
                 participation.getMultimediaContentList().addAll(multimediaContentList);
-                notificationListener.handleParticipationContest(participation);
                 contestParticipationRepository.save(participation);
+                notificationListener.handleParticipationContest(participation);
             } else {
                 notificationListener.handleDenialPermission(user);
             }
@@ -187,8 +187,8 @@ public class ContestService {
     public void deleteParticipationContest(ContestParticipation participation, String reason) {
         User user = participation.getUser();
         if(user.getRole() == Role.TOURIST || user.getRole() == Role.AUTHENTICATED_TOURIST) {
-            notificationListener.handleDeleteParticipationContest(participation, reason);
             contestParticipationRepository.delete(participation);
+            notificationListener.handleDeleteParticipationContest(participation, reason);
         }  else {
             notificationListener.handleDenialPermission(user);
         }
@@ -206,8 +206,8 @@ public class ContestService {
                     quoteCriterion.setDescription(description);
                     quoteCriterion.setQuote(true);
                     participation.setQuoteCriterion(quoteCriterion);
-                    notificationListener.handleEvaluateParticipantContest(participation, quoteCriterion);
                     contestParticipationRepository.save(participation);
+                    notificationListener.handleEvaluateParticipantContest(participation, quoteCriterion);
                 } else {
                     notificationListener.handleAlreadyQuote(participation);
                 }

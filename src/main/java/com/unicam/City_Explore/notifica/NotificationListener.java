@@ -2,6 +2,7 @@ package com.unicam.City_Explore.notifica;
 
 import com.unicam.City_Explore.contest.ContestParticipation;
 import com.unicam.City_Explore.contest.QuoteCriterion;
+import com.unicam.City_Explore.elementi.AbstractElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -379,4 +380,8 @@ public class NotificationListener {
         notificationService.sendNotification(notification, contributor);
     }
 
+    public void handleNewElementInPreferList(AbstractElement element, User authenticatedTourist) {
+        Notification notification = notificationService.createNotification("Hai un nuovo elemento nella lista dei preferiti. " + element.getName(), NotificationType.CREATION);
+        notificationService.sendNotification(notification, authenticatedTourist);
+    }
 }

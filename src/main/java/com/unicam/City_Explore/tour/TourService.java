@@ -82,7 +82,6 @@ public class TourService {
         // Il metodo buildTourFromPOIs chiederà all'utente informazioni aggiuntive per la creazione dei percorsi.
         Tour tour = buildTourFromPOIs(selectedPOIs, currentUser);
 
-        notificationListener.handleCreateTour(tour);
         // Salva il Tour
         save(tour);
 
@@ -177,14 +176,14 @@ public class TourService {
                 // Supponendo che il builder non gestisca i percorsi, li settiamo direttamente sul tour
                 tour.getWayList().add(p);
             }
-
+            save(tour);
+            notificationListener.handleCreateTour(tour);
             if(author.getRole() == Role.CONTRIBUTOR) {
                 validationService.sendTourForValidation(tour);
             } else {
                 validationService.approveTour(tour.getId());
             }
 
-            save(tour);
             // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
             return tour;
         } else {
@@ -205,7 +204,7 @@ public class TourService {
         }
         
         return gruppi;
-        }
+    }
 
 
     public Tour updateTour(int idTour, Tour tour) {
@@ -217,8 +216,8 @@ public class TourService {
                 tourSelected.setDescription(tour.getDescription());
                 tourSelected.setWayList(tour.getWayList());
                 tourSelected.setStatus(Status.APPROVED);
-                notificationListener.handleUpdateTour(tour);
                 tourRepository.save(tourSelected);
+                notificationListener.handleUpdateTour(tour);
             }
             return tourSelected;
         } else {

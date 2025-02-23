@@ -190,8 +190,8 @@ public class DeletionService {
                     multimediaContent.setPointOfInterest(null);
                     multimediaContentRepository.save(multimediaContent);
                 }
-                notificationListener.handleDeletePOI(poi);
                 poiRepository.deleteById(idPOI);
+                notificationListener.handleDeletePOI(poi);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
@@ -212,8 +212,8 @@ public class DeletionService {
                     multimediaContent.setPointOfInterest(null);
                     multimediaContentRepository.save(multimediaContent);
                 }
-                notificationListener.handleDeleteTour(tour);
                 tourRepository.deleteById(tour.getId());
+                notificationListener.handleDeleteTour(tour);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
@@ -232,8 +232,8 @@ public class DeletionService {
                 for(ContestParticipation participant: contest.getParticipationContestList()) {
                     contest.getParticipationContestList().remove(participant);
                 }
-                notificationListener.handleDeleteContest(contest);
                 contestRepository.deleteById(idContest);
+                notificationListener.handleDeleteContest(contest);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
@@ -253,8 +253,8 @@ public class DeletionService {
                     contest.getEventList().remove(event);
                     contestRepository.save(contest);
                 }
-                notificationListener.handleDeleteEvent(event);
                 eventRepository.deleteById(idEvent);
+                notificationListener.handleDeleteEvent(event);
             }
         }  else {
             notificationListener.handleDenialPermission(curator);
@@ -275,8 +275,9 @@ public class DeletionService {
                 tour.getMultimediaContentList().remove(multimediaContent);
                 tourRepository.save(tour);
 
-                notificationListener.handleDeleteMultimediaContent(multimediaContent);
+
                 multimediaContentRepository.deleteById(idMC);
+                notificationListener.handleDeleteMultimediaContent(multimediaContent);
             }
         } else {
             notificationListener.handleDenialPermission(curator);

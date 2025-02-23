@@ -56,6 +56,7 @@ public class PreferListService {
 
             preferList.getElementList().add(poi);
             preferListRepository.save(preferList);
+            notificationListener.handleNewElementInPreferList(poi, user);
         } else {
             notificationListener.handleDenialPermission(user);
         }
@@ -76,6 +77,7 @@ public class PreferListService {
 
             preferList.getElementList().add(tour);
             preferListRepository.save(preferList);
+            notificationListener.handleNewElementInPreferList(tour, user);
         } else {
             notificationListener.handleDenialPermission(user);
         }
@@ -96,6 +98,7 @@ public class PreferListService {
 
             preferList.getElementList().add(contest);
             preferListRepository.save(preferList);
+            notificationListener.handleNewElementInPreferList(contest, user);
         } else {
             notificationListener.handleDenialPermission(user);
         }
@@ -116,6 +119,7 @@ public class PreferListService {
 
             preferList.getElementList().add(event);
             preferListRepository.save(preferList);
+            notificationListener.handleNewElementInPreferList(event, user);
         } else {
             notificationListener.handleDenialPermission(user);
         }

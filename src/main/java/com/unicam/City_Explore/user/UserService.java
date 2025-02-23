@@ -31,8 +31,8 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(password);
         user.setRole(role);
-        notificationListener.handleCreateUser(user);
         this.saveUser(user);
+        notificationListener.handleCreateUser(user);
         return user;
     }
 
@@ -57,8 +57,8 @@ public class UserService {
                 userSelected.setSurname(user.getSurname());
                 userSelected.setUsername(user.getUsername());
                 user.setEmail(user.getEmail());
-                notificationListener.handleUpdateUser(user);
                 userRepository.save(userSelected);
+                notificationListener.handleUpdateUser(user);
                 return userSelected;
             }
         } else {
@@ -72,8 +72,8 @@ public class UserService {
         User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
         if(checkAdministrator(administrator)) {
             if (user != null) {
-                notificationListener.handleDeleteUser(user, reason);
                 userRepository.delete(user);
+                notificationListener.handleDeleteUser(user, reason);
             }
         } else {
             notificationListener.handleDenialPermission(administrator);
@@ -86,8 +86,8 @@ public class UserService {
         if(checkAdministrator(administrator)) {
             if(user != null) {
                 user.setRole(role);
-                notificationListener.handleUpdateUserRole(user, role);
                 userRepository.save(user);
+                notificationListener.handleUpdateUserRole(user, role);
             }
         } else {
             notificationListener.handleDenialPermission(administrator);
@@ -100,8 +100,8 @@ public class UserService {
         if(checkAdministrator(administrator)) {
             if (user != null && user.getRole() == Role.CONTRIBUTOR) {
                 user.setRole(Role.AUTORIZED_CONTRIBUTOR);
-                notificationListener.handleUpdateContributor(user);
                 userRepository.save(user);
+                notificationListener.handleUpdateContributor(user);
             }
         } else {
             notificationListener.handleDenialPermission(administrator);
@@ -136,8 +136,8 @@ public class UserService {
                 request.setApproved(isApproved);
                 User user = request.getAuthor();
                 if (request.isApproved()) {
-                    notificationListener.handleApprovedRequest(request);
                     updateUserRole(user.getId(), newRole);
+                    notificationListener.handleApprovedRequest(request);
                 } else {
                     notificationListener.handleRejectRequest(request);
                 }

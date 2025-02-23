@@ -32,8 +32,8 @@ public class MediaReportService {
             report.setMultimediaContent(multimediaContent);
             report.setLocalDateTime(LocalDateTime.now());
             mediaReportList.add(report);
-            notificationListener.handleReportedMultimediaContent(report);
             multimediaContent.setStatus(Status.REPORTED);
+            notificationListener.handleReportedMultimediaContent(report);
         } else {
             notificationListener.handleDenialPermission(reporter);
         }

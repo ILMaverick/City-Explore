@@ -121,8 +121,8 @@ public class MultimediaContentService {
             multimediaContent.setDimension(dimension);
             multimediaContent.setResolution(resolution);
             multimediaContent.setDataCreation(LocalDateTime.now());
-            notificationListener.handleCreateMultimediaContent(multimediaContent);
             multimediaContentRepository.save(multimediaContent);
+            notificationListener.handleCreateMultimediaContent(multimediaContent);
             return multimediaContent;
         } else {
             notificationListener.handleDenialPermission(author);
@@ -141,13 +141,13 @@ public class MultimediaContentService {
                 multimediaContent.setPointOfInterest(poi);
                 multimediaContentRepository.save(multimediaContent);
                 poi.getMultimediaContentList().add(multimediaContent);
+                poiRepository.save(poi);
                 notificationListener.handleLoadMultimediaContentToPOI(poi, multimediaContent);
                 if(author.getRole() == Role.CONTRIBUTOR) {
                     validationService.sendMultimediaContentForValidation(multimediaContent);
                 } else {
                     validationService.approveMultimediaContent(multimediaContent.getId());
                 }
-                poiRepository.save(poi);
                 return poi;
             }
             else{
@@ -167,13 +167,13 @@ public class MultimediaContentService {
                 multimediaContent.setTour(tour);
                 multimediaContentRepository.save(multimediaContent);
                 tour.getMultimediaContentList().add(multimediaContent);
+                tourRepository.save(tour);
                 notificationListener.handleLoadMultimediaContentToTour(tour, multimediaContent);
                 if(author.getRole() == Role.CONTRIBUTOR) {
                     validationService.sendMultimediaContentForValidation(multimediaContent);
                 } else {
                     validationService.approveMultimediaContent(multimediaContent.getId());
                 }
-                tourRepository.save(tour);
                 return tour;
             }
             else{
@@ -194,9 +194,9 @@ public class MultimediaContentService {
                 multimediaContentSelected.setDuration(multimediaContent.getDimension());
                 multimediaContentSelected.setResolution(multimediaContent.getResolution());
                 multimediaContentSelected.setDataCreation(LocalDateTime.now());
-                notificationListener.handleUpdateMultimediaContent(multimediaContent);
                 multimediaContentSelected.setStatus(Status.APPROVED);
                 multimediaContentRepository.save(multimediaContentSelected);
+                notificationListener.handleUpdateMultimediaContent(multimediaContent);
                 return multimediaContentSelected;
             } else{
                 notificationListener.handleDenialPermission(author);

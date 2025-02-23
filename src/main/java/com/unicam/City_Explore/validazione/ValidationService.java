@@ -103,8 +103,8 @@ public class ValidationService {
 
     public void sendPOIForValidation(PointOfInterest poi) {
         poi.setStatus(Status.PENDING);
-        notificationListener.handleValidationPOI(poi);
         poiRepository.save(poi);
+        notificationListener.handleValidationPOI(poi);
     }
 
     public void approvePOI(int idPOI) {
@@ -113,8 +113,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (poi != null && poi.getStatus()==Status.PENDING) {
                 poi.setStatus(Status.APPROVED);
-                notificationListener.handleApprovePOI(poi);
                 poiRepository.save(poi);
+                notificationListener.handleApprovePOI(poi);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
@@ -127,8 +127,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (poi != null && poi.getStatus()==Status.PENDING) {
                 poi.setStatus(Status.UPDATED);
-                notificationListener.handleUpdatePOIStatus(poi);
                 poiRepository.save(poi);
+                notificationListener.handleUpdatePOIStatus(poi);
             } else {
                 throw new RuntimeException("Contenuto non in stato PENDENTE per modifica");
             }
@@ -143,8 +143,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (poi != null && poi.getStatus()==Status.PENDING) {
                 poi.setStatus(Status.REJECTED);
-                notificationListener.handleRejectPOI(poi, reason);
                 deletionService.deletePOI(idPOI);
+                notificationListener.handleRejectPOI(poi, reason);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
@@ -153,8 +153,8 @@ public class ValidationService {
 
     public void sendTourForValidation(Tour tour) {
         tour.setStatus(Status.PENDING);
-        notificationListener.handleValidationTour(tour);
         tourRepository.save(tour);
+        notificationListener.handleValidationTour(tour);
     }
 
     public void approveTour(int idTour) {
@@ -163,8 +163,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (tour != null && tour.getStatus()==Status.PENDING) {
                 tour.setStatus(Status.APPROVED);
-                notificationListener.handleApproveTour(tour);
                 tourRepository.save(tour);
+                notificationListener.handleApproveTour(tour);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
@@ -177,8 +177,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (tour != null && tour.getStatus()==Status.PENDING) {
                 tour.setStatus(Status.UPDATED);
-                notificationListener.handleUpdateTourStatus(tour);
                 tourRepository.save(tour);
+                notificationListener.handleUpdateTourStatus(tour);
             } else {
                 throw new RuntimeException("Contenuto non in stato PENDENTE per modifica");
             }
@@ -193,8 +193,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (tour != null && tour.getStatus()==Status.PENDING) {
                 tour.setStatus(Status.REJECTED);
-                notificationListener.handleRejectTour(tour, reason);
                 deletionService.deleteTour(idTour);
+                notificationListener.handleRejectTour(tour, reason);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
@@ -203,8 +203,8 @@ public class ValidationService {
 
     public void sendMultimediaContentForValidation(MultimediaContent multimediaContent) {
         multimediaContent.setStatus(Status.PENDING);
-        notificationListener.handleValidationMultimediaContent(multimediaContent);
         multimediaContentRepository.save(multimediaContent);
+        notificationListener.handleValidationMultimediaContent(multimediaContent);
     }
 
     public void approveMultimediaContent(int idMC) {
@@ -213,8 +213,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
                 multimediaContent.setStatus(Status.APPROVED);
-                notificationListener.handleApproveMultimediaContent(multimediaContent);
                 multimediaContentRepository.save(multimediaContent);
+                notificationListener.handleApproveMultimediaContent(multimediaContent);
             } else {
                 throw new RuntimeException("Contenuto non in stato PENDENTE per approvazione");
             }
@@ -229,8 +229,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
                 multimediaContent.setStatus(Status.UPDATED);
-                notificationListener.handleUpdateMultimediaContentStatus(multimediaContent);
                 multimediaContentRepository.save(multimediaContent);
+                notificationListener.handleUpdateMultimediaContentStatus(multimediaContent);
             } else {
                 throw new RuntimeException("Contenuto non in stato PENDENTE per modifica");
             }
@@ -245,8 +245,8 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
                 multimediaContent.setStatus(Status.REJECTED);
-                notificationListener.handleRejectMultimediaContent(multimediaContent, reason);
                 deletionService.deleteContest(idMC);
+                notificationListener.handleRejectMultimediaContent(multimediaContent, reason);
             } else {
                 throw new RuntimeException("Contenuto non in stato PENDENTE per rifiuto");
             }

@@ -168,13 +168,14 @@ public class POIService {
     	User author = this.userService.getCurrentUser();
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
             PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
+            poiRepository.save(poi);
             notificationListener.handleCreatePOI(poi);
             if(author.getRole() == Role.CONTRIBUTOR) {
                 validationService.sendPOIForValidation(poi);
             } else {
                 validationService.approvePOI(poi.getId());
             }
-            return poiRepository.save(poi);
+            return poi;
         } else {
             notificationListener.handleDenialPermission(author);
         }
@@ -185,13 +186,14 @@ public class POIService {
     	User author = this.userService.getCurrentUser();
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
             PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
+            poiRepository.save(poi);
             notificationListener.handleCreatePOI(poi);
             if(author.getRole() == Role.CONTRIBUTOR) {
                 validationService.sendPOIForValidation(poi);
             } else {
                 validationService.approvePOI(poi.getId());
             }
-            return poiRepository.save(poi);
+            return poi;
         } else {
             notificationListener.handleDenialPermission(author);
         }
@@ -213,8 +215,8 @@ public class POIService {
 				 */
                 pointOfInterestSelected.setType(pointOfInterest.getType());
                 pointOfInterestSelected.setStatus(Status.APPROVED);
-                notificationListener.handleUpdatePOI(pointOfInterestSelected);
                 poiRepository.save(pointOfInterest);
+                notificationListener.handleUpdatePOI(pointOfInterestSelected);
             }
             return pointOfInterestSelected;
         } else {
