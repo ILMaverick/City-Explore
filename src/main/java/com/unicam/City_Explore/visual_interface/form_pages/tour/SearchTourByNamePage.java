@@ -12,12 +12,12 @@ import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
 @Component
-public class SearchPOIByNamePage extends FormPage {
+public class SearchTourByNamePage extends FormPage {
 
 	@Autowired
 	private POIService poiService;
 	
-	public SearchPOIByNamePage() {
+	public SearchTourByNamePage() {
 		super("Ricerca Punti di Interesse tramite nome");
 	}
 

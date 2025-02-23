@@ -21,11 +21,15 @@ public class PointOfInterest extends AbstractElement{
 	//private LocalTime close_time;
 	private POIType type;
 	@OneToMany
-	private final List<MultimediaContent> multimediaContentList;
+	private List<MultimediaContent> multimediaContentList;
 	@ManyToMany
-	public final List<Event> eventList;
+	private List<Event> eventList;
 	@OneToMany
 	private List<Tappa> tappe;
+	
+	public PointOfInterest() {
+		
+	}
 	
 	public PointOfInterest(String name, String description, double lat, double lon, User author, POIType type) {
 		super(name, description, author);

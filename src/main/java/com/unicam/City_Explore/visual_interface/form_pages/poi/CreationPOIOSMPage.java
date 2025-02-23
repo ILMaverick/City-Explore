@@ -34,7 +34,7 @@ public class CreationPOIOSMPage extends FormPage {
         System.out.print("Tipi disponibili:\n"
                 + "-TURISMO: monumenti, musei, quartieri_storici, teatri, luoghi_culto, zone_pedonali, planetari\n"
                 + "-ALLOGGI: hotels, motels, ostelli, guest_house\n"
-                + "-SERVIZI: scuole, universita' , ospedali, farmacie, cinema, mercati, ristoranti\n"
+                + "-SERVIZI: scuole, universita'ï¿½, ospedali, farmacie, cinema, mercati, ristoranti\n"
                 + "-NATURA: parchi, foreste, vette, vigneti, spiagge\n"
                 + "Inserisci il tipo di POI: ");
         String poi = scanner.nextLine();
@@ -68,7 +68,8 @@ public class CreationPOIOSMPage extends FormPage {
         PointOfInterest newPoi = poiService.createPOIFromOSM(selectedElement, poiType);
 
         System.out.println("\nPointOfInterest creato dalla ricerca OSM:");
-        System.out.println(newPoi);		
+        System.out.println(this.poiService.searchPOIByName(newPoi.getName()));
+        
 	}
 
 	@Override
