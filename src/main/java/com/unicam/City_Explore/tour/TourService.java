@@ -11,9 +11,9 @@ import com.unicam.City_Explore.validazione.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.notifica.NotificationListener;
 
 @Service
@@ -22,7 +22,7 @@ public class TourService {
     @Autowired
     private TourRepository tourRepository;
     @Autowired
-    private POIRepository poiRepository;
+    private UserService userService;
     @Autowired
     private NotificationListener notificationListener;
     @Autowired
@@ -34,99 +34,10 @@ public class TourService {
      }
 
     /**
-     * Crea un Tour a partire da una lista di POI.
-     * L'utente seleziona i POI da includere e inserisce le informazioni aggiuntive per la creazione dei percorsi.
-     * Il Tour viene poi costruito tramite il TourService (che usa il TourBuilder) e salvato.
-     */
-    public void createTourFromPOIs() {
-        System.out.println("=== Creazione di un Tour a partire da POI ===");
-
-        // Recupera la lista dei POI già salvati
-        List<PointOfInterest> poiList = poiRepository.findAll();
-        if (poiList == null || poiList.isEmpty()) {
-            System.out.println("Nessun POI disponibile per creare un Tour.");
-            return;
-        }
-
-        // Visualizza la lista dei POI con indice
-        System.out.println("Elenco dei POI disponibili:");
-        for (int i = 0; i < poiList.size(); i++) {
-            System.out.println((i + 1) + ". " + poiList.get(i));
-        }
-
-        // L'utente seleziona i POI da includere, separati da virgola (es. "1,3,5")
-        System.out.print("Seleziona i POI da includere nel Tour (inserisci i numeri separati da virgola): ");
-        String input = scanner.nextLine();
-        String[] tokens = input.split(",");
-        List<PointOfInterest> selectedPOIs = new ArrayList<>();
-        for (String token : tokens) {
-            try {
-                int index = Integer.parseInt(token.trim());
-                if (index >= 1 && index <= poiList.size()) {
-                    selectedPOIs.add(poiList.get(index - 1));
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Input non valido: " + token);
-            }
-        }
-
-        if (selectedPOIs.isEmpty()) {
-            System.out.println("Nessun POI selezionato.");
-            return;
-        }
-
-        // Recupera l'utente corrente (dummy)
-        User currentUser = getCurrentUser();
-
-        // Costruisce il Tour a partire dai POI selezionati.
-        // Il metodo buildTourFromPOIs chiederà all'utente informazioni aggiuntive per la creazione dei percorsi.
-        Tour tour = buildTourFromPOIs(selectedPOIs, currentUser);
-
-        // Salva il Tour
-        save(tour);
-
-        System.out.println("\nTour creato e salvato con successo:");
-        System.out.println(tour);
-    }
-
-    public void searchTourByName() {
-        System.out.println("=== Ricerca Itinerario tramite nome ===");
-        System.out.print("Inserisci il nome: ");
-
-        String name = scanner.nextLine();
-        List<Tour> tourList = searchTourByName(name);
-        if(tourList.isEmpty()) {
-            System.out.println("Non e' presente un Itinerario con questo nome.");
-        } else {
-            System.out.println("Elenco Itinerari con il nome cercato:");
-            for(Tour tour: tourList) {
-                System.out.println(tour);
-            }
-        }
-    }
-
-
-    public void searchTourByDescription() {
-        System.out.println("=== Ricerca Itinerario tramite descrizione ===");
-        System.out.print("Inserisci la descrizione: ");
-
-        String description = scanner.nextLine();
-        List<Tour> tourList = searchTourByName(description);
-        if(tourList.isEmpty()) {
-            System.out.println("Non e' presente un Itinerario con questa descrizione.");
-        } else {
-            System.out.println("Elenco Itinerari con la descrizione cercata:");
-            for(Tour tour: tourList) {
-                System.out.println(tour);
-            }
-        }
-    }
-
-    
-    /**
      * Metodo interattivo per costruire un Tour a partire da una lista di PointOfInterest.
      */
-    public Tour buildTourFromPOIs(List<PointOfInterest> poiList, User author) {
+    public Tour buildTourFromPOIs(List<PointOfInterest> poiList) {
+    	User author = this.userService.getCurrentUser();
         if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
             // 1. Crea le tappe a partire dai POI
             List<Tappa> tappe = new ArrayList<>();
@@ -244,17 +155,6 @@ public class TourService {
 
     public Tour getTourById(int id) {
         return tourRepository.findById(id).orElse(null);
-    }
-
-    // Metodo dummy per ottenere l'utente attuale (da sostituire con logica reale)
-    private User getCurrentUser() {
-        User user = new User();
-        user.setName("utente");
-        user.setSurname("demo");
-        user.setUsername("utente_demo");
-        user.setEmail("utente_demo.mail@gmail.com");
-        user.setPassword("1234567890");
-        return user;
     }
 
     public void close() {

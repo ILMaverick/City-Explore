@@ -14,6 +14,10 @@ public class Tappa extends PointOfInterest{
 	private PointOfInterest pointOfInterest;
 	@ManyToOne
 	private Way way;
+	
+	public Tappa() {
+		
+	}
 
 	public Tappa(String name, String description, double lat, double lon, User author, POIType type, int numeroTappa) {
 		super(name, description, lat, lon, author, type);

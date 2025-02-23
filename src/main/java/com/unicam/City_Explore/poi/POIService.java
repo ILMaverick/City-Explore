@@ -33,6 +33,7 @@ public class POIService {
 
     //Inizializza dei Punti di Interesse
     public void initializer() {
+    	
         createPOIFromUser("primo", "primo", 1, 1, POIType.Turismo);
         createPOIFromUser("secondo", "secondo", 2, 2, POIType.Alloggio);
         createPOIFromUser("terzo", "terzo", 3, 3, POIType.Natura);

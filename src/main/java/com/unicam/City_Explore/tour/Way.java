@@ -14,8 +14,12 @@ public class Way {
 	private WayDifficultyType type;
 	@ManyToOne
 	private Tour tour;
-	@OneToMany
+	@OneToMany(mappedBy = "way", cascade = CascadeType.PERSIST)
 	private List<Tappa> tappe;
+	
+	public Way() {
+		
+	}
 	
 	public Way(double length, double duration, WayDifficultyType type, List<Tappa> tappe) {
 		this.length = length;
@@ -28,8 +32,7 @@ public class Way {
 	public String toString() {
 		return "Percorso [lunghezza=" + length +
 				", durata=" + duration +
-				", type=" + type + 
-				", tappe=" + tappe + "]";
+				", type=" + type;
 	}
 
 	public double getLength() {

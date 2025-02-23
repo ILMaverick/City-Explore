@@ -2,31 +2,38 @@ package com.unicam.City_Explore.visual_interface.menu_pages.tour;
 
 import java.util.ArrayList;
 
-import com.unicam.City_Explore.visual_interface.Page;
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.visual_interface.form_pages.tour.CreationTourPage;
+import com.unicam.City_Explore.visual_interface.form_pages.tour.UpdateTourPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ManageTourPage extends MenuPage {
+	@Autowired
+	private CreationTourPage creationTourPage;
+	
+	@Autowired
+	private UpdateTourPage updateTourPage;
 
 	public ManageTourPage() {
 		super ("Gestione TOUR");
-		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Crea Tour da POI");
-		chapters.add("Aggiorna un Tour");
-		this.setChapters(chapters);
+		this.getChapters().add("Crea Tour da POI");
+		this.getChapters().add("Aggiorna un Tour");
 	}
 
 	@Override
 	public void setAuthorization() {
-		// TODO Auto-generated method stub
-		
+		this.authService.addAuthorization("Crea Tour da POI", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
+		this.authService.addAuthorization("Aggiorna un Tour", Role.CURATOR);
 	}
 
 	@Override
 	public void populateLinksTable() {
-		// TODO Auto-generated method stub
+		this.getLinksTable().put("Crea Tour da POI", this.creationTourPage);
+		this.getLinksTable().put("Aggiorna un Tour", this.updateTourPage);
 		
 	}
 }

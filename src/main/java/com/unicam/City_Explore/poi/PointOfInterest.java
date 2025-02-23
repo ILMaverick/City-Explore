@@ -21,11 +21,11 @@ public class PointOfInterest extends AbstractElement{
 	//private LocalTime close_time;
 	private POIType type;
 	@OneToMany
-	private List<MultimediaContent> multimediaContentList;
+	private final List<MultimediaContent> multimediaContentList = new ArrayList<>();
 	@ManyToMany
-	private List<Event> eventList;
+	private final List<Event> eventList = new ArrayList<>();
 	@OneToMany
-	private List<Tappa> tappe;
+	private final List<Tappa> tappe = new ArrayList<>();
 	
 	public PointOfInterest() {
 		
@@ -38,9 +38,6 @@ public class PointOfInterest extends AbstractElement{
 		//this.open_time = null;
 		//this.close_time = null;
 		this.type = type;
-		this.multimediaContentList = new ArrayList<>();
-		this.eventList = new ArrayList<>();
-		this.tappe = new ArrayList<>();
 	}
 	
 	@Override
@@ -53,12 +50,11 @@ public class PointOfInterest extends AbstractElement{
 				",\n  longitude=" + longitude +
 				//",\n  open_time=" + open_time +
 				//",\n  close_time=" + close_time +
-    			",\n  author=" + super.getAuthor() +
+    			",\n  author=" + super.getAuthor().getUsername() +
 				",\n  type=" + type +
 //				",\n  multimediaContentList=" + multimediaContentList +
 //				",\n  eventList=" + eventList +
 //				",\n  tourList=" + tourList +
-				",\n  published=" + super.isPublished() +
 				",\n  ElementStatus=" + getStatus() +
 				"\n}";
 	}

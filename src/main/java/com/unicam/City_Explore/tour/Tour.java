@@ -7,20 +7,24 @@ import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.user.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 
 @Entity
 public class Tour extends AbstractElement {
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private List<Way> wayList = new ArrayList<>();
 	@OneToMany
-	private List<Way> wayList;
-	@OneToMany
-	private final List<MultimediaContent> multimediaContentList;
+	private final List<MultimediaContent> multimediaContentList = new ArrayList<>();
+	
+	public Tour() {
+		
+	}
 
 	public Tour(String name, String description, User author) {
 		super(name, description, author);
-		this.wayList = new ArrayList<>();
-		this.multimediaContentList = new ArrayList<>();
 	}
 
 	public List<Way> getWayList() {
@@ -49,7 +53,7 @@ public class Tour extends AbstractElement {
 	        }
 	    }
 	    
-	    sb.append(",\n  author=").append(super.getAuthor())
+	    sb.append(",\n  author=").append(super.getAuthor().getUsername())
 	      .append(",\n  published=").append(super.isPublished())
 	      .append("\n}");
 	    

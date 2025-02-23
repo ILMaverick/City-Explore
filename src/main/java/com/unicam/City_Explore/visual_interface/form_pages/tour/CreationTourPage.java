@@ -1,5 +1,7 @@
 package com.unicam.City_Explore.visual_interface.form_pages.tour;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
+import com.unicam.City_Explore.tour.Tour;
+import com.unicam.City_Explore.tour.TourService;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
@@ -15,42 +19,53 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class CreationTourPage extends FormPage {
 	
 	@Autowired
+	private TourService tourService;
+	@Autowired
 	private POIService poiService;
 	
 	public CreationTourPage() {
-		super("Creazione di un nuovo PointOfInterest da zero");
+		super("Creazione di un Tour a partire da POI");
 	}
 
 	@Override
 	public void startForm(Scanner scanner) {
-		System.out.print("Inserisci il nome: ");
-        String name = scanner.nextLine();
+		List<PointOfInterest> poiList = poiService.getAllPOIs();
+        if (poiList == null || poiList.isEmpty()) {
+            System.out.println("Nessun POI disponibile per creare un Tour.");
+            return;
+        }
 
-        System.out.print("Inserisci la descrizione: ");
-        String description = scanner.nextLine();
+        // Visualizza la lista dei POI con indice
+        System.out.println("Elenco dei POI disponibili:");
+        for (int i = 0; i < poiList.size(); i++) {
+            System.out.println((i + 1) + ". " + poiList.get(i));
+        }
 
-        System.out.print("Inserisci la latitudine: ");
-        double lat = Double.parseDouble(scanner.nextLine());
+        // L'utente seleziona i POI da includere, separati da virgola (es. "1,3,5")
+        System.out.print("Seleziona i POI da includere nel Tour (inserisci i numeri separati da virgola): ");
+        String input = scanner.nextLine();
+        String[] tokens = input.split(",");
+        List<PointOfInterest> selectedPOIs = new ArrayList<>();
+        for (String token : tokens) {
+            try {
+                int index = Integer.parseInt(token.trim());
+                if (index >= 1 && index <= poiList.size()) {
+                    selectedPOIs.add(poiList.get(index - 1));
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Input non valido: " + token);
+            }
+        }
 
-        System.out.print("Inserisci la longitudine: ");
-        double lon = Double.parseDouble(scanner.nextLine());
-
-        // In questo esempio, open_time e close_time sono lasciati null
-        // Chiediamo anche il tipo di POI (da un enum: Turismo, Alloggio, Servizio, Natura, Altro)
-        System.out.print("Inserisci il tipo di POI (Turismo, Alloggio, Servizio, Natura, Altro): ");
-        String typeInput = scanner.nextLine().trim();
-        POIType poiType;
-        try {
-            poiType = POIType.valueOf(typeInput);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Tipo non valido. Verra' usato 'Altro'.\n");
-            poiType = POIType.Altro;
+        if (selectedPOIs.isEmpty()) {
+            System.out.println("Nessun POI selezionato.");
+            return;
         }
         
-        PointOfInterest newPOI = poiService.createPOIFromUser(name, description, lat, lon, poiType);
-        
-        System.out.println("PointOfInterest creato da zero:\n");
-        System.out.println(newPOI);
+        Tour tour = tourService.buildTourFromPOIs(selectedPOIs);
+
+        System.out.println("\nTour creato e salvato con successo:");
+        System.out.println(this.tourService.searchTourByName(tour.getName()));
 	}
 
 	@Override
