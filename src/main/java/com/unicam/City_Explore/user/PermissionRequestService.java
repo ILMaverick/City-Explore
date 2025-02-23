@@ -1,5 +1,6 @@
 package com.unicam.City_Explore.user;
 
+import com.unicam.City_Explore.notifica.NotificationListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +10,10 @@ import java.util.List;
 public class PermissionRequestService {
     @Autowired
     private PermissionRequestRepository permissionRequestRepository;
-
     @Autowired
-    private UserRepository userRepository;
+    private NotificationListener notificationListener;
 
-    public PermissionRequest createRequest(int userId, String requestMessage) {
-        User user = userRepository.findById(userId).orElse(null);
+    public PermissionRequest createRequest(User user, String requestMessage) {
         if (user != null) {
             if(user.getRole() != Role.ADMINISTRATOR) {
                 PermissionRequest request = new PermissionRequest();
@@ -22,6 +21,7 @@ public class PermissionRequestService {
                 request.setRequestMessage(requestMessage);
                 request.setApproved(false);
                 permissionRequestRepository.save(request);
+                notificationListener.handleRequestSent(user);
                 return request;
             }
         }

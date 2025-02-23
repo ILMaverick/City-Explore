@@ -13,7 +13,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PermissionRequestRepository permissionRequestRepository;
+    private PermissionRequestService permissionRequestService;
     @Autowired
     private NotificationListener notificationListener;
     
@@ -128,20 +128,18 @@ public class UserService {
         return userRepository.searchUsersByEmail(email);
     }
 
-    public void approveRequest(int requestId, boolean isApproved, Role newRole) {
+    public void approveRequest(int requestId, boolean isApproved) {
         User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
         if(checkAdministrator(administrator)) {
-            List<PermissionRequest> requestList = permissionRequestRepository.findAll();
+            List<PermissionRequest> requestList = permissionRequestService.getAllRequests();
             for (PermissionRequest request : requestList) {
                 request.setApproved(isApproved);
-                User user = request.getAuthor();
                 if (request.isApproved()) {
-                    updateUserRole(user.getId(), newRole);
                     notificationListener.handleApprovedRequest(request);
                 } else {
                     notificationListener.handleRejectRequest(request);
                 }
-                permissionRequestRepository.delete(request);
+                permissionRequestService.deleteRequest(request.getId());
             }
         } else {
             notificationListener.handleDenialPermission(administrator);

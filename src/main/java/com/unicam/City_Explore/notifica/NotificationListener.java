@@ -386,4 +386,7 @@ public class NotificationListener {
         Notification notification = notificationService.createNotification("Hai un nuovo elemento nella lista dei preferiti. " + element.getName(), NotificationType.CREATION);
         notificationService.sendNotification(notification, authenticatedTourist);
     }
+
+    public void handleRequestSent(User user) {
+    }
 }
