@@ -41,23 +41,25 @@ public class NotificationListener {
         notificationService.sendNotification(notification, pointOfInterest.getAuthor());
     }
 
-    public void handleDeletePOI(PointOfInterest pointOfInterest) {
-        Notification notification = notificationService.createNotification("E' stato eliminato un Punto di Interesse" + pointOfInterest.getName(), NotificationType.DELETION);
+
+    public void handleDeletePOI(PointOfInterest pointOfInterest, String reason) {
+        Notification notification = notificationService.createNotification("E' stato eliminato un Punto di Interesse " + pointOfInterest.getName() + "\nperche': " + reason, NotificationType.DELETION);
         notificationService.sendNotification(notification, pointOfInterest.getAuthor());
     }
 
     public void handleCreateTour(Tour tour) {
-        Notification notification = notificationService.createNotification("E' stato creato un Itinerario" + tour.getName(), NotificationType.CREATION);
+        Notification notification = notificationService.createNotification("E' stato creato un Itinerario " + tour, NotificationType.CREATION);
         notificationService.sendNotification(notification, tour.getAuthor());
     }
 
     public void handleUpdateTour(Tour tour) {
-        Notification notification = notificationService.createNotification("E' stato aggiornato un Itinerario" + tour.getName(), NotificationType.UPDATE);
+        Notification notification = notificationService.createNotification("E' stato aggiornato un Itinerario " + tour.getName(), NotificationType.UPDATE);
         notificationService.sendNotification(notification, tour.getAuthor());
     }
 
-    public void handleDeleteTour(Tour tour) {
-        Notification notification = notificationService.createNotification("E' stato eliminato un Itinerario" + tour.getName(), NotificationType.DELETION);
+
+    public void handleDeleteTour(Tour tour, String reason) {
+        Notification notification = notificationService.createNotification("E' stato eliminato un Itinerario " + tour.getName() + "\nperche': " + reason, NotificationType.DELETION);
         notificationService.sendNotification(notification, tour.getAuthor());
     }
 
@@ -79,9 +81,9 @@ public class NotificationListener {
         notificationService.sendNotification(notificationForAuthor, contest.getAuthor());
     }
 
-    public void handleDeleteContest(Contest contest) {
+    public void handleDeleteContest(Contest contest, String reason) {
         Notification notification = notificationService.createNotification("E' stato elimianto un Contest " + contest.getName(), NotificationType.DELETION);
-        Notification notificationForAuthor = notificationService.createNotification("Il Contest e' stato eliminato " + contest.getName(), NotificationType.DELETION);
+        Notification notificationForAuthor = notificationService.createNotification("Il Contest e' stato eliminato " + contest.getName() + "\nperche': " + reason, NotificationType.DELETION);
         for(User participant: userRepository.findAll()) {
             notificationService.sendNotification(notification, participant);
         }
@@ -158,9 +160,9 @@ public class NotificationListener {
         notificationService.sendNotification(notificationForAuthor, event.getAuthor());
     }
 
-    public void handleDeleteEvent(Event event) {
+    public void handleDeleteEvent(Event event, String reason) {
         Notification notification = notificationService.createNotification("E' stato eliminato un Evento " + event.getName(), NotificationType.DELETION);
-        Notification notificationForAuthor = notificationService.createNotification("L'Evento e' stato eliminato " + event.getName(), NotificationType.DELETION);
+        Notification notificationForAuthor = notificationService.createNotification("L'Evento e' stato eliminato " + event.getName() + " \nperche': " + reason, NotificationType.DELETION);
         for(User participant: userRepository.findAll()) {
             notificationService.sendNotification(notification, participant);
         }
@@ -212,9 +214,9 @@ public class NotificationListener {
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
     }
 
-    public void handleDeleteMultimediaContent(MultimediaContent multimediaContent) {
+    public void handleDeleteMultimediaContent(MultimediaContent multimediaContent, String reason) {
         Notification notification = notificationService.createNotification("E' stato eliminato un Contenuto esistente "
-                + multimediaContent.getName(), NotificationType.DELETION);
+                + multimediaContent + " \nperche': " + reason, NotificationType.DELETION);
         notificationService.sendNotification(notification, multimediaContent.getAuthor());
     }
 

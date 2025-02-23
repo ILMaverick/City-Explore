@@ -74,7 +74,7 @@ public class DeletionService {
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione: ");
         String reason = scanner.nextLine();
-        deletePOI(idPOI);
+        deletePOI(idPOI, reason);
 
         System.out.println("Il Punto di Interesse e' stato eliminato con successo, perche' " + reason);
     }
@@ -88,7 +88,7 @@ public class DeletionService {
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione: ");
         String reason = scanner.nextLine();
-        deleteTour(tour.getId());
+        deleteTour(idTour, reason);
         System.out.println("L'Itinerario e' stato eliminato con successo, perche' " + reason);
     }
 
@@ -111,7 +111,7 @@ public class DeletionService {
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione: ");
         String reason = scanner.nextLine();
-        deleteContest(idContest);
+        deleteContest(idContest, reason);
 
         System.out.println("Il Contest e' stato eliminato con successo, perche' " + reason);
     }
@@ -144,7 +144,7 @@ public class DeletionService {
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione:");
         String reason = scanner.nextLine();
-        deleteEvent(idEvent);
+        deleteEvent(idEvent, reason);
 
         System.out.println("L'Evento e' stato eliminato con successo, perche' " + reason);
     }
@@ -166,12 +166,12 @@ public class DeletionService {
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione: ");
         String reason = scanner.nextLine();
-        deleteMultimediaContent(idMC);
+        deleteMultimediaContent(idMC, reason);
 
         System.out.println("Il Contest e' stato eliminato con successo, perche' " + reason);
     }
 
-    public void deletePOI(int idPOI) {
+    public void deletePOI(int idPOI, String reason) {
         User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
         if(curator != null && curator.getRole() == Role.CURATOR) {
             PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
@@ -191,14 +191,14 @@ public class DeletionService {
                     multimediaContentRepository.save(multimediaContent);
                 }
                 poiRepository.deleteById(idPOI);
-                notificationListener.handleDeletePOI(poi);
+                notificationListener.handleDeletePOI(poi, reason);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
         }
     }
 
-    public void deleteTour(int idTour) {
+    public void deleteTour(int idTour, String reason) {
         User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
         if(curator != null && curator.getRole() == Role.CURATOR) {
             Tour tour = tourRepository.findById(idTour).orElse(null);
@@ -213,14 +213,14 @@ public class DeletionService {
                     multimediaContentRepository.save(multimediaContent);
                 }
                 tourRepository.deleteById(tour.getId());
-                notificationListener.handleDeleteTour(tour);
+                notificationListener.handleDeleteTour(tour, reason);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
         }
     }
 
-    public void deleteContest(int idContest) {
+    public void deleteContest(int idContest, String reason) {
         User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
         if(curator != null && curator.getRole() == Role.CURATOR) {
             Contest contest = contestRepository.findById(idContest).orElse(null);
@@ -233,14 +233,14 @@ public class DeletionService {
                     contest.getParticipationContestList().remove(participant);
                 }
                 contestRepository.deleteById(idContest);
-                notificationListener.handleDeleteContest(contest);
+                notificationListener.handleDeleteContest(contest, reason);
             }
         } else {
             notificationListener.handleDenialPermission(curator);
         }
     }
 
-    public void deleteEvent(int idEvent) {
+    public void deleteEvent(int idEvent, String reason) {
         User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
         if(curator != null && curator.getRole() == Role.CURATOR) {
             Event event = eventRepository.findById(idEvent).orElse(null);
@@ -254,14 +254,14 @@ public class DeletionService {
                     contestRepository.save(contest);
                 }
                 eventRepository.deleteById(idEvent);
-                notificationListener.handleDeleteEvent(event);
+                notificationListener.handleDeleteEvent(event, reason);
             }
         }  else {
             notificationListener.handleDenialPermission(curator);
         }
     }
 
-    public void deleteMultimediaContent(int idMC) {
+    public void deleteMultimediaContent(int idMC, String reason) {
         User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
         if(curator != null && curator.getRole() == Role.CURATOR) {
             MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
@@ -277,7 +277,7 @@ public class DeletionService {
 
 
                 multimediaContentRepository.deleteById(idMC);
-                notificationListener.handleDeleteMultimediaContent(multimediaContent);
+                notificationListener.handleDeleteMultimediaContent(multimediaContent, reason);
             }
         } else {
             notificationListener.handleDenialPermission(curator);

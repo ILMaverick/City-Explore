@@ -13,7 +13,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PermissionRequestService permissionRequestService;
+    private PermissionRequestRepository permissionRequestRepository;
     @Autowired
     private NotificationListener notificationListener;
     
@@ -131,7 +131,7 @@ public class UserService {
     public void approveRequest(int requestId, boolean isApproved, Role newRole) {
         User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
         if(checkAdministrator(administrator)) {
-            List<PermissionRequest> requestList = permissionRequestService.getAllRequests();
+            List<PermissionRequest> requestList = permissionRequestRepository.findAll();
             for (PermissionRequest request : requestList) {
                 request.setApproved(isApproved);
                 User user = request.getAuthor();
@@ -141,7 +141,7 @@ public class UserService {
                 } else {
                     notificationListener.handleRejectRequest(request);
                 }
-                permissionRequestService.deleteRequest(requestId);
+                permissionRequestRepository.delete(request);
             }
         } else {
             notificationListener.handleDenialPermission(administrator);
