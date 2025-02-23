@@ -178,45 +178,35 @@ public class POIService {
 
     public PointOfInterest createPOIFromOSM(OverpassElement element, POIType type) {
     	User author = this.userService.getCurrentUser();
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
-            PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
-            poiRepository.save(poi);
-            notificationListener.handleCreatePOI(poi);
-            if(author.getRole() == Role.CONTRIBUTOR) {
-                validationService.sendPOIForValidation(poi);
-            } else {
-                validationService.approvePOI(poi.getId());
-            }
-            return poi;
+    	PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
+        poiRepository.save(poi);
+        notificationListener.handleCreatePOI(poi);
+        if(author.getRole() == Role.CONTRIBUTOR) {
+            validationService.sendPOIForValidation(poi);
         } else {
-            notificationListener.handleDenialPermission(author);
+            validationService.approvePOI(poi.getId());
         }
-        return null;
+        return poi;
     }
 
     public PointOfInterest updatePOI(int idPOI, PointOfInterest pointOfInterest) {
         User newPoiAuthor = pointOfInterest.getAuthor();
-        if(newPoiAuthor.getRole() == Role.CURATOR || newPoiAuthor.getRole() == Role.ADMINISTRATOR) {
-            PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
-            if (pointOfInterestSelected != null && pointOfInterestSelected.getStatus()== Status.UPDATED) {
-                pointOfInterestSelected.setName(pointOfInterest.getName());
-                pointOfInterestSelected.setDescription(pointOfInterest.getDescription());
-                pointOfInterestSelected.setLatitude(pointOfInterest.getLatitude());
-                pointOfInterestSelected.setLongitude(pointOfInterest.getLongitude());
-				/*
-				 * pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
-				 * pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
-				 */
-                pointOfInterestSelected.setType(pointOfInterest.getType());
-                pointOfInterestSelected.setStatus(Status.APPROVED);
-                poiRepository.save(pointOfInterest);
-                notificationListener.handleUpdatePOI(pointOfInterestSelected);
-            }
-            return pointOfInterestSelected;
-        } else {
-            notificationListener.handleDenialPermission(newPoiAuthor);
+        PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
+        if (pointOfInterestSelected != null && pointOfInterestSelected.getStatus()== Status.UPDATED) {
+            pointOfInterestSelected.setName(pointOfInterest.getName());
+            pointOfInterestSelected.setDescription(pointOfInterest.getDescription());
+            pointOfInterestSelected.setLatitude(pointOfInterest.getLatitude());
+            pointOfInterestSelected.setLongitude(pointOfInterest.getLongitude());
+			/*
+			 * pointOfInterestSelected.setOpen_time(pointOfInterest.getOpen_time());
+			 * pointOfInterestSelected.setClose_time(pointOfInterest.getClose_time());
+			 */
+            pointOfInterestSelected.setType(pointOfInterest.getType());
+            pointOfInterestSelected.setStatus(Status.APPROVED);
+            poiRepository.save(pointOfInterest);
+            notificationListener.handleUpdatePOI(pointOfInterestSelected);
         }
-        return null;
+        return pointOfInterestSelected;
     }
 
     public List<PointOfInterest> searchPOIByName(String name) {

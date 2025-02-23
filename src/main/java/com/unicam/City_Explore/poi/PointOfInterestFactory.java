@@ -6,7 +6,7 @@ import com.unicam.City_Explore.user.User;
 public class PointOfInterestFactory {
     public static PointOfInterest createFromOverpassElement(OverpassElement element, User author, POIType type) {
         if (element == null) {
-            throw new IllegalArgumentException("L'elemento OverpassElement non può essere nullo.");
+            throw new IllegalArgumentException("L'elemento OverpassElement non puo' essere nullo.");
         }
 
         return create(element.tags.name, "POI generato da OSM", element.lat, element.lon, author, type);

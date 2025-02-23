@@ -19,6 +19,7 @@ public class WelcomePage extends MenuPage{
 		super ("Benvenuto!");
 		this.getChapters().add("Login");
 		this.getChapters().add("Registrati");
+		this.setPrevious(null);
 	}
 
 	@Override
