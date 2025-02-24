@@ -3,13 +3,10 @@ package com.unicam.City_Explore.contenuti;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
-
-import com.unicam.City_Explore.tour.Tour;
 import jakarta.persistence.*;
 
 import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.elementi.Status;
-import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
 
 

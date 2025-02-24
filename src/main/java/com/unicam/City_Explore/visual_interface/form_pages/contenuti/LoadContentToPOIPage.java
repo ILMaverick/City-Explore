@@ -10,7 +10,6 @@ import com.unicam.City_Explore.contenuti.FormatFileEnum;
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.contenuti.MultimediaContentService;
 import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;

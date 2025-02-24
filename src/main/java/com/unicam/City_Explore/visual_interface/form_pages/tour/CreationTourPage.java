@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.tour.TourService;

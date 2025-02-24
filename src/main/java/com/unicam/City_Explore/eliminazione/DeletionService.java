@@ -87,7 +87,7 @@ public class DeletionService {
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione: ");
         String reason = scanner.nextLine();
-        deleteTour(idTour, reason);
+        deleteTour(tour.getId(), reason);
         System.out.println("L'Itinerario e' stato eliminato con successo, perche' " + reason);
     }
 

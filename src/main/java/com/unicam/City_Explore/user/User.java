@@ -3,7 +3,6 @@ package com.unicam.City_Explore.user;
 import com.unicam.City_Explore.contest.ContestParticipation;
 import com.unicam.City_Explore.listapreferiti.PreferList;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

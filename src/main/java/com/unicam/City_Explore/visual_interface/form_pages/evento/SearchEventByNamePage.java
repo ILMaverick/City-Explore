@@ -27,9 +27,9 @@ public class SearchEventByNamePage extends FormPage {
         String name = scanner.nextLine();
         List<Event> eventList = eventService.searchEventByName(name);
         if(eventList.isEmpty()) {
-            System.out.println("Non e' presente un Punto di Interesse con questo nome.");
+            System.out.println("Non e' presente un Evento con questo nome.");
         } else {
-            System.out.println("Elenco Punti di Interesse con il nome cercato:");
+            System.out.println("Elenco Eventi con il nome cercato:");
             for(Event event: eventList) {
                 System.out.println(event);
             }

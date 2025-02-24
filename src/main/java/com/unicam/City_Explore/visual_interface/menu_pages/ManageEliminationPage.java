@@ -1,10 +1,5 @@
 package com.unicam.City_Explore.visual_interface.menu_pages;
 
-import java.util.ArrayList;
-
-import com.unicam.City_Explore.visual_interface.Page;
-
-
 import org.springframework.stereotype.Component;
 
 @Component

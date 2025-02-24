@@ -1,32 +1,38 @@
 package com.unicam.City_Explore.visual_interface.menu_pages.contest;
 
-import java.util.ArrayList;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.visual_interface.form_pages.contest.SearchContestByDescriptionPage;
+import com.unicam.City_Explore.visual_interface.form_pages.contest.SearchContestByNamePage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
 public class SearchContestPage extends MenuPage {
+	
+	@Autowired
+	private SearchContestByNamePage searchContestByNamePage;
+	@Autowired
+	private SearchContestByDescriptionPage searchContestByDescriptionPage;
 
 	public SearchContestPage() {
 		super("Cerca un Contest");
-		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Ricerca un Contest tramite nome");
-		chapters.add("Ricerca un Contest tramite descrizione");
-		// TODO Auto-generated constructor stub
+		this.getChapters().add("Ricerca un Contest tramite nome");
+		this.getChapters().add("Ricerca un Contest tramite descrizione");
 	}
 
 	@Override
 	public void setAuthorization() {
-		// TODO Auto-generated method stub
+		this.authService.addAuthorization("Ricerca un Contest tramite nome", Role.values());
+		this.authService.addAuthorization("Ricerca un Contest tramite descrizione", Role.values());
 
 	}
 
 	@Override
 	public void populateLinksTable() {
-		// TODO Auto-generated method stub
-
+		this.getLinksTable().put("Ricerca un Contest tramite nome", this.searchContestByNamePage);
+		this.getLinksTable().put("Ricerca un Contest tramite descrizione", this.searchContestByDescriptionPage);
 	}
 
 }

@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.Role;
-import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
 import com.unicam.City_Explore.visual_interface.form_pages.InizializerPage;
-import com.unicam.City_Explore.visual_interface.form_pages.validation.contenuti.ValidationContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contenuti.ManageContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contest.ManageContestPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.evento.ManageEventPage;
@@ -28,7 +26,7 @@ public class HomePage extends MenuPage{
 	@Autowired
 	private ManageContentPage manageContentPage;
 	@Autowired
-	private ManageValidationPage validationPage;
+	private ManageValidationPage manageValidationPage;
 	@Autowired
 	private EliminationPage eliminationPage;
 	@Autowired
@@ -58,9 +56,9 @@ public class HomePage extends MenuPage{
 		this.authService.addAuthorization("Gestione Contest", Role.ANIMATOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Gestione Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Gestione Contenuti Multimediali", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.AUTHENTICATED_TOURIST, Role.ADMINISTRATOR);
-		this.authService.addAuthorization("Validazione Elementi e Contenuti Pendenti", Role.CURATOR, Role.ADMINISTRATOR);
-		this.authService.addAuthorization("Eliminazione Elementi e Contenuti", Role.CURATOR, Role.ADMINISTRATOR);
-		this.authService.addAuthorization("Inizializza Elementi",Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Validazione Elementi e Contenuti Pendenti", Role.CURATOR, Role.ADMINISTRATOR, Role.ANIMATOR);
+		this.authService.addAuthorization("Eliminazione Elementi e Contenuti", Role.CURATOR, Role.ADMINISTRATOR, Role.ANIMATOR);
+		this.authService.addAuthorization("Inizializza Elementi",Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.ANIMATOR, Role.CURATOR);
 
 	}
 
@@ -72,7 +70,7 @@ public class HomePage extends MenuPage{
 		this.getLinksTable().put("Gestione Contest", this.manageContestPage);
 		this.getLinksTable().put("Gestione Evento", this.manageEventPage);
 		this.getLinksTable().put("Gestione Contenuti Multimediali", this.manageContentPage);
-		this.getLinksTable().put("Validazione Elementi e Contenuti Pendenti", this.validationPage);
+		this.getLinksTable().put("Validazione Elementi e Contenuti Pendenti", this.manageValidationPage);
 		this.getLinksTable().put("Eliminazione Elementi e Contenuti", this.eliminationPage);
 		this.getLinksTable().put("Inizializza Elementi", this.inizializerPage);
 	}

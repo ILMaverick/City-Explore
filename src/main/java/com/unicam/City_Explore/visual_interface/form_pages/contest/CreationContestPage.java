@@ -10,10 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.contest.ContestService;
-import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.POIType;
-import com.unicam.City_Explore.poi.PointOfInterest;
-import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 

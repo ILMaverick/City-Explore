@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.validazione.ValidationService;
-import org.apache.el.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -148,6 +148,16 @@ public class MultimediaContentService {
     public MultimediaContent getMultimediaContentById(int id) {
         return multimediaContentRepository.findById(id).orElse(null);
     }
+    
+    public List<MultimediaContent> searchContentByName(String name) {
+        if(name == null) return List.of();
+        return multimediaContentRepository.searchByName(name);
+    }
+
+    public List<MultimediaContent> searchContentByDescription(String description) {
+        if(description == null) return List.of();
+        return multimediaContentRepository.searchByDescription(description);
+    }
 
 
 }

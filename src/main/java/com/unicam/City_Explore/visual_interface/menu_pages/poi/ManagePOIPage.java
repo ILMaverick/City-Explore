@@ -1,7 +1,5 @@
 package com.unicam.City_Explore.visual_interface.menu_pages.poi;
 
-import java.util.ArrayList;
-
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.visual_interface.form_pages.poi.CreationPOIOSMPage;
 import com.unicam.City_Explore.visual_interface.form_pages.poi.CreationPOIUserPage;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.visual_interface.menu_pages.contenuti.SearchContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contest.SearchContestPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.evento.SearchEventPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.poi.SearchPOIPage;
@@ -21,7 +22,7 @@ public class SearchPage extends MenuPage {
 	@Autowired
 	private SearchEventPage searchEventPage;
 	@Autowired
-	private SearchContestPage searchContentPage;
+	private SearchContentPage searchContentPage;
 	
 	public SearchPage() {
 		super("Menu Ricerca");

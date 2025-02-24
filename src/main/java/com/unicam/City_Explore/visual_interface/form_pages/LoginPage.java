@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.menu_pages.HomePage;

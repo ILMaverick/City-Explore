@@ -1,7 +1,5 @@
 package com.unicam.City_Explore.visual_interface.menu_pages.poi;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

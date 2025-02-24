@@ -10,6 +10,7 @@ import com.unicam.City_Explore.tour.Tappa;
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
@@ -17,8 +18,6 @@ import jakarta.persistence.OneToMany;
 public class PointOfInterest extends AbstractElement{
 	private double latitude;
 	private double longitude;
-	//private LocalTime open_time;
-	//private LocalTime close_time;
 	private POIType type;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private final List<Event> eventList = new ArrayList<>();

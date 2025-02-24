@@ -1,32 +1,36 @@
 package com.unicam.City_Explore.visual_interface.menu_pages.evento;
 
-import java.util.ArrayList;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.visual_interface.form_pages.evento.SearchEventByDescriptionPage;
+import com.unicam.City_Explore.visual_interface.form_pages.evento.SearchEventByNamePage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
 @Component
 public class SearchEventPage extends MenuPage {
+	@Autowired
+	private SearchEventByNamePage searchEventByNamePage;
+	@Autowired
+	private SearchEventByDescriptionPage searchEventByDescriptionPage;
 	
 	public SearchEventPage() {
 		super("Cerca un Evento");
-		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Ricerca un Evento tramite nome");
-		chapters.add("Ricerca un Evento tramite descrizione");
-		// TODO Auto-generated constructor stub
+		this.getChapters().add("Ricerca un Evento tramite nome");
+		this.getChapters().add("Ricerca un Evento tramite descrizione");
 	}
 
 	@Override
 	public void setAuthorization() {
-		// TODO Auto-generated method stub
-
+		this.authService.addAuthorization("Ricerca un Evento tramite nome", Role.values());
+		this.authService.addAuthorization("Ricerca un Evento tramite descrizione", Role.values());
 	}
 
 	@Override
 	public void populateLinksTable() {
-		// TODO Auto-generated method stub
-
+		this.getLinksTable().put("Ricerca un Evento tramite nome", this.searchEventByNamePage);
+		this.getLinksTable().put("Ricerca un Evento tramite descrizione", this.searchEventByDescriptionPage);
 	}
 
 }
