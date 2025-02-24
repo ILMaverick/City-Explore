@@ -53,14 +53,14 @@ public class HomePage extends MenuPage{
 	@Override
 	public void setAuthorization() {
 		this.authService.addAuthorization("Cerca POI, Tour, etc...", Role.values());
-		this.authService.addAuthorization("Gestione POI", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.CURATOR);
-		this.authService.addAuthorization("Gestione Tour", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.CURATOR);
+		this.authService.addAuthorization("Gestione POI", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.CURATOR);
+		this.authService.addAuthorization("Gestione Tour", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.CURATOR);
 		this.authService.addAuthorization("Gestione Contest", Role.ANIMATOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Gestione Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
-		this.authService.addAuthorization("Gestione Contenuti Multimediali", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.AUTHENTICATED_TOURIST, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Gestione Contenuti Multimediali", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.AUTHENTICATED_TOURIST, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Validazione Elementi e Contenuti Pendenti", Role.CURATOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Eliminazione Elementi e Contenuti", Role.CURATOR, Role.ADMINISTRATOR);
-		this.authService.addAuthorization("Inizializza Elementi",Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Inizializza Elementi",Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
 
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.tour.Tour;
 import jakarta.persistence.*;
 
+import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
@@ -26,13 +27,11 @@ public class MultimediaContent {
     private float dimension;
     private float resolution;
     private LocalDateTime dataCreation;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private User author;
     private Status status = Status.PENDING;
     @ManyToOne
-    private PointOfInterest pointOfInterest;
-    @ManyToOne
-    private Tour tour;
+    private AbstractElement element;
     
     public MultimediaContent() {
 		super();
@@ -56,7 +55,7 @@ public class MultimediaContent {
                 ",\n  resolution=" + resolution +
                 ",\n  dataCreation=" + dataCreation +
                 ",\n  author=" + author +
-                ",\n  poi=" + pointOfInterest +
+                ",\n  elemento=" + element +
                 ",\n  elementStatus=" + status +
                 "\n}";
     }
@@ -101,12 +100,10 @@ public class MultimediaContent {
     public void setStatus(Status status) {
         this.status = status;
     }
-    public PointOfInterest getPointOfInterest() {
-        return pointOfInterest;
+    public AbstractElement getAttachedElement() {
+        return element;
     }
-    public void setPointOfInterest(PointOfInterest pointOfInterest) {
-        this.pointOfInterest = pointOfInterest;
+    public void setAttachedElement(AbstractElement element) {
+        this.element = element;
     }
-    public Tour getTour() { return tour;}
-    public void setTour(Tour tour) { this.tour = tour; }
 }

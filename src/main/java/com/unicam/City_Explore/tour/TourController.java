@@ -13,10 +13,6 @@ public class TourController {
     public TourController() {
     }
 
-    public void createTourFromPOIs() {
-        tourService.createTourFromPOIs();
-    }
-
     /**
      * Visualizza tutti i Tour salvati.
      */
@@ -30,14 +26,6 @@ public class TourController {
                 System.out.println(tour);
             }
         }
-    }
-
-    public void searchTourByName() {
-        tourService.searchTourByName();
-    }
-
-    public void searchTourByDescription() {
-        tourService.searchTourByDescription();
     }
     
     public void close() {

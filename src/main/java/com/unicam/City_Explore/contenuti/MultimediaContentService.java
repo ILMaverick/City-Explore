@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
@@ -12,6 +13,7 @@ import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.tour.TourRepository;
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.user.User;
+import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.validazione.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class MultimediaContentService {
     private POIRepository poiRepository;
     @Autowired
     private TourRepository tourRepository;
+    @Autowired
+    private UserService userService;
     @Autowired
     private NotificationListener notificationListener;
     @Autowired
@@ -65,95 +69,36 @@ public class MultimediaContentService {
 
     }
 
-    public void createMultimediaContent() {
-        System.out.println("=== Creazione di un Contenuto Multimediale ===");
-
-        System.out.print("Inserisci il nome: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Inserisci la descrizione: ");
-        String description = scanner.nextLine();
-
-        System.out.print("Inserisci il formato: ");
-        String formatString = scanner.nextLine();
-        FormatFileEnum format = FormatFileEnum.formatFile(formatString);
-
-        System.out.print("Inserisci la durata: ");
-        float duration = scanner.nextFloat();
-
-        System.out.print("Inserisci la dimensione: ");
-        float dimension = scanner.nextFloat();
-
-        System.out.print("Inserisci la risoluzione: ");
-        float resolution = scanner.nextFloat();
-
-        User currentUser = getCurrentUser();
-
-        MultimediaContent multimediaContent = createMultimediaContent(name, description, currentUser, format, duration, dimension, resolution);
-
-        System.out.println("Contenuto Multimediale creato in data: " + multimediaContent.getDataCreation());
-        System.out.println(multimediaContent);
-    }
-
-    public void loadMultimediaContentToPOI() {
-
-        System.out.println("=== Caricamento Contenuto Multimediale su un Punto di Interesse ===");
-
-        System.out.print("Inserisci l'ID del Punto di Interesse: ");
-        int idPOI = scanner.nextInt();
-
-        System.out.print("Inserisci l'ID del Contenuto: ");
-        int idMC = scanner.nextInt();
-
-        PointOfInterest pointOfInterest = loadMultimediaContentToPOI(idPOI, idMC);
-
-        System.out.println("Contenuto Multimediale caricato al Punto di Interesse: ");
-        System.out.println(pointOfInterest);
-
-    }
-
-    public MultimediaContent createMultimediaContent(String name, String description, User author, FormatFileEnum format, float duration, float dimension, float resolution) {
-        MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR || author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
-            multimediaContent.setFormatFileEnum(format);
-            multimediaContent.setDuration(duration);
-            multimediaContent.setDimension(dimension);
-            multimediaContent.setResolution(resolution);
-            multimediaContent.setDataCreation(LocalDateTime.now());
-            multimediaContentRepository.save(multimediaContent);
-            notificationListener.handleCreateMultimediaContent(multimediaContent);
-            return multimediaContent;
-        } else {
-            notificationListener.handleDenialPermission(author);
-
+    public MultimediaContent createMultimediaContent(String name, String description, FormatFileEnum format, float duration, float dimension, float resolution) {
+        User author = userService.getCurrentUser();
+    	MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
+        multimediaContent.setFormatFileEnum(format);
+        multimediaContent.setDuration(duration);
+        multimediaContent.setDimension(dimension);
+        multimediaContent.setResolution(resolution);
+        multimediaContent.setDataCreation(LocalDateTime.now());
+        multimediaContentRepository.save(multimediaContent);
+        notificationListener.handleCreateMultimediaContent(multimediaContent);
+        return multimediaContent;
         }
-        return null;
-    }
 
     public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
         PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        User author = multimediaContent.getAuthor();
         if(poi != null & multimediaContent != null) {
-            User author = multimediaContent.getAuthor();
-            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
-                    author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
-                multimediaContent.setPointOfInterest(poi);
+                multimediaContent.setAttachedElement(poi);
                 multimediaContentRepository.save(multimediaContent);
                 poi.getMultimediaContentList().add(multimediaContent);
                 poiRepository.save(poi);
                 notificationListener.handleLoadMultimediaContentToPOI(poi, multimediaContent);
-                if(author.getRole() == Role.CONTRIBUTOR) {
+                if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.TOURIST || author.getRole() == Role.AUTHENTICATED_TOURIST ) {
                     validationService.sendMultimediaContentForValidation(multimediaContent);
                 } else {
                     validationService.approveMultimediaContent(multimediaContent.getId());
                 }
-                return poi;
-            }
-            else{
-                notificationListener.handleDenialPermission(author);
-            }
-        }
-        return null;
+                }
+		return poi;
     }
 
     public Tour loadMultimediaContentToTour(int idTour, int idMC) {
@@ -161,9 +106,9 @@ public class MultimediaContentService {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
         if(tour != null & multimediaContent != null) {
             User author = multimediaContent.getAuthor();
-            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHORIZED_CONTRIBUTOR ||
                     author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
-                multimediaContent.setTour(tour);
+                multimediaContent.setAttachedElement(tour);
                 multimediaContentRepository.save(multimediaContent);
                 tour.getMultimediaContentList().add(multimediaContent);
                 tourRepository.save(tour);
@@ -210,16 +155,6 @@ public class MultimediaContentService {
 
     public MultimediaContent getMultimediaContentById(int id) {
         return multimediaContentRepository.findById(id).orElse(null);
-    }
-
-    private User getCurrentUser() {
-        User user = new User();
-        user.setName("utente");
-        user.setSurname("demo");
-        user.setUsername("utente_demo");
-        user.setEmail("utente_demo.mail@gmail.com");
-        user.setPassword("1234567890");
-        return user;
     }
 
     public void close() {

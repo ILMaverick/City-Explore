@@ -30,8 +30,8 @@ public class ManagePOIPage extends MenuPage {
 
 	@Override
 	public void setAuthorization() {
-		this.authService.addAuthorization("Crea PointOfInterest da zero", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
-		this.authService.addAuthorization("Crea PointOfInterest da OSM", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
+		this.authService.addAuthorization("Crea PointOfInterest da zero", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR);
+		this.authService.addAuthorization("Crea PointOfInterest da OSM", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR);
 		this.authService.addAuthorization("Aggiorna un POI", Role.CURATOR);
 		
 	}

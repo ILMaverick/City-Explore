@@ -10,6 +10,7 @@ import com.unicam.City_Explore.tour.Tappa;
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
@@ -20,8 +21,6 @@ public class PointOfInterest extends AbstractElement{
 	//private LocalTime open_time;
 	//private LocalTime close_time;
 	private POIType type;
-	@OneToMany
-	private final List<MultimediaContent> multimediaContentList = new ArrayList<>();
 	@ManyToMany
 	private final List<Event> eventList = new ArrayList<>();
 	@OneToMany
@@ -91,7 +90,9 @@ public class PointOfInterest extends AbstractElement{
 	        this.type = type;
 	    }
 
-	public List<MultimediaContent> getMultimediaContentList() { return this.multimediaContentList; }
+	public List<MultimediaContent> getContents(){
+		return super.getMultimediaContentList();
+	}
 
 	public List<Event> getEvents() {
 		return this.eventList;

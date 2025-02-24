@@ -143,7 +143,7 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (poi != null && poi.getStatus()==Status.PENDING) {
                 poi.setStatus(Status.REJECTED);
-                deletionService.deletePOI(idPOI);
+                deletionService.deletePOI(idPOI, reason);
                 notificationListener.handleRejectPOI(poi, reason);
             }
         } else {
@@ -193,7 +193,7 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (tour != null && tour.getStatus()==Status.PENDING) {
                 tour.setStatus(Status.REJECTED);
-                deletionService.deleteTour(idTour);
+                deletionService.deleteTour(idTour, reason);
                 notificationListener.handleRejectTour(tour, reason);
             }
         } else {
@@ -245,7 +245,7 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
                 multimediaContent.setStatus(Status.REJECTED);
-                deletionService.deleteContest(idMC);
+                deletionService.deleteContest(idMC,reason);
                 notificationListener.handleRejectMultimediaContent(multimediaContent, reason);
             } else {
                 throw new RuntimeException("Contenuto non in stato PENDENTE per rifiuto");

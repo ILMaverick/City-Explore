@@ -16,8 +16,6 @@ import jakarta.persistence.OneToMany;
 public class Tour extends AbstractElement {
 	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Way> wayList = new ArrayList<>();
-	@OneToMany
-	private final List<MultimediaContent> multimediaContentList = new ArrayList<>();
 	
 	public Tour() {
 		
@@ -61,6 +59,6 @@ public class Tour extends AbstractElement {
 	}
 
     public List<MultimediaContent> getMultimediaContentList() {
-        return multimediaContentList;
+        return super.getMultimediaContentList();
     }
 }

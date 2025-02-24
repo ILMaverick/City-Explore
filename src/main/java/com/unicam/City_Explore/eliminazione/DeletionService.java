@@ -12,6 +12,7 @@ import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.contenuti.MultimediaContentRepository;
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.contest.ContestRepository;
+import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.evento.EventRepository;
 import com.unicam.City_Explore.poi.POIRepository;
@@ -156,12 +157,12 @@ public class DeletionService {
         int idMC = scanner.nextInt();
 
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).get();
-        PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
-        if(pointOfInterest == null) {
+        AbstractElement element = multimediaContent.getAttachedElement();
+        if(element == null) {
             System.out.println("Non ci sono Punti di Interesse associati a questo Contenuto.");
         } else {
             System.out.print("Il Contenuto da eliminare si trova in questo Punto di Interesse: ");
-            System.out.println(pointOfInterest);
+            System.out.println(element);
         }
         scanner.nextLine();
         System.out.print("Aggiungi una motivazione per l'eliminazione: ");
@@ -187,7 +188,7 @@ public class DeletionService {
                 }
 
                 for (MultimediaContent multimediaContent : poi.getMultimediaContentList()) {
-                    multimediaContent.setPointOfInterest(null);
+                    multimediaContent.setAttachedElement(null);
                     multimediaContentRepository.save(multimediaContent);
                 }
                 poiRepository.deleteById(idPOI);
@@ -209,7 +210,7 @@ public class DeletionService {
                 }
 
                 for (MultimediaContent multimediaContent : tour.getMultimediaContentList()) {
-                    multimediaContent.setPointOfInterest(null);
+                    multimediaContent.setAttachedElement(null);
                     multimediaContentRepository.save(multimediaContent);
                 }
                 tourRepository.deleteById(tour.getId());
@@ -266,16 +267,24 @@ public class DeletionService {
         if(curator != null && curator.getRole() == Role.CURATOR) {
             MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
             if (multimediaContent != null) {
-
-                PointOfInterest pointOfInterest = multimediaContent.getPointOfInterest();
-                pointOfInterest.getMultimediaContentList().remove(multimediaContent);
-                poiRepository.save(pointOfInterest);
-
-                Tour tour = multimediaContent.getTour();
-                tour.getMultimediaContentList().remove(multimediaContent);
-                tourRepository.save(tour);
-
-
+            	AbstractElement element = multimediaContent.getAttachedElement();
+                if(element instanceof PointOfInterest) {
+                	PointOfInterest poi = (PointOfInterest) element;
+                	poi.getMultimediaContentList().remove(multimediaContent);
+                    poiRepository.save(poi);
+                } else if (element instanceof Tour) {
+                	Tour tour = (Tour) element;
+                	tour.getMultimediaContentList().remove(multimediaContent);
+                    tourRepository.save(tour);
+                } else if (element instanceof Event) {
+                	Event evento = (Event) element;
+                	evento.getMultimediaContentList().remove(multimediaContent);
+                    eventRepository.save(evento);
+                } else if (element instanceof Contest) {
+                	Contest contest = (Contest) element;
+                	contest.getMultimediaContentList().remove(multimediaContent);
+                    contestRepository.save(contest);
+                }
                 multimediaContentRepository.deleteById(idMC);
                 notificationListener.handleDeleteMultimediaContent(multimediaContent, reason);
             }

@@ -99,7 +99,7 @@ public class UserService {
         User administrator = userRepository.searchUsersByRole(Role.ADMINISTRATOR).stream().findFirst().orElse(null);
         if(checkAdministrator(administrator)) {
             if (user != null && user.getRole() == Role.CONTRIBUTOR) {
-                user.setRole(Role.AUTORIZED_CONTRIBUTOR);
+                user.setRole(Role.AUTHORIZED_CONTRIBUTOR);
                 userRepository.save(user);
                 notificationListener.handleUpdateContributor(user);
             }

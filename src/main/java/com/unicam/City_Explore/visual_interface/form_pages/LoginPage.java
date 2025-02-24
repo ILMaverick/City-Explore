@@ -43,7 +43,7 @@ public class LoginPage extends FormPage {
 			userService.setCurrentUser(userService.searchUsersByName("CONTRIBUTOR").getFirst());;
 			break;
 		case 4:
-			userService.setCurrentUser(userService.searchUsersByName("AUTORIZED_CONTRIBUTOR").getFirst());;
+			userService.setCurrentUser(userService.searchUsersByName("AUTHORIZED_CONTRIBUTOR").getFirst());;
 			break;
 		case 5:
 			userService.setCurrentUser(userService.searchUsersByName("CURATOR").getFirst());;

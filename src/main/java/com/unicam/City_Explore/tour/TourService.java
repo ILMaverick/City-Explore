@@ -38,7 +38,7 @@ public class TourService {
      */
     public Tour buildTourFromPOIs(List<PointOfInterest> poiList) {
     	User author = this.userService.getCurrentUser();
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR) {
+        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHORIZED_CONTRIBUTOR) {
             // 1. Crea le tappe a partire dai POI
             List<Tappa> tappe = new ArrayList<>();
             int count = 1;

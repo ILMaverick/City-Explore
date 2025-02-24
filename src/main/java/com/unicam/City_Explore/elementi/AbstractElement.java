@@ -1,16 +1,21 @@
 package com.unicam.City_Explore.elementi;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.user.User;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -23,6 +28,9 @@ public abstract class AbstractElement implements Element {
 	private String name;
 	
 	private String description;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private final List<MultimediaContent> multimediaContentList = new ArrayList<>();
 	
 	@ManyToOne
 	private User author;
@@ -73,4 +81,8 @@ public abstract class AbstractElement implements Element {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+	public List<MultimediaContent> getMultimediaContentList() {
+        return multimediaContentList;
+    }
 }

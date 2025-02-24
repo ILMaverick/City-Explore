@@ -26,7 +26,7 @@ public class ManageTourPage extends MenuPage {
 
 	@Override
 	public void setAuthorization() {
-		this.authService.addAuthorization("Crea Tour da POI", Role.CONTRIBUTOR, Role.AUTORIZED_CONTRIBUTOR);
+		this.authService.addAuthorization("Crea Tour da POI", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR);
 		this.authService.addAuthorization("Aggiorna un Tour", Role.CURATOR);
 	}
 
