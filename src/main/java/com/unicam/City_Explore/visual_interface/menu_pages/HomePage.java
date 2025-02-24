@@ -28,7 +28,7 @@ public class HomePage extends MenuPage{
 	@Autowired
 	private ManageContentPage manageContentPage;
 	@Autowired
-	private ValidationContentPage validationPage;
+	private ManageValidationPage validationPage;
 	@Autowired
 	private EliminationPage eliminationPage;
 	@Autowired

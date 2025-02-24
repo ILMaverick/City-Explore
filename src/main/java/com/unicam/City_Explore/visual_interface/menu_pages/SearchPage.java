@@ -21,7 +21,7 @@ public class SearchPage extends MenuPage {
 	@Autowired
 	private SearchEventPage searchEventPage;
 	@Autowired
-	private SearchContestPage searchcontentPage;
+	private SearchContestPage searchContentPage;
 	
 	public SearchPage() {
 		super("Menu Ricerca");
@@ -47,6 +47,6 @@ public class SearchPage extends MenuPage {
 		this.getLinksTable().put("Cerca Tour", this.searchTourPage);
 		this.getLinksTable().put("Cerca Contest", this.searchContestPage);
 		this.getLinksTable().put("Cerca Evento", this.searchEventPage);
-		this.getLinksTable().put("Cerca Contenuti Multimediali", this.searchcontentPage);
+		this.getLinksTable().put("Cerca Contenuti Multimediali", this.searchContentPage);
 	}
 }

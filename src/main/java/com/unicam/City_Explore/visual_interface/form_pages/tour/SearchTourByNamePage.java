@@ -3,6 +3,8 @@ package com.unicam.City_Explore.visual_interface.form_pages.tour;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.tour.Tour;
+import com.unicam.City_Explore.tour.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,23 +17,23 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class SearchTourByNamePage extends FormPage {
 
 	@Autowired
-	private POIService poiService;
+	private TourService tourService;
 	
 	public SearchTourByNamePage() {
-		super("Ricerca Punti di Interesse tramite nome");
+		super("Ricerca Itinerari tramite nome");
 	}
 
 	@Override
 	public void startForm(Scanner scanner) {
         System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
-        List<PointOfInterest> pointOfInterestList = poiService.searchPOIByName(name);
-        if(pointOfInterestList.isEmpty()) {
-            System.out.println("Non e' presente un Punto di Interesse con questo nome.");
+        List<Tour> tourList = tourService.searchTourByName(name);
+        if(tourList.isEmpty()) {
+            System.out.println("Non e' presente un Itinerario con questo nome.");
         } else {
-            System.out.println("Elenco Punti di Interesse con il nome cercato:");
-            for(PointOfInterest pointOfInterest: pointOfInterestList) {
-                System.out.println(pointOfInterest);
+            System.out.println("Elenco Itinerari con il nome cercato:");
+            for(Tour tour: tourList) {
+                System.out.println(tour);
             }
         }
 	}

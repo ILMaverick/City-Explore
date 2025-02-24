@@ -54,10 +54,6 @@ public class ValidationController {
     }
      */
 
-    public void validation() {
-        validationService.validation();
-    }
-
     public void displayAllPOiPending() {
         List<PointOfInterest> pointOfInterestList = validationService.getAllPendingPOI();
         if (pointOfInterestList.isEmpty()) {
@@ -92,9 +88,5 @@ public class ValidationController {
                 System.out.println(mc);
             }
         }
-    }
-
-    public void close() {
-        validationService.close();
     }
 }

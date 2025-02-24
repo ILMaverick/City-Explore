@@ -21,9 +21,9 @@ public class PointOfInterest extends AbstractElement{
 	//private LocalTime open_time;
 	//private LocalTime close_time;
 	private POIType type;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private final List<Event> eventList = new ArrayList<>();
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private final List<Tappa> tappe = new ArrayList<>();
 	
 	public PointOfInterest() {

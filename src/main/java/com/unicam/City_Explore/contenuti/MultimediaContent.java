@@ -30,7 +30,7 @@ public class MultimediaContent {
     @ManyToOne(cascade = CascadeType.MERGE)
     private User author;
     private Status status = Status.PENDING;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private AbstractElement element;
     
     public MultimediaContent() {

@@ -1,9 +1,7 @@
 package com.unicam.City_Explore.visual_interface.menu_pages.contenuti;
 
-import java.util.ArrayList;
 
 import com.unicam.City_Explore.user.Role;
-import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.contenuti.LoadContentToContestPage;
 import com.unicam.City_Explore.visual_interface.form_pages.contenuti.LoadContentToEventPage;
 import com.unicam.City_Explore.visual_interface.form_pages.contenuti.LoadContentToPOIPage;

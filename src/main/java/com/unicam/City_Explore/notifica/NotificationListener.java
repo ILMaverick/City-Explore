@@ -32,12 +32,12 @@ public class NotificationListener {
     }
 
     public void handleCreatePOI(PointOfInterest pointOfInterest) {
-        Notification notification = notificationService.createNotification("E' stato creato un Punto di Interesse" + pointOfInterest.getName(), NotificationType.CREATION);
+        Notification notification = notificationService.createNotification("E' stato creato un Punto di Interesse " + pointOfInterest.getName(), NotificationType.CREATION);
         notificationService.sendNotification(notification, pointOfInterest.getAuthor());
     }
 
     public void handleUpdatePOI(PointOfInterest pointOfInterest) {
-        Notification notification = notificationService.createNotification("E' stato aggiornato un Punto di Interesse" + pointOfInterest.getName(), NotificationType.UPDATE);
+        Notification notification = notificationService.createNotification("E' stato aggiornato un Punto di Interesse " + pointOfInterest.getName(), NotificationType.UPDATE);
         notificationService.sendNotification(notification, pointOfInterest.getAuthor());
     }
 

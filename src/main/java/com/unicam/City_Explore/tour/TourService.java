@@ -38,7 +38,7 @@ public class TourService {
      */
     public Tour buildTourFromPOIs(List<PointOfInterest> poiList) {
     	User author = this.userService.getCurrentUser();
-        if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHORIZED_CONTRIBUTOR) {
+
             // 1. Crea le tappe a partire dai POI
             List<Tappa> tappe = new ArrayList<>();
             int count = 1;
@@ -101,9 +101,7 @@ public class TourService {
             } else {
                 notificationListener.handleUpdateTour(tour);
             }
-        } else {
-            notificationListener.handleDenialPermission(author);
-        }
+
         return null;
     }
     
@@ -123,24 +121,19 @@ public class TourService {
 
 
     public Tour updateTour(int idTour, Tour tour) {
-        User newTourAuthor = tour.getAuthor();
-        if(newTourAuthor.getRole() == Role.CURATOR || newTourAuthor.getRole() == Role.ADMINISTRATOR) {
-            Tour tourSelected = getTourById(idTour);
-            if (tourSelected != null && tourSelected.getStatus()== Status.UPDATED) {
-                tourSelected.setName(tour.getName());
-                tourSelected.setDescription(tour.getDescription());
-                tourSelected.setWayList(tour.getWayList());
-                tourSelected.setStatus(Status.APPROVED);
-                if(checkTourData(tourSelected)) {
-                    tourRepository.save(tourSelected);
-                    notificationListener.handleUpdateTour(tour);
-                    return tourSelected;
-                } else {
-                    notificationListener.handleRefuseTour(tourSelected);
-                }
+        Tour tourSelected = getTourById(idTour);
+        if (tourSelected != null && tourSelected.getStatus()== Status.UPDATED) {
+            tourSelected.setName(tour.getName());
+            tourSelected.setDescription(tour.getDescription());
+            tourSelected.setWayList(tour.getWayList());
+            tourSelected.setStatus(Status.APPROVED);
+            if(checkTourData(tourSelected)) {
+                tourRepository.save(tourSelected);
+                notificationListener.handleUpdateTour(tour);
+                return tourSelected;
+            } else {
+                notificationListener.handleRefuseTour(tourSelected);
             }
-        } else {
-            notificationListener.handleDenialPermission(newTourAuthor);
         }
         return null;
     }

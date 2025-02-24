@@ -3,11 +3,11 @@ package com.unicam.City_Explore.visual_interface.form_pages.evento;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.evento.Event;
+import com.unicam.City_Explore.evento.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
@@ -15,23 +15,23 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class SearchEventByNamePage extends FormPage {
 
 	@Autowired
-	private POIService poiService;
+	private EventService eventService;
 	
 	public SearchEventByNamePage() {
-		super("Ricerca Punti di Interesse tramite nome");
+		super("Ricerca Eventi tramite nome");
 	}
 
 	@Override
 	public void startForm(Scanner scanner) {
         System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
-        List<PointOfInterest> pointOfInterestList = poiService.searchPOIByName(name);
-        if(pointOfInterestList.isEmpty()) {
+        List<Event> eventList = eventService.searchEventByName(name);
+        if(eventList.isEmpty()) {
             System.out.println("Non e' presente un Punto di Interesse con questo nome.");
         } else {
             System.out.println("Elenco Punti di Interesse con il nome cercato:");
-            for(PointOfInterest pointOfInterest: pointOfInterestList) {
-                System.out.println(pointOfInterest);
+            for(Event event: eventList) {
+                System.out.println(event);
             }
         }
 	}

@@ -3,11 +3,11 @@ package com.unicam.City_Explore.visual_interface.form_pages.contest;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.contest.Contest;
+import com.unicam.City_Explore.contest.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
@@ -15,23 +15,23 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class SearchContestByNamePage extends FormPage {
 
 	@Autowired
-	private POIService poiService;
+	private ContestService contestService;
 	
 	public SearchContestByNamePage() {
-		super("Ricerca Punti di Interesse tramite nome");
+		super("Ricerca Contest tramite nome");
 	}
 
 	@Override
 	public void startForm(Scanner scanner) {
         System.out.print("Inserisci il nome: ");
         String name = scanner.nextLine();
-        List<PointOfInterest> pointOfInterestList = poiService.searchPOIByName(name);
-        if(pointOfInterestList.isEmpty()) {
-            System.out.println("Non e' presente un Punto di Interesse con questo nome.");
+        List<Contest> contestList = contestService.searchContestByName(name);
+        if(contestList.isEmpty()) {
+            System.out.println("Non e' presente un Contest con questo nome.");
         } else {
-            System.out.println("Elenco Punti di Interesse con il nome cercato:");
-            for(PointOfInterest pointOfInterest: pointOfInterestList) {
-                System.out.println(pointOfInterest);
+            System.out.println("Elenco Contest con il nome cercato:");
+            for(Contest contest: contestList) {
+                System.out.println(contest);
             }
         }
 	}

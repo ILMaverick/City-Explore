@@ -34,8 +34,5 @@ public class MultimediaContentController {
         }
     }
 
-    public void close() {
-        multimediaContentService.close();
-    }
 
 }

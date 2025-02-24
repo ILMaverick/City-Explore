@@ -2,9 +2,7 @@ package com.unicam.City_Explore.contenuti;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Scanner;
 
-import com.unicam.City_Explore.elementi.AbstractElement;
 import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
@@ -27,12 +25,11 @@ public class MultimediaContentService {
     @Autowired
     private TourRepository tourRepository;
     @Autowired
-    private UserService userService;
-    @Autowired
     private NotificationListener notificationListener;
     @Autowired
     private ValidationService validationService;
-    private Scanner scanner;
+    @Autowired
+    private UserService userService;
 
     public MultimediaContentService() {
     }
@@ -71,7 +68,7 @@ public class MultimediaContentService {
 
     public MultimediaContent createMultimediaContent(String name, String description, FormatFileEnum format, float duration, float dimension, float resolution) {
         User author = userService.getCurrentUser();
-    	MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
+        MultimediaContent multimediaContent = new MultimediaContent(name, description, author);
         multimediaContent.setFormatFileEnum(format);
         multimediaContent.setDuration(duration);
         multimediaContent.setDimension(dimension);
@@ -80,25 +77,26 @@ public class MultimediaContentService {
         multimediaContentRepository.save(multimediaContent);
         notificationListener.handleCreateMultimediaContent(multimediaContent);
         return multimediaContent;
-        }
+    }
 
     public PointOfInterest loadMultimediaContentToPOI(int idPOI, int idMC) {
         PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
-        User author = multimediaContent.getAuthor();
         if(poi != null & multimediaContent != null) {
-                multimediaContent.setAttachedElement(poi);
-                multimediaContentRepository.save(multimediaContent);
-                poi.getMultimediaContentList().add(multimediaContent);
-                poiRepository.save(poi);
-                notificationListener.handleLoadMultimediaContentToPOI(poi, multimediaContent);
-                if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.TOURIST || author.getRole() == Role.AUTHENTICATED_TOURIST ) {
-                    validationService.sendMultimediaContentForValidation(multimediaContent);
-                } else {
-                    validationService.approveMultimediaContent(multimediaContent.getId());
-                }
-                }
-		return poi;
+            User author = multimediaContent.getAuthor();
+            multimediaContent.setAttachedElement(poi);
+            multimediaContentRepository.save(multimediaContent);
+            poi.getMultimediaContentList().add(multimediaContent);
+            poiRepository.save(poi);
+            notificationListener.handleLoadMultimediaContentToPOI(poi, multimediaContent);
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_TOURIST) {
+                validationService.sendMultimediaContentForValidation(multimediaContent);
+            } else {
+                validationService.approveMultimediaContent(multimediaContent.getId());
+            }
+            return poi;
+        }
+		return null;
     }
 
     public Tour loadMultimediaContentToTour(int idTour, int idMC) {
@@ -106,23 +104,17 @@ public class MultimediaContentService {
         MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
         if(tour != null & multimediaContent != null) {
             User author = multimediaContent.getAuthor();
-            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHORIZED_CONTRIBUTOR ||
-                    author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
-                multimediaContent.setAttachedElement(tour);
-                multimediaContentRepository.save(multimediaContent);
-                tour.getMultimediaContentList().add(multimediaContent);
-                tourRepository.save(tour);
-                notificationListener.handleLoadMultimediaContentToTour(tour, multimediaContent);
-                if(author.getRole() == Role.CONTRIBUTOR) {
-                    validationService.sendMultimediaContentForValidation(multimediaContent);
-                } else {
-                    validationService.approveMultimediaContent(multimediaContent.getId());
-                }
-                return tour;
+            multimediaContent.setAttachedElement(tour);
+            multimediaContentRepository.save(multimediaContent);
+            tour.getMultimediaContentList().add(multimediaContent);
+            tourRepository.save(tour);
+            notificationListener.handleLoadMultimediaContentToTour(tour, multimediaContent);
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_TOURIST) {
+                validationService.sendMultimediaContentForValidation(multimediaContent);
+            } else {
+                validationService.approveMultimediaContent(multimediaContent.getId());
             }
-            else{
-                notificationListener.handleDenialPermission(author);
-            }
+            return tour;
         }
         return null;
     }
@@ -155,12 +147,6 @@ public class MultimediaContentService {
 
     public MultimediaContent getMultimediaContentById(int id) {
         return multimediaContentRepository.findById(id).orElse(null);
-    }
-
-    public void close() {
-        if (scanner != null) {
-            scanner.close();
-        }
     }
 
 

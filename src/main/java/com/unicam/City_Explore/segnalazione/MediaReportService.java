@@ -1,6 +1,5 @@
 package com.unicam.City_Explore.segnalazione;
 
-import com.unicam.City_Explore.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,18 +31,14 @@ public class MediaReportService {
                 throw new RuntimeException(e);
             }
         }
-        if(reporter.getRole() == Role.TOURIST || reporter.getRole() == Role.AUTHENTICATED_TOURIST) {
-            MediaReport report = new MediaReport();
-            report.setReason(reason);
-            report.setReporter(reporter);
-            report.setMultimediaContent(multimediaContent);
-            report.setLocalDateTime(LocalDateTime.now());
-            mediaReportList.add(report);
-            multimediaContent.setStatus(Status.REPORTED);
-            notificationListener.handleReportedMultimediaContent(report);
-        } else {
-            notificationListener.handleDenialPermission(reporter);
-        }
+        MediaReport report = new MediaReport();
+        report.setReason(reason);
+        report.setReporter(reporter);
+        report.setMultimediaContent(multimediaContent);
+        report.setLocalDateTime(LocalDateTime.now());
+        mediaReportList.add(report);
+        multimediaContent.setStatus(Status.REPORTED);
+        notificationListener.handleReportedMultimediaContent(report);
     }
 
     public List<MediaReport> getMediaReportList() {

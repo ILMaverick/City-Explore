@@ -3,11 +3,11 @@ package com.unicam.City_Explore.visual_interface.form_pages.evento;
 import java.util.List;
 import java.util.Scanner;
 
+import com.unicam.City_Explore.evento.Event;
+import com.unicam.City_Explore.evento.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
@@ -15,10 +15,10 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class SearchEventByDescriptionPage extends FormPage {
 
 	@Autowired
-	private POIService poiService;
+	private EventService eventService;
 	
 	public SearchEventByDescriptionPage() {
-		super("Ricerca Punti di Interesse tramite descrizione");
+		super("Ricerca Eventi tramite descrizione");
 	}
 
 	@Override
@@ -26,13 +26,13 @@ public class SearchEventByDescriptionPage extends FormPage {
         System.out.print("Inserisci la descrizione: ");
 
         String description = scanner.nextLine();
-        List<PointOfInterest> pointOfInterestList = poiService.searchPOIByDescription(description);
-        if(pointOfInterestList.isEmpty()) {
-            System.out.println("Non e' presente un Punto di Interesse con questa descrizione.");
+        List<Event> eventList = eventService.searchEventByDescription(description);
+        if(eventList.isEmpty()) {
+            System.out.println("Non e' presente un Evento con questa descrizione.");
         } else {
-            System.out.println("Elenco Punti di Interesse con la descrizione cercata:");
-            for(PointOfInterest pointOfInterest: pointOfInterestList) {
-                System.out.println(pointOfInterest);
+            System.out.println("Elenco Eventi con la descrizione cercata:");
+            for(Event event: eventList) {
+                System.out.println(event);
             }
         }
 	}
