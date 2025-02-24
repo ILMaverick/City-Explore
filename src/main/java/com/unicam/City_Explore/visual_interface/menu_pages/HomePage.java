@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.user.Role;
-import com.unicam.City_Explore.visual_interface.form_pages.EliminationPage;
 import com.unicam.City_Explore.visual_interface.form_pages.InizializerPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contenuti.ManageContentPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.contest.ManageContestPage;
@@ -28,7 +27,7 @@ public class HomePage extends MenuPage{
 	@Autowired
 	private ManageValidationPage manageValidationPage;
 	@Autowired
-	private EliminationPage eliminationPage;
+	private ManageEliminationPage eliminationPage;
 	@Autowired
 	private InizializerPage inizializerPage;
 	@Autowired

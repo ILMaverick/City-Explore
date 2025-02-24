@@ -1,31 +1,43 @@
 package com.unicam.City_Explore.visual_interface.menu_pages.evento;
 
-import java.util.ArrayList;
+import com.unicam.City_Explore.user.Role;
+import com.unicam.City_Explore.visual_interface.form_pages.evento.AddPOIToEventPage;
+import com.unicam.City_Explore.visual_interface.form_pages.evento.CreationEventPage;
+import com.unicam.City_Explore.visual_interface.form_pages.evento.UpdateEventPage;
 import com.unicam.City_Explore.visual_interface.menu_pages.MenuPage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ManageEventPage extends MenuPage {
+	@Autowired
+	private CreationEventPage creationEventPage;
+	@Autowired
+	private AddPOIToEventPage addPOIToEventPage;
+	@Autowired
+	private UpdateEventPage updateEventPage;
 
 	public ManageEventPage() {
 		super ("Gestione Evento");
-		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Crea Evento");
-		chapters.add("Aggiungi POI ad un Evento");
-		chapters.add("Aggiorna un Evento");
-		this.setChapters(chapters);
+		
+		this.getChapters().add("Crea Evento");
+		this.getChapters().add("Aggiungi POI ad un Evento");
+		this.getChapters().add("Aggiorna un Evento");
 	}
 
 	@Override
 	public void setAuthorization() {
-		// TODO Auto-generated method stub
+		this.authService.addAuthorization("Crea Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Aggiungi POI ad un Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Aggiorna un Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
 		
 	}
 
 	@Override
 	public void populateLinksTable() {
-		// TODO Auto-generated method stub
-		
+		this.getLinksTable().put("Crea Evento", this.creationEventPage);
+		this.getLinksTable().put("Aggiungi POI ad un Evento", this.addPOIToEventPage);
+		this.getLinksTable().put("Aggiorna un Evento", this.updateEventPage);
 	}
 }

@@ -33,10 +33,10 @@ public class ManageContentPage extends MenuPage {
 
 	@Override
 	public void setAuthorization() {
-		this.authService.addAuthorization("Carica Contenuto ad un POI", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR);
-		this.authService.addAuthorization("Carica Contenuto ad un Tour", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR);
-		this.authService.addAuthorization("Carica Contenuto ad un Evento", Role.TOURIST, Role.AUTHENTICATED_TOURIST, Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR);
-		this.authService.addAuthorization("Carica Contenuto ad un Contest", Role.TOURIST, Role.AUTHENTICATED_TOURIST, Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR);
+		this.authService.addAuthorization("Carica Contenuto ad un POI", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Carica Contenuto ad un Tour", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR,  Role.AUTHENTICATED_TOURIST);
+		this.authService.addAuthorization("Carica Contenuto ad un Evento", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Carica Contenuto ad un Contest", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR);
 	}
 
 	@Override
