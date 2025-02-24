@@ -3,6 +3,7 @@ package com.unicam.City_Explore.contest;
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.user.UserRepository;
+import com.unicam.City_Explore.user.UserService;
 import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.notifica.NotificationListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import java.util.Scanner;
 @Service
 public class ContestService {
     private Scanner scanner;
+    @Autowired
+    private UserService userService;
     @Autowired
     private ContestRepository contestRepository;
     @Autowired
@@ -41,45 +44,7 @@ public class ContestService {
 
         LocalDate deadline = LocalDate.of(2025, 2,17);
 
-        createContest("nome", "descrizione", user, "non fare il birbante", "foto piu' bella", "gita in barca", deadline);
-    }
-
-    public void createContest() {
-        System.out.println("=== Creazione di un Contest ===");
-
-        System.out.print("Inserisci il nome: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Inserisci la descrizione: ");
-        String description = scanner.nextLine();
-
-        User currentUser = getCurrentUser();
-
-        System.out.print("Inserisci le regole: ");
-        String rules = scanner.nextLine();
-
-        System.out.print("Inserisci l'obiettivo: ");
-        String goal = scanner.nextLine();
-
-        System.out.print("Inserisci il premio: ");
-        String prize = scanner.nextLine();
-
-        System.out.print("Inserisci la scadenza (il formato e' dd-MM-yyyy): ");
-        String deadlineString = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate deadline = null;
-
-        try {
-            deadline = LocalDate.parse(deadlineString, formatter);
-            System.out.println("Data convertita: " + deadline);
-        } catch (DateTimeParseException e) {
-            System.out.println("Formato della data non valido: " + e.getMessage());
-        }
-
-        Contest newContest = createContest(name, description, currentUser, rules, goal, prize, deadline);
-
-        System.out.println("Contest creato da zero: ");
-        System.out.println(newContest);
+        createContest("nome", "descrizione", "non fare il birbante", "foto piu' bella", "gita in barca", deadline);
     }
 
     public void searchContestByName() {
@@ -115,9 +80,9 @@ public class ContestService {
         }
     }
 
-    public Contest createContest(String name, String description, User author, String rules, String goal, String prize, LocalDate deadline) {
-        Contest contest = new Contest(name, description, author);
-        if(author.getRole() == Role.ANIMATOR) {
+    public Contest createContest(String name, String description, String rules, String goal, String prize, LocalDate deadline) {
+        User author = userService.getCurrentUser();
+    	Contest contest = new Contest(name, description, author);
             contest.setRules(rules);
             contest.setGoal(goal);
             contest.setPrize(prize);
@@ -129,10 +94,7 @@ public class ContestService {
             } else {
                 notificationListener.handleRefuseContest(contest);
             }
-        } else {
-            notificationListener.handleDenialPermission(author);
-        }
-        return null;
+        return contest;
     }
 
     public Contest updateContest(int idContest, Contest contest) {
@@ -261,15 +223,6 @@ public class ContestService {
         return contest.getDeadline() != null;
     }
 
-    private User getCurrentUser() {
-        User user = new User();
-        user.setName("utente");
-        user.setSurname("demo");
-        user.setUsername("utente_demo");
-        user.setEmail("utente_demo.mail@gmail.com");
-        user.setPassword("1234567890");
-        return user;
-    }
 
     public void close() {
         if (scanner != null) {

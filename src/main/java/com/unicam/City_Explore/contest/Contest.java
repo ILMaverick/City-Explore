@@ -10,6 +10,7 @@ import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
@@ -23,16 +24,18 @@ public class Contest extends AbstractElement {
 
     private LocalDate deadline;
     private boolean active;
-    @OneToMany
-    private final List<ContestParticipation> participationContestList;
-    @ManyToMany
-    public final List<Event> eventList;
+    @OneToMany(fetch = FetchType.EAGER)
+    private final List<ContestParticipation> participationContestList = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    public final List<Event> eventList = new ArrayList<>();;
+    
+    public Contest() {
+    	
+    }
 
     public Contest(String name, String description, User author) {
         super(name, description, author);
         super.setStatus(Status.APPROVED);
-        this.eventList = new ArrayList<>();
-        this.participationContestList = new ArrayList<>();
         this.active = true;
     }
 

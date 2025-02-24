@@ -17,10 +17,6 @@ public class ContestController {
         contestService.initializer();
     }
 
-    public void createContest() {
-        contestService.createContest();
-    }
-
     public void displayAllContest() {
         List<Contest> contestList = contestService.getAllContest();
         if(contestList.isEmpty()) {

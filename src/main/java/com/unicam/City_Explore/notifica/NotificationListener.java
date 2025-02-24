@@ -198,7 +198,7 @@ public class NotificationListener {
     }
 
     public void handleLoadMultimediaContentToTour(Tour tour, MultimediaContent multimediaContent) {
-        Notification notification = notificationService.createNotification("Un Contenuto e' stato aggiunto ad un Punto di Interesse "
+        Notification notification = notificationService.createNotification("Un Contenuto e' stato aggiunto ad un Tour "
                 + tour.getName() + ", " + multimediaContent.getName(), NotificationType.UPDATE);
         if(tour.getAuthor().equals(multimediaContent.getAuthor())) {
             notificationService.sendNotification(notification, tour.getAuthor());

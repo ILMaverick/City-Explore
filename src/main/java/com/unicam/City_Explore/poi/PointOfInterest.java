@@ -10,7 +10,6 @@ import com.unicam.City_Explore.tour.Tappa;
 import com.unicam.City_Explore.user.User;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 

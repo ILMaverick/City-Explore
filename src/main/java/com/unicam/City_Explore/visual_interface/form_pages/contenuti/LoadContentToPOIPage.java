@@ -24,7 +24,7 @@ public class LoadContentToPOIPage extends FormPage {
 	private MultimediaContentService contentService;
 	
 	public LoadContentToPOIPage() {
-		super("Creazione di un nuovo Contenuto Multimediale da zero");
+		super("Aggiunta di un nuovo Contenuto Multimediale su un POI");
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class LoadContentToPOIPage extends FormPage {
 		 
 		 List<PointOfInterest> poiList = poiService.getAllPOIs();
 	        if (poiList == null || poiList.isEmpty()) {
-	            System.out.println("Nessun POI disponibile per creare un Tour.");
+	            System.out.println("Nessun POI disponibile per aggiungere un contenuto.");
 	            return;
 	        }
 
