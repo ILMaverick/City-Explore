@@ -158,6 +158,4 @@ public class MultimediaContentService {
         if(description == null) return List.of();
         return multimediaContentRepository.searchByDescription(description);
     }
-
-
 }

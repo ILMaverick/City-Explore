@@ -13,14 +13,6 @@ public class POIController {
     public POIController() {
     }
 
-    public void createPOIFromScratch() {
-        poiService.createPOIFromUser();
-    }
-
-    public void createPOIFromOSM() {
-        poiService.createPOIFromOSM();
-    }
-
     public void initializer() {
         poiService.initializer();
     }
@@ -36,13 +28,7 @@ public class POIController {
             }
         }
     }
-    public void searchPOIByName() {
-        poiService.searchPOIByName();
-    }
 
-    public void searchPOIByDescription() {
-        poiService.searchPOIByDescription();
-    }
     public void close() {
         poiService.close();
     }

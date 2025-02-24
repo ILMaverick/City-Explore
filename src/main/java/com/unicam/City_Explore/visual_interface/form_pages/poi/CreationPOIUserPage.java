@@ -50,7 +50,7 @@ public class CreationPOIUserPage extends FormPage {
         PointOfInterest newPOI = poiService.createPOIFromUser(name, description, lat, lon, poiType);
         
         System.out.println("PointOfInterest creato da zero:\n");
-        System.out.println(newPOI);
+        System.out.println(this.poiService.getPOIById(newPOI.getId()));
 	}
 
 	@Override

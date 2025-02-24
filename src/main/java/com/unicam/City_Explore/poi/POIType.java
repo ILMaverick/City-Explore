@@ -44,4 +44,19 @@ public enum POIType {
 	                return Altro;
 	        }
 	    }
+	 
+	 public static POIType fromString(String type) {
+	        switch (type.toLowerCase()) {
+	        case "turismo":
+	        	return Turismo;
+	        case "alloggio":
+	        	return Alloggio;
+	        case "servizio":
+	        	return Servizio;
+	        case "natura":
+	        	return Natura;
+	        default:
+	        	return Altro;
+	        }
+	}
 }
