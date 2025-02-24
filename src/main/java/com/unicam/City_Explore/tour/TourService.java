@@ -87,16 +87,20 @@ public class TourService {
                 // Supponendo che il builder non gestisca i percorsi, li settiamo direttamente sul tour
                 tour.getWayList().add(p);
             }
-            save(tour);
-            notificationListener.handleCreateTour(tour);
-            if(author.getRole() == Role.CONTRIBUTOR) {
-                validationService.sendTourForValidation(tour);
-            } else {
-                validationService.approveTour(tour.getId());
-            }
+            if(checkTourData(tour)) {
+                save(tour);
+                notificationListener.handleCreateTour(tour);
+                if (author.getRole() == Role.CONTRIBUTOR) {
+                    validationService.sendTourForValidation(tour);
+                } else {
+                    validationService.approveTour(tour.getId());
+                }
 
-            // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
-            return tour;
+                // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
+                return tour;
+            } else {
+                notificationListener.handleUpdateTour(tour);
+            }
         } else {
             notificationListener.handleDenialPermission(author);
         }
@@ -127,10 +131,14 @@ public class TourService {
                 tourSelected.setDescription(tour.getDescription());
                 tourSelected.setWayList(tour.getWayList());
                 tourSelected.setStatus(Status.APPROVED);
-                tourRepository.save(tourSelected);
-                notificationListener.handleUpdateTour(tour);
+                if(checkTourData(tourSelected)) {
+                    tourRepository.save(tourSelected);
+                    notificationListener.handleUpdateTour(tour);
+                    return tourSelected;
+                } else {
+                    notificationListener.handleRefuseTour(tourSelected);
+                }
             }
-            return tourSelected;
         } else {
             notificationListener.handleDenialPermission(newTourAuthor);
         }
@@ -138,10 +146,12 @@ public class TourService {
     }
 
     public List<Tour> searchTourByName(String name) {
+        if(name == null) return List.of();
         return tourRepository.searchByName(name);
     }
 
     public List<Tour> searchTourByDescription(String description) {
+        if(description == null) return List.of();
         return tourRepository.searchByDescription(description);
     }
 
@@ -155,6 +165,13 @@ public class TourService {
 
     public Tour getTourById(int id) {
         return tourRepository.findById(id).orElse(null);
+    }
+
+    private boolean checkTourData(Tour tour) {
+        if(tour == null) return false;
+        if(tour.getName()==null) return false;
+        if(tour.getDescription()==null) return false;
+        return !tour.getWayList().isEmpty();
     }
 
     public void close() {

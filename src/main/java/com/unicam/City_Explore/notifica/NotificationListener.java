@@ -394,4 +394,34 @@ public class NotificationListener {
         Notification notificationAdm = notificationService.createNotification("Hai una nuova richiesta. " + request, NotificationType.REQUEST);
         notificationService.sendNotification(notificationAdm, administrator);
     }
+
+    public void handleRefusePOI(PointOfInterest pointOfInterest) {
+        Notification notification = notificationService.createNotification("Il Punto di Interesse non e' stato aggiunto perche' ci sono campi errati o mancanti.", NotificationType.DENIAL);
+        notificationService.sendNotification(notification, pointOfInterest.getAuthor());
+    }
+
+    public void handleRefuseTour(Tour tour) {
+        Notification notification = notificationService.createNotification("L'Itinerario non e' stato aggiunto perche' ci sono campi errati o mancanti.", NotificationType.DENIAL);
+        notificationService.sendNotification(notification, tour.getAuthor());
+    }
+
+    public void handleRefuseContest(Contest contest) {
+        Notification notification = notificationService.createNotification("Il Contest non e' stato aggiunto perche' ci sono campi errati o mancanti.", NotificationType.DENIAL);
+        notificationService.sendNotification(notification, contest.getAuthor());
+    }
+
+    public void handleRefuseEvent(Event event) {
+        Notification notification = notificationService.createNotification("L'Evento non e' stato aggiunto perche' ci sono campi errati o mancanti.", NotificationType.DENIAL);
+        notificationService.sendNotification(notification, event.getAuthor());
+    }
+
+    public void handleRefuseMultimediaContent(MultimediaContent multimediaContent) {
+        Notification notification = notificationService.createNotification("Il Contenuto non e' stato aggiunto perche' ci sono campi errati o mancanti.", NotificationType.DENIAL);
+        notificationService.sendNotification(notification, multimediaContent.getAuthor());
+    }
+
+    public void handleDuplicatePOI(PointOfInterest existPOI, User author) {
+        Notification notification = notificationService.createNotification("Il Punto di Interesse " + existPOI.getName() + " esiste gia'.", NotificationType.ALERT);
+        notificationService.sendNotification(notification, author);
+    }
 }
