@@ -11,11 +11,9 @@ public class ManageValidationPage extends MenuPage {
 
 	public ManageValidationPage() {
 		super ("Gestione Validazione");
-		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Valida POI Pendenti");
-		chapters.add("Valida Itinerari Pendenti");
-		chapters.add("Valida Contenuti Multimediali Pendenti");
-		this.setChapters(chapters);
+		this.getChapters().add("Valida POI Pendenti");
+		this.getChapters().add("Valida Tour Pendenti");
+		this.getChapters().add("Valida Contenuti Multimediali Pendenti");
 	}
 
 	@Override

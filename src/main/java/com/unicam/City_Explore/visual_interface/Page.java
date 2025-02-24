@@ -9,7 +9,6 @@ public abstract class Page {
 
 	private String title;
 	private MenuPage previous;
-	private Page next;
 	
 	public Page() {
 		
@@ -45,19 +44,5 @@ public abstract class Page {
 	 */
 	public MenuPage getPrevious() {
 		return this.previous;
-	}
-
-	/**
-	 * @return the next
-	 */
-	public Page getNext() {
-		return next;
-	}
-
-	/**
-	 * @param next the next to set
-	 */
-	public void setNext(Page next) {
-		this.next = next;
 	}
 }

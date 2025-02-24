@@ -12,7 +12,7 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class ValidationContentPage extends FormPage {
 	
 	public ValidationContentPage() {
-		super();
+		super("Valida Contenuti Multimediali Pendenti");
 	}
 
 	@Override

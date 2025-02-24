@@ -24,7 +24,7 @@ public class LoadContentToPOIPage extends FormPage {
 	private MultimediaContentService contentService;
 	
 	public LoadContentToPOIPage() {
-		super("Creazione di un nuovo PointOfInterest da zero");
+		super("Creazione di un nuovo Contenuto Multimediale da zero");
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class ValidationPOIPage extends FormPage {
 	
 	public ValidationPOIPage() {
-		super();
+		super("Valida POI Pendenti");
 	}
 
 	@Override

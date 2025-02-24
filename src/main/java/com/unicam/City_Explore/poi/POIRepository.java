@@ -8,7 +8,7 @@ import com.unicam.City_Explore.elementi.Status;
 
 public interface POIRepository extends ElementRepository<PointOfInterest> {
 
-	Optional<PointOfInterest> findByNameAndCoordinates(String name, double lat, double lon);
+	Optional<PointOfInterest> findByNameAndLatitudeAndLongitude(String name, double lat, double lon);
 	List<PointOfInterest> searchByName(String name);
 	List<PointOfInterest> searchByDescription(String description);
 	List<PointOfInterest> searchByStatus(Status status);

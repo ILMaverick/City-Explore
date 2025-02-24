@@ -42,8 +42,6 @@ public class ValidationService {
 
 
     public ValidationService() {
-        // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
-        scanner = new Scanner(System.in);
     }
 
     public void validation() {
@@ -245,7 +243,7 @@ public class ValidationService {
         if(checkCurator(curator)) {
             if (multimediaContent != null && multimediaContent.getStatus()==Status.PENDING) {
                 multimediaContent.setStatus(Status.REJECTED);
-                deletionService.deleteContest(idMC,reason);
+                deletionService.deleteContest(idMC, reason);
                 notificationListener.handleRejectMultimediaContent(multimediaContent, reason);
             } else {
                 throw new RuntimeException("Contenuto non in stato PENDENTE per rifiuto");

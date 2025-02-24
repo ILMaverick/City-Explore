@@ -12,10 +12,9 @@ public class ManageContestPage extends MenuPage {
 
 	public ManageContestPage() {
 		super ("Gestione Contest");
-		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Crea Contest");
-		chapters.add("Aggiorna un Contest");
-		this.setChapters(chapters);
+		this.getChapters().add("Crea Contest");
+		this.getChapters().add("Aggiorna un Contest");
+		this.getChapters().add("Partecipa ad un Contest");
 	}
 
 	@Override

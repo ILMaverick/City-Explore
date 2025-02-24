@@ -21,7 +21,6 @@ public class MenuPageBuilder implements PageBuilder<MenuPage>{
 	@Autowired
 	private AuthorizationService authService;
 	
-	@Override
 	public Page buildPage(MenuPage toExecute, Scanner scanner) {
 		toExecute.setAuthorization();
 		toExecute.populateLinksTable();

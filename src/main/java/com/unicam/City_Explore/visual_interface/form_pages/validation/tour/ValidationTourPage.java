@@ -12,7 +12,7 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class ValidationTourPage extends FormPage {
 	
 	public ValidationTourPage() {
-		super();
+		super("Valida Tour Pendenti");
 	}
 
 	@Override

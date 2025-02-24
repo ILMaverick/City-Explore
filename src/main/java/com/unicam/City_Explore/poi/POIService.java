@@ -167,7 +167,7 @@ public class POIService {
     	User author = this.userService.getCurrentUser();
     	PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
         if(checkPOIData(poi)) {
-            Optional<PointOfInterest> optionalExistPointOfInterest = poiRepository.findByNameAndCoordinates(name, lat, lon);
+            Optional<PointOfInterest> optionalExistPointOfInterest = poiRepository.findByNameAndLatitudeAndLongitude(name, lat, lon);
             if(optionalExistPointOfInterest.isPresent()) {
                 PointOfInterest existPOI= optionalExistPointOfInterest.get();
                 notificationListener.handleDuplicatePOI(existPOI, author);
@@ -191,7 +191,7 @@ public class POIService {
     	User author = this.userService.getCurrentUser();
     	PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
         if(checkPOIData(poi)) {
-            Optional<PointOfInterest> optionalExistPointOfInterest = poiRepository.findByNameAndCoordinates(poi.getName(), poi.getLatitude(), poi.getLongitude());
+            Optional<PointOfInterest> optionalExistPointOfInterest = poiRepository.findByNameAndLatitudeAndLongitude(poi.getName(), poi.getLatitude(), poi.getLongitude());
             if(optionalExistPointOfInterest.isPresent()) {
                 PointOfInterest existPOI= optionalExistPointOfInterest.get();
                 notificationListener.handleDuplicatePOI(existPOI, author);

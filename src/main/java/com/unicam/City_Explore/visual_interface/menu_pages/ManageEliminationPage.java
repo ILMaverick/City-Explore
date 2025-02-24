@@ -12,13 +12,11 @@ public class ManageEliminationPage extends MenuPage{
 
 	public ManageEliminationPage() {
 		super ("Gestione Eliminazione");
-		ArrayList<String> chapters = new ArrayList<String>();
-		chapters.add("Elimina POI");
-		chapters.add("Elimina Itinerario");
-		chapters.add("Elimina Contest");
-		chapters.add("Elimina Evento");
-		chapters.add("Elimina Contenuto");
-		this.setChapters(chapters);
+		this.getChapters().add("Elimina POI");
+		this.getChapters().add("Elimina Itinerario");
+		this.getChapters().add("Elimina Contest");
+		this.getChapters().add("Elimina Evento");
+		this.getChapters().add("Elimina Contenuto");
 	}
 
 	@Override

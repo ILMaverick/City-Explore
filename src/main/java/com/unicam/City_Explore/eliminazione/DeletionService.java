@@ -44,8 +44,6 @@ public class DeletionService {
     private UserRepository userRepository;
 
     public DeletionService() {
-        // Inizializza lo scanner (non lo chiudiamo perché chiudere System.in potrebbe causare problemi se usato in seguito)
-        scanner = new Scanner(System.in);
     }
 
     public void deletePOI() {
