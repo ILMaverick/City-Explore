@@ -120,12 +120,15 @@ public class MultimediaContentService {
             multimediaContent.setDimension(dimension);
             multimediaContent.setResolution(resolution);
             multimediaContent.setDataCreation(LocalDateTime.now());
-            multimediaContentRepository.save(multimediaContent);
-            notificationListener.handleCreateMultimediaContent(multimediaContent);
-            return multimediaContent;
+            if(checkMultimediaContentData(multimediaContent)) {
+                multimediaContentRepository.save(multimediaContent);
+                notificationListener.handleCreateMultimediaContent(multimediaContent);
+                return multimediaContent;
+            } else {
+                notificationListener.handleRefuseMultimediaContent(multimediaContent);
+            }
         } else {
             notificationListener.handleDenialPermission(author);
-
         }
         return null;
     }
@@ -162,13 +165,13 @@ public class MultimediaContentService {
         if(tour != null & multimediaContent != null) {
             User author = multimediaContent.getAuthor();
             if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTORIZED_CONTRIBUTOR ||
-                    author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR) {
+                    author.getRole() == Role.CURATOR || author.getRole() == Role.ADMINISTRATOR || author.getRole() == Role.AUTHENTICATED_TOURIST) {
                 multimediaContent.setTour(tour);
                 multimediaContentRepository.save(multimediaContent);
                 tour.getMultimediaContentList().add(multimediaContent);
                 tourRepository.save(tour);
                 notificationListener.handleLoadMultimediaContentToTour(tour, multimediaContent);
-                if(author.getRole() == Role.CONTRIBUTOR) {
+                if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_TOURIST) {
                     validationService.sendMultimediaContentForValidation(multimediaContent);
                 } else {
                     validationService.approveMultimediaContent(multimediaContent.getId());
@@ -194,9 +197,13 @@ public class MultimediaContentService {
                 multimediaContentSelected.setResolution(multimediaContent.getResolution());
                 multimediaContentSelected.setDataCreation(LocalDateTime.now());
                 multimediaContentSelected.setStatus(Status.APPROVED);
-                multimediaContentRepository.save(multimediaContentSelected);
-                notificationListener.handleUpdateMultimediaContent(multimediaContent);
-                return multimediaContentSelected;
+                if(checkMultimediaContentData(multimediaContentSelected)) {
+                    multimediaContentRepository.save(multimediaContentSelected);
+                    notificationListener.handleUpdateMultimediaContent(multimediaContent);
+                    return multimediaContentSelected;
+                } else {
+                    notificationListener.handleRefuseMultimediaContent(multimediaContentSelected);
+                }
             } else{
                 notificationListener.handleDenialPermission(author);
             }
@@ -210,6 +217,15 @@ public class MultimediaContentService {
 
     public MultimediaContent getMultimediaContentById(int id) {
         return multimediaContentRepository.findById(id).orElse(null);
+    }
+
+    private boolean checkMultimediaContentData(MultimediaContent multimediaContent) {
+        if(multimediaContent == null) return false;
+        if(multimediaContent.getName() == null) return false;
+        if(multimediaContent.getDescription() == null) return false;
+        if(multimediaContent.getFormatFileEnum() == null) return false;
+        if(multimediaContent.getDimension() == 0) return false;
+        return multimediaContent.getResolution() != 0 ;
     }
 
     private User getCurrentUser() {

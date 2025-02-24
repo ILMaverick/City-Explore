@@ -14,7 +14,8 @@ public class TourController {
     }
 
     public void createTourFromPOIs() {
-        tourService.createTourFromPOIs();
+
+        //tourService.createTourFromPOIs();
     }
 
     /**
@@ -33,11 +34,11 @@ public class TourController {
     }
 
     public void searchTourByName() {
-        tourService.searchTourByName();
+        //tourService.searchTourByName();
     }
 
     public void searchTourByDescription() {
-        tourService.searchTourByDescription();
+        //tourService.searchTourByDescription();
     }
     
     public void close() {

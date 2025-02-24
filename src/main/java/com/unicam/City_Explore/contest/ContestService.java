@@ -122,9 +122,13 @@ public class ContestService {
             contest.setGoal(goal);
             contest.setPrize(prize);
             contest.setDeadline(deadline);
-            contestRepository.save(contest);
-            notificationListener.handleNewContest(contest);
-            return contest;
+            if(checkContestData(contest)) {
+                contestRepository.save(contest);
+                notificationListener.handleNewContest(contest);
+                return contest;
+            } else {
+                notificationListener.handleRefuseContest(contest);
+            }
         } else {
             notificationListener.handleDenialPermission(author);
         }
@@ -142,10 +146,14 @@ public class ContestService {
                 contestSelected.setPrize(contest.getPrize());
                 contestSelected.setDeadline(contest.getDeadline());
                 contestSelected.setActive(contest.getActive());
-                contestRepository.save(contestSelected);
-                notificationListener.handleUpdateContest(contest);
+                if(checkContestData(contestSelected)) {
+                    contestRepository.save(contestSelected);
+                    notificationListener.handleUpdateContest(contest);
+                    return contestSelected;
+                } else {
+                    notificationListener.handleRefuseContest(contestSelected);
+                }
             }
-            return contestSelected;
         } else {
             notificationListener.handleDenialPermission(contest.getAuthor());
         }
@@ -242,6 +250,15 @@ public class ContestService {
             notificationListener.handleDenialPermission(animatorAuthor);
         }
         return null;
+    }
+
+    private boolean checkContestData(Contest contest) {
+        if(contest == null) return false;
+        if(contest.getName()==null) return false;
+        if(contest.getDescription()==null) return false;
+        if(contest.getGoal() == null) return false;
+        if(contest.getRules() == null) return false;
+        return contest.getDeadline() != null;
     }
 
     private User getCurrentUser() {

@@ -221,9 +221,13 @@ public class EventService {
                              double price, LocalDateTime time, boolean isOpen) {
         if(author.getRole() == Role.ANIMATOR) {
             Event event = new Event(name, description, author, scope, activity, organization, theme, category, price, time, isOpen);
-            eventRepository.save(event);
-            notificationListener.handleNewEvent(event);
-            return event;
+            if(checkEventData(event)) {
+                eventRepository.save(event);
+                notificationListener.handleNewEvent(event);
+                return event;
+            } else {
+                notificationListener.handleRefuseEvent(event);
+            }
         } else {
             notificationListener.handleDenialPermission(author);
         }
@@ -284,10 +288,14 @@ public class EventService {
                 eventSelected.setTime(event.getTime());
                 eventSelected.setPrice(event.getPrice());
                 eventSelected.setIsOpen(eventSelected.getIsOpen());
-                eventRepository.save(eventSelected);
-                notificationListener.handleUpdateEvent(event);
+                if(checkEventData(eventSelected)) {
+                    eventRepository.save(eventSelected);
+                    notificationListener.handleUpdateEvent(event);
+                    return eventSelected;
+                } else {
+                    notificationListener.handleRefuseEvent(eventSelected);
+                }
             }
-            return eventSelected;
         } else {
             notificationListener.handleDenialPermission(animator);
         }
@@ -299,10 +307,12 @@ public class EventService {
     }
 
     public List<Event> searchEventByName(String name) {
+        if(name == null) return List.of();
         return eventRepository.searchByName(name);
     }
 
     public List<Event> searchEventByDescription(String description) {
+        if(description == null) return List.of();
         return eventRepository.searchByDescription(description);
     }
 
@@ -346,6 +356,17 @@ public class EventService {
         }
     }
 
+    private boolean checkEventData(Event event) {
+        if(event == null) return false;
+        if(event.getName()==null) return false;
+        if(event.getDescription()==null) return false;
+        if(event.getScope()==null) return false;
+        if(event.getActivity()==null) return false;
+        if(event.getOrganization()==null) return false;
+        if(event.getTheme()==null) return false;
+        if(event.getCategory()==null) return false;
+        return event.getTime()!=null;
+    }
 
     // Metodo dummy per ottenere l'utente corrente (da sostituire con logica reale)
     private User getCurrentUser() {

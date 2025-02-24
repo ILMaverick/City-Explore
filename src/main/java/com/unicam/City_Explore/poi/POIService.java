@@ -1,6 +1,7 @@
 package com.unicam.City_Explore.poi;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import com.unicam.City_Explore.elementi.Status;
@@ -165,30 +166,52 @@ public class POIService {
     public PointOfInterest createPOIFromUser(String name, String description, double lat, double lon, POIType type) {
     	User author = this.userService.getCurrentUser();
     	PointOfInterest poi = PointOfInterestFactory.create(name, description, lat, lon, author, type);
-        notificationListener.handleCreatePOI(poi);
-        if(author.getRole() == Role.CONTRIBUTOR) {
-            validationService.sendPOIForValidation(poi);
+        if(checkPOIData(poi)) {
+            Optional<PointOfInterest> optionalExistPointOfInterest = poiRepository.findByNameAndCoordinates(name, lat, lon);
+            if(optionalExistPointOfInterest.isPresent()) {
+                PointOfInterest existPOI= optionalExistPointOfInterest.get();
+                notificationListener.handleDuplicatePOI(existPOI, author);
+                return existPOI;
+            }
+            poiRepository.save(poi);
+            notificationListener.handleCreatePOI(poi);
+            if (author.getRole() == Role.CONTRIBUTOR) {
+                validationService.sendPOIForValidation(poi);
+            } else {
+                validationService.approvePOI(poi.getId());
+            }
+            return poi;
         } else {
-            validationService.approvePOI(poi.getId());
+            notificationListener.handleRefusePOI(poi);
         }
-        return poiRepository.save(poi);
+        return null;
     }
 
     public PointOfInterest createPOIFromOSM(OverpassElement element, POIType type) {
     	User author = this.userService.getCurrentUser();
     	PointOfInterest poi = PointOfInterestFactory.createFromOverpassElement(element, author, type);
-        poiRepository.save(poi);
-        notificationListener.handleCreatePOI(poi);
-        if(author.getRole() == Role.CONTRIBUTOR) {
-            validationService.sendPOIForValidation(poi);
+        if(checkPOIData(poi)) {
+            Optional<PointOfInterest> optionalExistPointOfInterest = poiRepository.findByNameAndCoordinates(poi.getName(), poi.getLatitude(), poi.getLongitude());
+            if(optionalExistPointOfInterest.isPresent()) {
+                PointOfInterest existPOI= optionalExistPointOfInterest.get();
+                notificationListener.handleDuplicatePOI(existPOI, author);
+                return existPOI;
+            }
+            poiRepository.save(poi);
+            notificationListener.handleCreatePOI(poi);
+            if (author.getRole() == Role.CONTRIBUTOR) {
+                validationService.sendPOIForValidation(poi);
+            } else {
+                validationService.approvePOI(poi.getId());
+            }
+            return poi;
         } else {
-            validationService.approvePOI(poi.getId());
+            notificationListener.handleRefusePOI(poi);
         }
-        return poi;
+        return null;
     }
 
     public PointOfInterest updatePOI(int idPOI, PointOfInterest pointOfInterest) {
-        User newPoiAuthor = pointOfInterest.getAuthor();
         PointOfInterest pointOfInterestSelected = getPOIById(idPOI);
         if (pointOfInterestSelected != null && pointOfInterestSelected.getStatus()== Status.UPDATED) {
             pointOfInterestSelected.setName(pointOfInterest.getName());
@@ -201,21 +224,29 @@ public class POIService {
 			 */
             pointOfInterestSelected.setType(pointOfInterest.getType());
             pointOfInterestSelected.setStatus(Status.APPROVED);
-            poiRepository.save(pointOfInterest);
-            notificationListener.handleUpdatePOI(pointOfInterestSelected);
+            if(checkPOIData(pointOfInterestSelected)) {
+                poiRepository.save(pointOfInterest);
+                notificationListener.handleUpdatePOI(pointOfInterestSelected);
+                return pointOfInterestSelected;
+            } else {
+                notificationListener.handleRefusePOI(pointOfInterestSelected);
+            }
         }
-        return pointOfInterestSelected;
+        return null;
     }
 
     public List<PointOfInterest> searchPOIByName(String name) {
+        if(name == null) return List.of();
         return poiRepository.searchByName(name);
     }
 
     public List<PointOfInterest> searchPOIByDescription(String description) {
+        if(description == null) return List.of();
         return poiRepository.searchByDescription(description);
     }
 
     public List<PointOfInterest> searchPOIByType(POIType type) {
+        if(type == null) return List.of();
         return poiRepository.searchByType(type);
     }
 
@@ -225,6 +256,13 @@ public class POIService {
 
     public PointOfInterest getPOIById(int id) {
         return poiRepository.findById(id).orElse(null);
+    }
+
+    private boolean checkPOIData(PointOfInterest pointOfInterest) {
+        if(pointOfInterest == null) return false;
+        if(pointOfInterest.getName()==null) return false;
+        if(pointOfInterest.getDescription()==null) return false;
+        return pointOfInterest.getLatitude() != 0 || pointOfInterest.getLongitude() != 0;
     }
 
     public void close() {
