@@ -16,21 +16,6 @@ public class EventController {
     public EventController() {
     }
 
-    public void initializer() {
-        eventService.initializer();
-    }
-
-    public void createEventFromInput() {
-        eventService.createEventFromInput();
-    }
-
-    public void addEventToPOI() {
-        eventService.addEventToPOI();
-    }
-
-    public void updateEvent() {
-        eventService.updateEvent();
-    }
     
     /**
      * Visualizza tutti gli eventi salvati.
@@ -59,15 +44,5 @@ public class EventController {
         }
     }
 
-    public void searchEventByName() {
-        eventService.searchEventByName();
-    }
 
-    public void searchEventByDescription() {
-        eventService.searchEventByDescription();
-    }
-
-    public void close() {
-        eventService.close();
-    }
 }

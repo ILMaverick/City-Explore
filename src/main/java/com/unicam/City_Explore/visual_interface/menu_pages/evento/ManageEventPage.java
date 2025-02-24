@@ -31,7 +31,6 @@ public class ManageEventPage extends MenuPage {
 		this.authService.addAuthorization("Crea Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Aggiungi POI ad un Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Aggiorna un Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
-		
 	}
 
 	@Override
