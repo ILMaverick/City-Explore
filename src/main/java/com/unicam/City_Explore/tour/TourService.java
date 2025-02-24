@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.validazione.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,15 +94,11 @@ public class TourService {
                 } else {
                     validationService.approveTour(tour.getId());
                 }
-
-                // scanner.close(); // Attenzione a non chiudere System.in se usato altrove
-                return tour;
             } else {
                 notificationListener.handleUpdateTour(tour);
             }
-
-        return null;
-    }
+            return tour;
+            }
     
     /**
      * Raggruppa le tappe in gruppi per la creazione dei percorsi.
@@ -120,22 +115,20 @@ public class TourService {
     }
 
 
-    public Tour updateTour(int idTour, Tour tour) {
-        Tour tourSelected = getTourById(idTour);
-        if (tourSelected != null && tourSelected.getStatus()== Status.UPDATED) {
-            tourSelected.setName(tour.getName());
-            tourSelected.setDescription(tour.getDescription());
-            tourSelected.setWayList(tour.getWayList());
-            tourSelected.setStatus(Status.APPROVED);
-            if(checkTourData(tourSelected)) {
-                tourRepository.save(tourSelected);
-                notificationListener.handleUpdateTour(tour);
-                return tourSelected;
-            } else {
-                notificationListener.handleRefuseTour(tourSelected);
-            }
+    public Tour updateTour(int idTour, String name, String description) {
+        Tour tour = getTourById(idTour);
+        if (!description.isEmpty()) {
+            tour.setDescription(description);
+        }if (!name.isEmpty()) {
+            tour.setName(name);
         }
-        return null;
+        if(checkTourData(tour)) {
+                tourRepository.save(tour);
+                notificationListener.handleUpdateTour(tour);
+            } else {
+                notificationListener.handleRefuseTour(tour);
+            }
+        return getTourById(tour.getId());
     }
 
     public List<Tour> searchTourByName(String name) {

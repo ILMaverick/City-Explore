@@ -70,9 +70,7 @@ public class UpdatePOIPage extends FormPage {
 	        
 	        System.out.println("Hai aggiornato il seguente Punto di Interesse: ");
 	        System.out.println(this.poiService.getPOIById(selectedPOI.getId()));
-	        
-		
-	}
+	        }
 
 	@Override
 	public Page getNext() {

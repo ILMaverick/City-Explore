@@ -30,9 +30,9 @@ public class Way {
 	
 	@Override
 	public String toString() {
-		return "Percorso [lunghezza=" + length +
-				", durata=" + duration +
-				", type=" + type;
+		return "Percorso [km=" + length +
+				", h=" + duration +
+				", type=" + type +"]";
 	}
 
 	public double getLength() {

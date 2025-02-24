@@ -115,8 +115,13 @@ public class POIService {
             } catch (IllegalArgumentException e) {
             }
         }
-        
-        return poiRepository.save(selectedPOI);
+        if(checkPOIData(selectedPOI)) {
+            poiRepository.save(selectedPOI);
+            notificationListener.handleUpdatePOI(selectedPOI);
+        } else {
+            notificationListener.handleRefusePOI(selectedPOI);
+        }
+        return getPOIById(selectedPOI.getId());
     }
 
     public List<PointOfInterest> searchPOIByName(String name) {

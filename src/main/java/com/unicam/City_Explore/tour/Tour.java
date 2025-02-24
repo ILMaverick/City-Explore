@@ -37,10 +37,10 @@ public class Tour extends AbstractElement {
 	public String toString() {
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("Tour {")
-	      .append("\n  id='").append(super.getId()).append('\'')
-	      .append(",\n  name='").append(super.getName()).append('\'')
-	      .append(",\n  description='").append(super.getDescription()).append('\'')
-	      .append(",\n  percorsi=");
+	      .append("\n  id=").append(super.getId()).append('\'')
+	      .append(",\n  name=").append(super.getName()).append('\'')
+	      .append(",\n  descr='").append(super.getDescription()).append('\'')
+	      .append(",\n  way=");
 	    
 	    if (wayList == null || wayList.isEmpty()) {
 	        sb.append("Nessun percorso");
@@ -52,7 +52,7 @@ public class Tour extends AbstractElement {
 	    }
 	    
 	    sb.append(",\n  author=").append(super.getAuthor().getUsername())
-	      .append(",\n  published=").append(super.isPublished())
+	      .append(",\n  Status=").append(super.getStatus())
 	      .append("\n}");
 	    
 	    return sb.toString();
