@@ -1,8 +1,6 @@
 package com.unicam.City_Explore.autorizzazione;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,7 @@ public class AuthorizationService {
 	@Autowired
 	private UserService userService;
 	
-	private final HashMap<String, Set<Role>> authorization = new HashMap<String, Set<Role>>();
+	private final Map<String, Set<Role>> authorization = new HashMap<String, Set<Role>>();
 	
 	public AuthorizationService() {
 		super();
@@ -25,14 +23,10 @@ public class AuthorizationService {
 	public void addAuthorization(String page, Role... roles) {
 		if (authorization.containsKey(page)) {
 			Set<Role> setRole = authorization.get(page);
-			for (Role role : roles) {
-				setRole.add(role);
-			}
+            Collections.addAll(setRole, roles);
 		} else {
 			Set<Role> newSetRole = new HashSet<Role>();
-			for (Role role : roles) {
-				newSetRole.add(role);
-			}
+            Collections.addAll(newSetRole, roles);
 			authorization.put(page, newSetRole);
 		}
 	}

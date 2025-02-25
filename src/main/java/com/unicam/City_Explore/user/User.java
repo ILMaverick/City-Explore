@@ -27,7 +27,7 @@ public class User {
 	public Role role;
 	@OneToMany(fetch = FetchType.EAGER)
 	private final List<Notification> notificationList;
-	@OneToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private final List<Event> eventList;
 	@OneToMany
 	private final List<ContestParticipation> participationContestList;

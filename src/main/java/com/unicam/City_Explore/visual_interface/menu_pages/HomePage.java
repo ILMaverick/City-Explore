@@ -32,6 +32,8 @@ public class HomePage extends MenuPage{
 	private InizializerPage inizializerPage;
 	@Autowired
 	private SearchPage searchPage;
+	@Autowired
+	private ManageUserPage manageUserPage;
 	
 	public HomePage() {
 		super ("Menu Principale");
@@ -44,6 +46,7 @@ public class HomePage extends MenuPage{
 		this.getChapters().add("Validazione Elementi e Contenuti Pendenti");
 		this.getChapters().add("Eliminazione Elementi e Contenuti");
 		this.getChapters().add("Inizializza Elementi");
+		this.getChapters().add("Gestione Utenti");
 
 	}
 
@@ -53,12 +56,12 @@ public class HomePage extends MenuPage{
 		this.authService.addAuthorization("Gestione POI", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.CURATOR);
 		this.authService.addAuthorization("Gestione Tour", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.CURATOR);
 		this.authService.addAuthorization("Gestione Contest", Role.ANIMATOR, Role.ADMINISTRATOR);
-		this.authService.addAuthorization("Gestione Evento", Role.ANIMATOR, Role.ADMINISTRATOR);
+		this.authService.addAuthorization("Gestione Evento", Role.ANIMATOR, Role.ADMINISTRATOR, Role.TOURIST, Role.AUTHENTICATED_TOURIST);
 		this.authService.addAuthorization("Gestione Contenuti Multimediali", Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.AUTHENTICATED_TOURIST, Role.ADMINISTRATOR);
 		this.authService.addAuthorization("Validazione Elementi e Contenuti Pendenti", Role.CURATOR, Role.ADMINISTRATOR, Role.ANIMATOR);
 		this.authService.addAuthorization("Eliminazione Elementi e Contenuti", Role.CURATOR, Role.ADMINISTRATOR, Role.ANIMATOR);
 		this.authService.addAuthorization("Inizializza Elementi",Role.CONTRIBUTOR, Role.AUTHORIZED_CONTRIBUTOR, Role.ADMINISTRATOR, Role.ANIMATOR, Role.CURATOR);
-
+		this.authService.addAuthorization("Gestione Utenti", Role.ADMINISTRATOR);
 	}
 
 	@Override
@@ -72,5 +75,6 @@ public class HomePage extends MenuPage{
 		this.getLinksTable().put("Validazione Elementi e Contenuti Pendenti", this.manageValidationPage);
 		this.getLinksTable().put("Eliminazione Elementi e Contenuti", this.eliminationPage);
 		this.getLinksTable().put("Inizializza Elementi", this.inizializerPage);
+		this.getLinksTable().put("Gestione Utenti", this.manageUserPage);
 	}
 }

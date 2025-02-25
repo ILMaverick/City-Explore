@@ -3,7 +3,6 @@ package com.unicam.City_Explore.evento;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class Event extends AbstractElement {
 	private final List<PointOfInterest> pointOfInterestList = new ArrayList<>();
 	@ManyToMany(fetch = FetchType.EAGER)
 	private final List<Contest> contestList = new ArrayList<>();
-	@OneToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	private final List<User> participants = new ArrayList<>();
 	
 	public Event() {
