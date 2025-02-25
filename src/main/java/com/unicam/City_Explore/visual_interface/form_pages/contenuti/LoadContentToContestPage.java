@@ -11,10 +11,6 @@ import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.contenuti.MultimediaContentService;
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.contest.ContestService;
-import com.unicam.City_Explore.evento.Event;
-import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.POIType;
-import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
@@ -85,7 +81,7 @@ public class LoadContentToContestPage extends FormPage {
 	        float resolution = scanner.nextFloat();
 	        MultimediaContent content = contentService.createMultimediaContent(name, description, format, duration, dimension, resolution);
 	        
-	        //contentService.loadMultimediaContentToEvent(selectedEvent.getId(), content.getId());
+	        contentService.loadMultimediaContentToEvent(selectedContest.getId(), content.getId());
 	        
 	        System.out.println("Contenuto Multimediale aggiunto al Contest: ");
 	        System.out.println(this.contentService.getMultimediaContentById(content.getId()));

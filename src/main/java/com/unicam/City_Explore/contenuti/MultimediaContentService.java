@@ -3,7 +3,11 @@ package com.unicam.City_Explore.contenuti;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.unicam.City_Explore.contest.Contest;
+import com.unicam.City_Explore.contest.ContestRepository;
 import com.unicam.City_Explore.elementi.Status;
+import com.unicam.City_Explore.evento.Event;
+import com.unicam.City_Explore.evento.EventRepository;
 import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.notifica.NotificationListener;
@@ -24,6 +28,10 @@ public class MultimediaContentService {
     private POIRepository poiRepository;
     @Autowired
     private TourRepository tourRepository;
+    @Autowired
+    private EventRepository eventRepository;
+    @Autowired
+    private ContestRepository contestRepository;
     @Autowired
     private NotificationListener notificationListener;
     @Autowired
@@ -94,9 +102,8 @@ public class MultimediaContentService {
             } else {
                 validationService.approveMultimediaContent(multimediaContent.getId());
             }
-            return poi;
-        }
-		return null;
+            }
+        return poi;
     }
 
     public Tour loadMultimediaContentToTour(int idTour, int idMC) {
@@ -114,10 +121,47 @@ public class MultimediaContentService {
             } else {
                 validationService.approveMultimediaContent(multimediaContent.getId());
             }
+            }
             return tour;
         }
-        return null;
-    }
+    
+    public Event loadMultimediaContentToEvent(int idEvent, int idMC) {
+        Event event = eventRepository.findById(idEvent).orElse(null);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        if(event != null & multimediaContent != null) {
+            User author = multimediaContent.getAuthor();
+            multimediaContent.setAttachedElement(event);
+            multimediaContentRepository.save(multimediaContent);
+            event.getMultimediaContentList().add(multimediaContent);
+            eventRepository.save(event);
+            notificationListener.handleLoadMultimediaContentToEvent(event, multimediaContent);
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_TOURIST) {
+                validationService.sendMultimediaContentForValidation(multimediaContent);
+            } else {
+                validationService.approveMultimediaContent(multimediaContent.getId());
+            }
+            }
+            return event;
+        }
+    
+    public Contest loadMultimediaContentToContest(int idEvent, int idMC) {
+        Contest contest = contestRepository.findById(idEvent).orElse(null);
+        MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
+        if(contest != null & multimediaContent != null) {
+            User author = multimediaContent.getAuthor();
+            multimediaContent.setAttachedElement(contest);
+            multimediaContentRepository.save(multimediaContent);
+            contest.getMultimediaContentList().add(multimediaContent);
+            contestRepository.save(contest);
+            notificationListener.handleLoadMultimediaContentToContest(contest, multimediaContent);
+            if(author.getRole() == Role.CONTRIBUTOR || author.getRole() == Role.AUTHENTICATED_TOURIST) {
+                validationService.sendMultimediaContentForValidation(multimediaContent);
+            } else {
+                validationService.approveMultimediaContent(multimediaContent.getId());
+            }
+            }
+            return contest;
+        }
 
     public MultimediaContent updateMultimediaContent(int idMC, MultimediaContent multimediaContent) {
         MultimediaContent multimediaContentSelected = getMultimediaContentById(idMC);

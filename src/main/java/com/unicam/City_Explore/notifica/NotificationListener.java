@@ -207,6 +207,28 @@ public class NotificationListener {
             notificationService.sendNotification(notification, multimediaContent.getAuthor());
         }
     }
+    
+    public void handleLoadMultimediaContentToEvent(Event event, MultimediaContent multimediaContent) {
+        Notification notification = notificationService.createNotification("Un Contenuto e' stato aggiunto ad un Evento "
+                + event.getName() + ", " + multimediaContent.getName(), NotificationType.UPDATE);
+        if(event.getAuthor().equals(multimediaContent.getAuthor())) {
+            notificationService.sendNotification(notification, event.getAuthor());
+        } else {
+            notificationService.sendNotification(notification, event.getAuthor());
+            notificationService.sendNotification(notification, multimediaContent.getAuthor());
+        }
+    }
+    
+    public void handleLoadMultimediaContentToContest(Contest contest, MultimediaContent multimediaContent) {
+        Notification notification = notificationService.createNotification("Un Contenuto e' stato aggiunto ad un Contest "
+                + contest.getName() + ", " + multimediaContent.getName(), NotificationType.UPDATE);
+        if(contest.getAuthor().equals(multimediaContent.getAuthor())) {
+            notificationService.sendNotification(notification, contest.getAuthor());
+        } else {
+            notificationService.sendNotification(notification, contest.getAuthor());
+            notificationService.sendNotification(notification, multimediaContent.getAuthor());
+        }
+    }
 
     public void handleUpdateMultimediaContent(MultimediaContent multimediaContent) {
         Notification notification = notificationService.createNotification("E' stato aggiornato un Contenuto esistente "

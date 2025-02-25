@@ -11,9 +11,6 @@ import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.contenuti.MultimediaContentService;
 import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.evento.EventService;
-import com.unicam.City_Explore.poi.POIService;
-import com.unicam.City_Explore.poi.POIType;
-import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.visual_interface.Page;
 import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 
@@ -83,7 +80,7 @@ public class LoadContentToEventPage extends FormPage {
 	        float resolution = scanner.nextFloat();
 	        MultimediaContent content = contentService.createMultimediaContent(name, description, format, duration, dimension, resolution);
 	        
-	        //contentService.loadMultimediaContentToEvent(selectedEvent.getId(), content.getId());
+	        contentService.loadMultimediaContentToEvent(selectedEvent.getId(), content.getId());
 	        
 	        System.out.println("Contenuto Multimediale aggiunto all'Evento: ");
 	        System.out.println(this.contentService.getMultimediaContentById(content.getId()));
