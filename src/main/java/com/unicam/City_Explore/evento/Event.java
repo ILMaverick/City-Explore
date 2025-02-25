@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.unicam.City_Explore.contest.Contest;
 import com.unicam.City_Explore.elementi.AbstractElement;
+import com.unicam.City_Explore.elementi.Status;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.user.User;
 
@@ -49,6 +50,7 @@ public class Event extends AbstractElement {
 		this.price = price;
 		this.time = time;
 		this.isOpen = isOpen;
+		super.setStatus(Status.APPROVED);
 	}
 	
 	@Override
@@ -66,7 +68,7 @@ public class Event extends AbstractElement {
 //                ",\n  pointOfInterestList=" + pointOfInterestList +
                 ",\n  author=" + super.getAuthor() +
                 ",\n  time=" + time +
-                ",\n  published=" + super.isPublished() +
+                ",\n  Status=" + super.getStatus() +
                 "\n}";
     }
 

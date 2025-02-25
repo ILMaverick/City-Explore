@@ -1,6 +1,7 @@
 package com.unicam.City_Explore.evento;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,30 +79,7 @@ public class EventService {
     public Event getEventById(int id) {
         return eventRepository.findById(id).orElse(null);
     }
-
-    public Event updateEvent(int idEvent, Event event) {
-        Event eventSelected = eventRepository.findById(idEvent).orElse(null);
-        if (eventSelected != null) {
-            eventSelected.setName(event.getName());
-            eventSelected.setDescription(event.getDescription());
-            eventSelected.setScope(event.getScope());
-            eventSelected.setActivity(event.getActivity());
-            eventSelected.setOrganization(event.getOrganization());
-            eventSelected.setTheme(event.getTheme());
-            eventSelected.setCategory(event.getCategory());
-            eventSelected.setTime(event.getTime());
-            eventSelected.setPrice(event.getPrice());
-            eventSelected.setIsOpen(eventSelected.getIsOpen());
-            if(checkEventData(eventSelected)) {
-                eventRepository.save(eventSelected);
-                notificationListener.handleUpdateEvent(event);
-                return eventSelected;
-            } else {
-                notificationListener.handleRefuseEvent(eventSelected);
-            }
-        }
-        return null;
-    }
+        
 
     public List<PointOfInterest> getAllPoiFromEventRepository() {
         return poiRepository.findAll();
@@ -156,6 +134,57 @@ public class EventService {
         if(event.getCategory()==null) return false;
         return event.getTime()!=null;
     }
+
+	public Event updateEvent(int idEvent, String name, String description, String scope, String activity, String organization,
+			String theme, String category, String price, String time, String isOpen) {
+		Event selectedEvent = eventRepository.findById(idEvent).orElse(null);
+        if (!description.isEmpty()) {
+            selectedEvent.setDescription(description);
+        }if (!name.isEmpty()) {
+            selectedEvent.setName(name);
+        }
+        if (!scope.isEmpty()) {
+            selectedEvent.setScope(scope);
+        }
+        if (!activity.isEmpty()) {
+            selectedEvent.setActivity(activity);
+        }
+        if (!organization.isEmpty()) {
+            selectedEvent.setOrganization(organization);
+        }
+        if (!theme.isEmpty()) {
+            selectedEvent.setTheme(theme);
+        }
+        if (!category.isEmpty()) {
+            selectedEvent.setCategory(category);
+        }
+        if (!price.isEmpty()) {
+        	try {
+                double prezzo = Double.parseDouble(price);
+                selectedEvent.setPrice(prezzo);
+            } catch (NumberFormatException e) {
+            }
+        }
+        if (!time.isEmpty()) {
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        	LocalDateTime timer = LocalDateTime.parse(time, formatter);
+            selectedEvent.setTime(timer);
+        }
+        if(!isOpen.isEmpty()) {
+        	try {
+        		boolean open = Boolean.parseBoolean(isOpen);
+        		selectedEvent.setIsOpen(open);
+        	}	 catch (NumberFormatException e) {
+        	}
+        }
+        if(checkEventData(selectedEvent)) {
+            eventRepository.save(selectedEvent);
+            notificationListener.handleUpdateEvent(selectedEvent);
+        } else {
+            notificationListener.handleRefuseEvent(selectedEvent);
+        }
+        return getEventById(selectedEvent.getId());
+	}
 
 
 

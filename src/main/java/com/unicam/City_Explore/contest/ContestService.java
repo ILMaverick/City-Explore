@@ -123,6 +123,10 @@ public class ContestService {
     public List<Contest> getAllContest() {
         return contestRepository.findAll();
     }
+    
+    public Contest getContestById(int id) {
+    	return contestRepository.findById(id).get();
+    }
 
     public List<Contest> searchContestByName(String name) {
         if(name == null) return List.of();
@@ -228,4 +232,29 @@ public class ContestService {
         }
     }
 
+	public Contest updateContest(int id, String name, String description, String roles, String goal, String price) {
+		Contest selectedContest = contestRepository.findById(id).orElse(null);
+        if (!description.isEmpty()) {
+            selectedContest.setDescription(description);
+        }if (!name.isEmpty()) {
+            selectedContest.setName(name);
+        }
+        if (!roles.isEmpty()) {
+            selectedContest.setRules(roles);
+        }
+        if (!goal.isEmpty()) {
+            selectedContest.setGoal(goal);
+        }
+        if (!price.isEmpty()) {
+            selectedContest.setPrize(price);
+        }
+        if(checkContestData(selectedContest)) {
+            contestRepository.save(selectedContest);
+            notificationListener.handleUpdateContest(selectedContest);
+        } else {
+            notificationListener.handleRefuseContest(selectedContest);
+        }
+        return getContestById(selectedContest.getId());
+	}
+	
 }

@@ -1,11 +1,11 @@
 package com.unicam.City_Explore.visual_interface.form_pages.evento;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.evento.EventService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,62 +24,70 @@ public class UpdateEventPage extends FormPage {
 
 	@Override
 	public void startForm(Scanner scanner) {
-		System.out.println("=== Aggiorna Evento ===");
+		List<Event> eventList = eventService.getAllEvent();
+        if (eventList == null || eventList.isEmpty()) {
+            System.out.println("Nessun Evento disponibile per aggiornamento.");
+            return;
+        }
 
-		System.out.print("Inserisci l'ID dell'Evento: ");
-		int idEvent = scanner.nextInt();
+        // Visualizza la lista degli Eventi con indice
+        System.out.println("Elenco degli Eventi disponibili:");
+        for (int i = 0; i < eventList.size(); i++) {
+            System.out.println((i + 1) + ". " + eventList.get(i));
+        }
+        
+     // L'utente seleziona l'Evento da includere (inserisci un solo numero)
+        System.out.print("Seleziona l'Evento da aggiornare: (inserisci il numero corrispondente)");
+        String input = scanner.nextLine();
+        int index;
+        try {
+            index = Integer.parseInt(input.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Input non valido: " + input);
+            return;
+        }
 
-		Event selectedEvent = eventService.getEventById(idEvent);
+        if (index < 1 || index > eventList.size()) {
+            System.out.println("Indice fuori range. Selezione non valida.");
+            return;
+        }
+        
+        Event selectedEvent = eventList.get(index - 1);
+        
+        System.out.print("Nome corrente (" + selectedEvent.getName() + "). Inserisci nuovo nome -String- (premi invio per saltare): ");
+        String name = scanner.nextLine();
+
+        System.out.print("Descrizione corrente (" + selectedEvent.getDescription() + "). Inserisci nuova descrizione -String- (premi invio per saltare): ");
+        String description = scanner.nextLine();
+        
+        System.out.print("Scope corrente (" + selectedEvent.getScope() + "). Inserisci nuovo scope -String- (premi invio per saltare): ");
+        String scope = scanner.nextLine();
+        
+        System.out.print("Attività corrente (" + selectedEvent.getActivity() + "). Inserisci la nuova attività -String- (premi invio per saltare): ");
+        String activity = scanner.nextLine();
+        
+        System.out.print("Organizzazione corrente (" + selectedEvent.getOrganization() + "). Inserisci la nuova organizzazione -String- (premi invio per saltare): ");
+        String organization = scanner.nextLine();
+        
+        System.out.print("Tema corrente (" + selectedEvent.getTheme() + "). Inserisci il nuovo tema -String- (premi invio per saltare): ");
+        String theme = scanner.nextLine();
+        
+        System.out.print("Categoria corrente (" + selectedEvent.getCategory() + "). Inserisci la nuova categoria -String- (premi invio per saltare): ");
+        String category = scanner.nextLine();
+        
+        System.out.print("Prezzo corrente (" + selectedEvent.getPrice() + "). Inserisci il nuovo prezzo -double- (premi invio per saltare): ");
+		String price = scanner.nextLine();
+		
+		System.out.print("Orario corrente (" + selectedEvent.getTime() + "). Inserisci il nuovo orario -String- formato: dd-MM-yyyy HH:mm (premi invio per saltare): ");
+		String time = scanner.nextLine();
+		
+		System.out.print("Inserisci evento aperto o chiuso (true per aperto, false per chiuso): ");
+		String isOpen = scanner.nextLine();
+		
+		selectedEvent = eventService.updateEvent(selectedEvent.getId(), name, description, scope, activity, organization, theme, category, price, time, isOpen);
+		System.out.println("Evento aggiornato: ");
 		System.out.println(selectedEvent);
-		if(selectedEvent != null) {
-
-			System.out.println("Per aggiornare l'Evento, inserire i dati negli appositi campi, compresi quelli del precedente");
-
-			scanner.nextLine();
-
-			System.out.print("Inserisci il nome: ");
-			String name = scanner.nextLine();
-
-			System.out.print("Inserisci la descrizione: ");
-			String description = scanner.nextLine();
-
-			System.out.print("Inserisci lo scope: ");
-			String scope = scanner.nextLine();
-
-			System.out.print("Inserisci l'attività: ");
-			String activity = scanner.nextLine();
-
-			System.out.print("Inserisci l'organizzazione: ");
-			String organization = scanner.nextLine();
-
-			System.out.print("Inserisci il tema: ");
-			String theme = scanner.nextLine();
-
-			System.out.print("Inserisci la categoria: ");
-			String category = scanner.nextLine();
-
-			System.out.print("Inserisci il prezzo (double): ");
-			double price = Double.parseDouble(scanner.nextLine());
-
-			System.out.print("Inserisci l'orario (formato: dd-MM-yyyy HH:mm): ");
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-			String timeString = scanner.nextLine();
-			LocalDateTime time = LocalDateTime.parse(timeString, formatter);
-
-			System.out.print("Inserisci evento aperto o chiuso (true per aperto, false per chiuso): ");
-			boolean isOpen = scanner.nextBoolean();
-
-			Event newEvent = eventService.createEvent(name, description, scope, activity, organization, theme, category, price, time, isOpen);
-
-			selectedEvent = eventService.updateEvent(idEvent, newEvent);
-
-			System.out.println("Evento aggiornato: ");
-			System.out.println(selectedEvent);
-			scanner.nextLine();
-		} else {
-			System.out.println("L'Evento non e' presente ");
 		}
-	}
 
 	@Override
 	public Page getNext() {
