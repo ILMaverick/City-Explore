@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.unicam.City_Explore.contenuti.MultimediaContent;
 import com.unicam.City_Explore.user.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public abstract class AbstractElement implements Element {
 	
 	private String description;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private final List<MultimediaContent> multimediaContentList = new ArrayList<>();
 	
 	@ManyToOne

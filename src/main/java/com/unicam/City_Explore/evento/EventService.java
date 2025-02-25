@@ -3,9 +3,7 @@ package com.unicam.City_Explore.evento;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
-import com.unicam.City_Explore.user.Role;
 import com.unicam.City_Explore.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

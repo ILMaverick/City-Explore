@@ -1,10 +1,17 @@
 package com.unicam.City_Explore.visual_interface.form_pages.contenuti;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.unicam.City_Explore.contenuti.FormatFileEnum;
+import com.unicam.City_Explore.contenuti.MultimediaContent;
+import com.unicam.City_Explore.contenuti.MultimediaContentService;
+import com.unicam.City_Explore.contest.Contest;
+import com.unicam.City_Explore.contest.ContestService;
+import com.unicam.City_Explore.evento.Event;
 import com.unicam.City_Explore.poi.POIService;
 import com.unicam.City_Explore.poi.POIType;
 import com.unicam.City_Explore.poi.PointOfInterest;
@@ -15,7 +22,9 @@ import com.unicam.City_Explore.visual_interface.form_pages.FormPage;
 public class LoadContentToContestPage extends FormPage {
 	
 	@Autowired
-	private POIService poiService;
+	private ContestService contestService;
+	@Autowired
+	private MultimediaContentService contentService;
 	
 	public LoadContentToContestPage() {
 		super("Creazione di un nuovo PointOfInterest da zero");
@@ -23,34 +32,63 @@ public class LoadContentToContestPage extends FormPage {
 
 	@Override
 	public void startForm(Scanner scanner) {
-		System.out.print("Inserisci il nome: ");
-        String name = scanner.nextLine();
+		System.out.println("=== Caricamento Contenuto Multimediale su un Contest ===");
+		 
+		 List<Contest> contestList = contestService.getAllContest();
+	        if (contestList == null || contestList.isEmpty()) {
+	            System.out.println("Nessun Contest disponibile per aggiungere un contenuto.");
+	            return;
+	        }
 
-        System.out.print("Inserisci la descrizione: ");
-        String description = scanner.nextLine();
+	        // Visualizza la lista dei Contest con indice
+	        System.out.println("Elenco dei Contest disponibili:");
+	        for (int i = 0; i < contestList.size(); i++) {
+	            System.out.println((i + 1) + ". " + contestList.get(i));
+	        }
+	        
+	     // L'utente seleziona il Contest da includere (inserisci un solo numero)
+	        System.out.print("Seleziona il Contest a cui aggiungere un Contenuto: (inserisci il numero corrispondente)");
+	        String input = scanner.nextLine();
+	        int index;
+	        try {
+	            index = Integer.parseInt(input.trim());
+	        } catch (NumberFormatException e) {
+	            System.out.println("Input non valido: " + input);
+	            return;
+	        }
 
-        System.out.print("Inserisci la latitudine: ");
-        double lat = Double.parseDouble(scanner.nextLine());
+	        if (index < 1 || index > contestList.size()) {
+	            System.out.println("Indice fuori range. Selezione non valida.");
+	            return;
+	        }
 
-        System.out.print("Inserisci la longitudine: ");
-        double lon = Double.parseDouble(scanner.nextLine());
+	        Contest selectedContest = contestList.get(index - 1);
+	        System.out.println("Hai selezionato il Contest: " + selectedContest);
+	        
+	        System.out.print("Inserisci il nome del Contenuto: ");
+	        String name = scanner.nextLine();
+	        
+	        System.out.print("Inserisci la descrizione del Contenuto: ");
+	        String description = scanner.nextLine();
+	        
+	        System.out.print("Inserisci il formato: ");
+	        String formatString = scanner.nextLine();
+	        FormatFileEnum format = FormatFileEnum.formatFile(formatString);
+	        
+	        System.out.print("Inserisci la durata: ");
+	        float duration = scanner.nextFloat();
 
-        // In questo esempio, open_time e close_time sono lasciati null
-        // Chiediamo anche il tipo di POI (da un enum: Turismo, Alloggio, Servizio, Natura, Altro)
-        System.out.print("Inserisci il tipo di POI (Turismo, Alloggio, Servizio, Natura, Altro): ");
-        String typeInput = scanner.nextLine().trim();
-        POIType poiType;
-        try {
-            poiType = POIType.valueOf(typeInput);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Tipo non valido. Verra' usato 'Altro'.\n");
-            poiType = POIType.Altro;
-        }
-        
-        PointOfInterest newPOI = poiService.createPOIFromUser(name, description, lat, lon, poiType);
-        
-        System.out.println("PointOfInterest creato da zero:\n");
-        System.out.println(newPOI);
+	        System.out.print("Inserisci la dimensione: ");
+	        float dimension = scanner.nextFloat();
+
+	        System.out.print("Inserisci la risoluzione: ");
+	        float resolution = scanner.nextFloat();
+	        MultimediaContent content = contentService.createMultimediaContent(name, description, format, duration, dimension, resolution);
+	        
+	        //contentService.loadMultimediaContentToEvent(selectedEvent.getId(), content.getId());
+	        
+	        System.out.println("Contenuto Multimediale aggiunto al Contest: ");
+	        System.out.println(this.contentService.getMultimediaContentById(content.getId()));
 	}
 
 	@Override

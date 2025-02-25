@@ -3,8 +3,6 @@ package com.unicam.City_Explore.eliminazione;
 import com.unicam.City_Explore.contest.ContestParticipation;
 import com.unicam.City_Explore.tour.Tappa;
 import com.unicam.City_Explore.tour.Way;
-import com.unicam.City_Explore.user.Role;
-import com.unicam.City_Explore.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,6 @@ import com.unicam.City_Explore.poi.POIRepository;
 import com.unicam.City_Explore.poi.PointOfInterest;
 import com.unicam.City_Explore.tour.Tour;
 import com.unicam.City_Explore.tour.TourRepository;
-import com.unicam.City_Explore.user.User;
 import com.unicam.City_Explore.notifica.NotificationListener;
 
 import java.util.List;
@@ -40,8 +37,6 @@ public class DeletionService {
     private MultimediaContentRepository multimediaContentRepository;
     @Autowired
     private NotificationListener notificationListener;
-    @Autowired
-    private UserRepository userRepository;
 
     public DeletionService() {
     }
@@ -171,8 +166,6 @@ public class DeletionService {
     }
 
     public void deletePOI(int idPOI, String reason) {
-        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
-        if(curator != null && curator.getRole() == Role.CURATOR) {
             PointOfInterest poi = poiRepository.findById(idPOI).orElse(null);
             if (poi != null) {
 
@@ -186,20 +179,14 @@ public class DeletionService {
                 }
 
                 for (MultimediaContent multimediaContent : poi.getMultimediaContentList()) {
-                    multimediaContent.setAttachedElement(null);
-                    multimediaContentRepository.save(multimediaContent);
+                	multimediaContentRepository.delete(multimediaContent);
                 }
                 poiRepository.deleteById(idPOI);
                 notificationListener.handleDeletePOI(poi, reason);
             }
-        } else {
-            notificationListener.handleDenialPermission(curator);
-        }
     }
 
     public void deleteTour(int idTour, String reason) {
-        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
-        if(curator != null && curator.getRole() == Role.CURATOR) {
             Tour tour = tourRepository.findById(idTour).orElse(null);
             if (tour != null) {
                 for(Way way: tour.getWayList()) {
@@ -208,20 +195,14 @@ public class DeletionService {
                 }
 
                 for (MultimediaContent multimediaContent : tour.getMultimediaContentList()) {
-                    multimediaContent.setAttachedElement(null);
-                    multimediaContentRepository.save(multimediaContent);
+                	multimediaContentRepository.delete(multimediaContent);
                 }
                 tourRepository.deleteById(tour.getId());
                 notificationListener.handleDeleteTour(tour, reason);
             }
-        } else {
-            notificationListener.handleDenialPermission(curator);
-        }
     }
 
     public void deleteContest(int idContest, String reason) {
-        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
-        if(curator != null && curator.getRole() == Role.CURATOR) {
             Contest contest = contestRepository.findById(idContest).orElse(null);
             if (contest != null) {
                 for (Event event : contest.getEventList()) {
@@ -231,17 +212,15 @@ public class DeletionService {
                 for(ContestParticipation participant: contest.getParticipationContestList()) {
                     contest.getParticipationContestList().remove(participant);
                 }
+                for (MultimediaContent multimediaContent : contest.getMultimediaContentList()) {
+                	multimediaContentRepository.delete(multimediaContent);
+                }
                 contestRepository.deleteById(idContest);
                 notificationListener.handleDeleteContest(contest, reason);
             }
-        } else {
-            notificationListener.handleDenialPermission(curator);
-        }
     }
 
     public void deleteEvent(int idEvent, String reason) {
-        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
-        if(curator != null && curator.getRole() == Role.CURATOR) {
             Event event = eventRepository.findById(idEvent).orElse(null);
             if (event != null) {
                 for (PointOfInterest poi : event.getPointOfInterestList()) {
@@ -252,17 +231,15 @@ public class DeletionService {
                     contest.getEventList().remove(event);
                     contestRepository.save(contest);
                 }
+                for (MultimediaContent multimediaContent : event.getMultimediaContentList()) {
+                	multimediaContentRepository.delete(multimediaContent);
+                }
                 eventRepository.deleteById(idEvent);
                 notificationListener.handleDeleteEvent(event, reason);
             }
-        }  else {
-            notificationListener.handleDenialPermission(curator);
-        }
     }
 
     public void deleteMultimediaContent(int idMC, String reason) {
-        User curator = userRepository.searchUsersByRole(Role.CURATOR).stream().findAny().orElse(null);
-        if(curator != null && curator.getRole() == Role.CURATOR) {
             MultimediaContent multimediaContent = multimediaContentRepository.findById(idMC).orElse(null);
             if (multimediaContent != null) {
             	AbstractElement element = multimediaContent.getAttachedElement();
@@ -286,12 +263,8 @@ public class DeletionService {
                 multimediaContentRepository.deleteById(idMC);
                 notificationListener.handleDeleteMultimediaContent(multimediaContent, reason);
             }
-        } else {
-            notificationListener.handleDenialPermission(curator);
         }
-    }
-
-    // Se necessario, aggiungi un metodo per chiudere lo scanner quando il controller non serve più.
+    
     public void close() {
         if (scanner != null) {
             scanner.close();
